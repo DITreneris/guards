@@ -277,19 +277,49 @@ nav {
     line-height: 1.2;
     font-weight: 800;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow for readability */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-title-line {
+    display: block;
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    font-weight: 900;
+}
+
+.hero-subtitle {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--dark-blue);
 }
 
 /* Highlight for the AI-Powered text */
 .hero-content h1 .highlight {
     color: var(--primary-blue);
     font-weight: 900;
+    position: relative;
+}
+
+.hero-content h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--primary-blue);
+    opacity: 0.3;
+    border-radius: 2px;
 }
 
 .tagline {
     font-size: 1.5rem;
     color: var(--medium-gray);
     margin-bottom: 2.5rem;
-    margin-top: 20px; /* Increase space between title and subheadline */
+    margin-top: 24px; /* Increased space between title and subheadline */
     animation: fadeInUp 1s ease-out 0.3s;
     animation-fill-mode: both;
 }
@@ -1116,8 +1146,12 @@ footer {
         margin: 0 0.75rem;
     }
     
-    .hero-content h1 {
-        font-size: 3rem;
+    .hero-title-line {
+        font-size: 3.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 2.4rem;
     }
 }
 
@@ -1156,12 +1190,17 @@ footer {
         z-index: 1000;
     }
     
-    .hero-content h1 {
-        font-size: 2.5rem;
+    .hero-title-line {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 2rem;
     }
     
     .tagline {
         font-size: 1.2rem;
+        margin-top: 18px;
     }
     
     .stats {
@@ -1197,7 +1236,16 @@ footer {
 }
 
 @media (max-width: 480px) {
-    .hero-content h1 {
-        font-size: 2rem;
+    .hero-title-line {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.6rem;
+    }
+    
+    .tagline {
+        font-size: 1.1rem;
+        margin-top: 16px;
     }
 } 
