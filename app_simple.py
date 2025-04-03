@@ -36,6 +36,7 @@ MONGODB_COLLECTION = os.getenv('MONGODB_COLLECTION', 'leads')
 mongo_client = None
 db = None
 leads_collection = None
+leads = []  # In-memory fallback for leads when MongoDB is not available
 
 # Only attempt MongoDB connection if URI is provided and looks valid
 if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
@@ -64,8 +65,30 @@ if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_U
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {e}")
         mongo_client = None
+        # Load any existing leads from JSON file as fallback
+        try:
+            json_path = os.getenv('JSON_BACKUP_PATH', 'leads.json')
+            if os.path.exists(json_path):
+                with open(json_path, 'r') as f:
+                    for line in f:
+                        if line.strip():
+                            leads.append(json.loads(line))
+                logger.info(f"Loaded {len(leads)} leads from local JSON file as fallback")
+        except Exception as e:
+            logger.error(f"Failed to load leads from JSON file: {e}")
 else:
-    logger.warning(f"No valid MongoDB URI provided. MongoDB functionality will be disabled.")
+    logger.warning(f"No valid MongoDB URI provided. Using local JSON storage instead.")
+    # Load any existing leads from JSON file
+    try:
+        json_path = os.getenv('JSON_BACKUP_PATH', 'leads.json')
+        if os.path.exists(json_path):
+            with open(json_path, 'r') as f:
+                for line in f:
+                    if line.strip():
+                        leads.append(json.loads(line))
+            logger.info(f"Loaded {len(leads)} leads from local JSON file")
+    except Exception as e:
+        logger.error(f"Failed to load leads from JSON file: {e}")
 
 @app.route('/')
 def index():
@@ -158,6 +181,10 @@ def submit_lead():
             with open(json_path, 'a') as f:
                 backup_data = {**lead_document, 'timestamp': lead_document['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}
                 f.write(json.dumps(backup_data) + '\n')
+                
+            # Also add to in-memory list with string timestamp
+            memory_data = {**lead_document, 'timestamp': lead_document['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}
+            leads.append(memory_data)
             logger.info(f"Lead saved to local JSON file: {json_path}")
         
         # Add to MongoDB
@@ -189,27 +216,34 @@ def leads_count():
             count = leads_collection.count_documents({})
             return jsonify({'status': 'success', 'count': count}), 200
         else:
-            return jsonify({'status': 'error', 'message': 'MongoDB connection not available'}), 503
+            # Use in-memory fallback
+            return jsonify({'status': 'success', 'count': len(leads), 'source': 'memory'}), 200
     except Exception as e:
         logger.error(f"Error counting leads: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/admin')
 def admin_dashboard():
-    leads = []
+    dashboard_leads = []
+    
     if mongo_client:
         try:
-            leads = list(leads_collection.find().sort('timestamp', -1))
+            dashboard_leads = list(leads_collection.find().sort('timestamp', -1))
             # Convert ObjectId to string for JSON serialization
-            for lead in leads:
+            for lead in dashboard_leads:
                 if '_id' in lead:
                     lead['_id'] = str(lead['_id'])
                 if 'timestamp' in lead:
                     lead['timestamp'] = lead['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
         except Exception as e:
-            logger.error(f"Error retrieving leads: {e}")
+            logger.error(f"Error retrieving leads from MongoDB: {e}")
+            # Fall back to in-memory leads
+            dashboard_leads = leads
+    else:
+        # Use in-memory fallback
+        dashboard_leads = leads
     
-    return render_template('admin_dashboard.html', leads=leads)
+    return render_template('admin_dashboard.html', leads=dashboard_leads)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
