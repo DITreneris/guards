@@ -33,55 +33,90 @@ MONGODB_COLLECTION = os.getenv('MONGODB_COLLECTION', 'leads')
 
 # Initialize MongoDB client
 mongo_client = None
-try:
-    mongo_client = MongoClient(MONGODB_URI)
-    # Test connection
-    mongo_client.admin.command('ping')
-    db = mongo_client[MONGODB_DB]
-    leads_collection = db[MONGODB_COLLECTION]
-    logger.info(f"Connected to MongoDB: {MONGODB_DB}.{MONGODB_COLLECTION}")
-except (ConnectionFailure, OperationFailure) as e:
-    logger.error(f"Failed to connect to MongoDB: {e}")
+db = None
+leads_collection = None
+
+# Only attempt MongoDB connection if URI is provided and looks valid
+if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
+    try:
+        logger.info(f"Attempting to connect to MongoDB with URI: {MONGODB_URI.split('@')[0]}@...")
+        mongo_client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
+        # Test connection
+        mongo_client.admin.command('ping')
+        db = mongo_client[MONGODB_DB]
+        leads_collection = db[MONGODB_COLLECTION]
+        logger.info(f"Connected to MongoDB: {MONGODB_DB}.{MONGODB_COLLECTION}")
+    except Exception as e:
+        logger.error(f"Failed to connect to MongoDB: {e}")
+        mongo_client = None
+else:
+    logger.warning(f"No valid MongoDB URI provided. MongoDB functionality will be disabled.")
 
 @app.route('/')
 def index():
     try:
+        # Try to render the original index.html template
         return render_template('index.html')
     except Exception as e:
-        logger.error(f"Error rendering template: {e}")
-        return f"""
-        <html>
-            <head><title>Guards & Robbers</title></head>
-            <body>
-                <h1>Guards & Robbers</h1>
-                <p>Welcome to our marketing website!</p>
-                <p>Template error: {str(e)}</p>
-                <p>Debug info:</p>
-                <ul>
-                    <li>App root: {app.root_path}</li>
-                    <li>Templates path: {os.path.join(app.root_path, 'templates')}</li>
-                    <li>Path exists: {os.path.exists(os.path.join(app.root_path, 'templates'))}</li>
-                </ul>
-            </body>
-        </html>
-        """
+        logger.warning(f"Failed to render index.html: {e}")
+        
+        try:
+            # Try to render our simplified template as fallback
+            return render_template('index_simple.html')
+        except Exception as e2:
+            logger.error(f"Failed to render index_simple.html: {e2}")
+            
+            # Last resort: return inline HTML
+            return f"""
+            <html>
+                <head><title>Guards & Robbers</title></head>
+                <body>
+                    <h1>Guards & Robbers</h1>
+                    <p>Welcome to our marketing website!</p>
+                    <p>Template error: {str(e2)}</p>
+                    <p>Debug info:</p>
+                    <ul>
+                        <li>App root: {app.root_path}</li>
+                        <li>Templates path: {os.path.join(app.root_path, 'templates')}</li>
+                        <li>Path exists: {os.path.exists(os.path.join(app.root_path, 'templates'))}</li>
+                        <li>Templates available: {os.listdir(os.path.join(app.root_path, 'templates')) if os.path.exists(os.path.join(app.root_path, 'templates')) else 'None'}</li>
+                    </ul>
+                </body>
+            </html>
+            """
 
 @app.route('/health')
 def health():
+    mongodb_status = "Not configured"
+    
     if mongo_client:
         try:
             # Test MongoDB connection
             mongo_client.admin.command('ping')
-            db_status = "connected"
+            mongodb_status = "Connected"
         except Exception as e:
-            db_status = f"error: {str(e)}"
-    else:
-        db_status = "not connected"
+            mongodb_status = f"Error: {str(e)}"
+    
+    # Get environment info
+    env_info = {
+        "MONGODB_URI": MONGODB_URI.split('@')[0] + '@...' if MONGODB_URI and '@' in MONGODB_URI else "Not set",
+        "MONGODB_DB": MONGODB_DB,
+        "MONGODB_COLLECTION": MONGODB_COLLECTION,
+        "JSON_BACKUP_ENABLED": os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true',
+        "FLASK_ENV": os.getenv('FLASK_ENV', 'production'),
+        "APP_ROOT": app.root_path,
+        "TEMPLATES_EXIST": os.path.exists(os.path.join(app.root_path, 'templates')),
+    }
+    
+    if env_info["TEMPLATES_EXIST"]:
+        env_info["TEMPLATE_FILES"] = os.listdir(os.path.join(app.root_path, 'templates'))
         
     return {
         "status": "ok", 
         "message": "Application is healthy",
-        "mongodb": db_status
+        "environment": env_info,
+        "mongodb": mongodb_status,
+        "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
 @app.route('/submit-lead', methods=['POST'])
