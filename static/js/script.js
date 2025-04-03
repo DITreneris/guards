@@ -1,0 +1,310 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize mobile menu
+    initMobileMenu();
+    
+    // Initialize section animations
+    initSectionAnimations();
+    
+    // Initialize count-up effect for statistics
+    initCountUp();
+    
+    // Initialize header scroll effect
+    initScrollHeader();
+    
+    // Smooth scrolling for navigation links
+    initSmoothScrolling();
+
+    // Form submission
+    initFormSubmission();
+    
+    // Feature card hover effect
+    initFeatureCards();
+});
+
+// Mobile Menu Toggle
+function initMobileMenu() {
+    const menuToggle = document.createElement('div');
+    menuToggle.className = 'mobile-menu-toggle';
+    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    
+    const nav = document.querySelector('nav');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (nav && !document.querySelector('.mobile-menu-toggle')) {
+        nav.insertBefore(menuToggle, navLinks);
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    }
+}
+
+// Section Animations
+function initSectionAnimations() {
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+}
+
+// Count-up Animation for Statistics
+function initCountUp() {
+    const stats = document.querySelectorAll('.stat h3');
+    const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
+    
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const targetValue = parseFloat(target.textContent.replace(/[^\d.-]/g, ''));
+                const prefix = target.textContent.match(/^[^\d]*/)[0] || '';
+                
+                if (!isNaN(targetValue)) {
+                    let startValue = 0;
+                    const duration = 2000;
+                    const increment = targetValue / (duration / 16);
+                    
+                    target.textContent = prefix + '0';
+                    
+                    const updateCounter = () => {
+                        startValue += increment;
+                        if (startValue < targetValue) {
+                            if (targetValue >= 1000) {
+                                target.textContent = prefix + Math.ceil(startValue).toLocaleString();
+                            } else {
+                                target.textContent = prefix + Math.ceil(startValue);
+                            }
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            if (targetValue >= 1000) {
+                                target.textContent = prefix + Math.ceil(targetValue).toLocaleString();
+                            } else {
+                                target.textContent = prefix + Math.ceil(targetValue);
+                            }
+                        }
+                    };
+                    
+                    requestAnimationFrame(updateCounter);
+                    statsObserver.unobserve(target);
+                }
+            }
+        });
+    }, options);
+    
+    stats.forEach(stat => {
+        statsObserver.observe(stat);
+    });
+}
+
+// Header Scroll Effect
+function initScrollHeader() {
+    const header = document.querySelector('header');
+    
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
+}
+
+// Smooth Scrolling
+function initSmoothScrolling() {
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    
+    // Add scroll indicator to hero section
+    const heroSection = document.getElementById('hero');
+    if (heroSection && !document.querySelector('.scroll-indicator')) {
+        const scrollIndicator = document.createElement('div');
+        scrollIndicator.className = 'scroll-indicator';
+        scrollIndicator.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        scrollIndicator.addEventListener('click', () => {
+            const nextSection = heroSection.nextElementSibling;
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        heroSection.appendChild(scrollIndicator);
+    }
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            
+            // Close mobile menu if open
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                const menuToggle = document.querySelector('.mobile-menu-toggle');
+                if (menuToggle) {
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
+            
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Form Submission
+function initFormSubmission() {
+    const leadForm = document.getElementById('lead-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (leadForm) {
+        // Add icons to form inputs
+        enhanceFormInputs();
+        
+        leadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitButton = leadForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitButton.disabled = true;
+            
+            // Prepare form data
+            const formData = new FormData(leadForm);
+            const data = {
+                company: formData.get('company'),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                network: formData.get('network')
+            };
+
+            try {
+                // Send data to backend
+                const response = await fetch('/submit-lead', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                // Show success or error message
+                formStatus.classList.remove('hidden', 'success', 'error');
+                
+                if (response.ok) {
+                    // Success
+                    formStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${result.message || 'Demo requested successfully!'}`;
+                    formStatus.classList.add('success');
+                    leadForm.reset();
+                } else {
+                    // Error
+                    formStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.message || 'Something went wrong. Please try again.'}`;
+                    formStatus.classList.add('error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                formStatus.classList.remove('hidden');
+                formStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Network error. Please try again later.';
+                formStatus.classList.add('error');
+            } finally {
+                // Reset button state
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+                
+                // Scroll to form status
+                setTimeout(() => {
+                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+                
+                // Hide status message after 5 seconds
+                setTimeout(() => {
+                    formStatus.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    }
+}
+
+// Enhance form inputs with icons
+function enhanceFormInputs() {
+    // Update CTA button with icon and microcopy
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+        if (!button.querySelector('i') && button.textContent.includes('Demo')) {
+            const text = button.textContent;
+            button.innerHTML = `<i class="fas fa-calendar-check"></i> ${text}`;
+            if (button.closest('#hero')) {
+                button.innerHTML += '<span class="microcopy">No credit card needed</span>';
+            }
+        }
+    });
+    
+    // Style the form submit button
+    const submitButton = document.querySelector('.submit-button');
+    if (submitButton && !submitButton.querySelector('i')) {
+        submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> ${submitButton.textContent}`;
+    }
+}
+
+// Feature card hover effects
+function initFeatureCards() {
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    featureCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.feature-icon i');
+            if (icon) {
+                icon.classList.add('fa-bounce');
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.feature-icon i');
+            if (icon) {
+                icon.classList.remove('fa-bounce');
+            }
+        });
+    });
+} 
