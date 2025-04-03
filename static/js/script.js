@@ -231,9 +231,17 @@ function initFormSubmission() {
             const formData = new FormData(leadForm);
             const data = {
                 company: formData.get('company'),
-                name: formData.get('name'),
+                contact_name: formData.get('name'),
                 email: formData.get('email'),
-                network: formData.get('network')
+                phone: formData.get('phone') || '',
+                network_type: formData.get('network') || '',
+                network_size: formData.get('network_size') || '',
+                message: formData.get('message') || '',
+                newsletter_consent: formData.get('newsletter_consent') === 'on',
+                marketing_consent: formData.get('marketing_consent') === 'on',
+                consent_timestamp: new Date().toISOString(),
+                consent_version: '1.0',
+                source: 'website_contact_form'
             };
 
             try {
@@ -251,11 +259,18 @@ function initFormSubmission() {
                 // Show success or error message
                 formStatus.classList.remove('hidden', 'success', 'error');
                 
-                if (response.ok) {
+                if (result.success) {
                     // Success
                     formStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${result.message || 'Demo requested successfully!'}`;
                     formStatus.classList.add('success');
                     leadForm.reset();
+                    
+                    // If user consented to newsletter, show additional confirmation
+                    if (data.newsletter_consent) {
+                        const newsConfirmation = document.createElement('p');
+                        newsConfirmation.innerHTML = '<strong>Thanks for subscribing!</strong> Please check your email to confirm your subscription.';
+                        formStatus.appendChild(newsConfirmation);
+                    }
                 } else {
                     // Error
                     formStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.message || 'Something went wrong. Please try again.'}`;

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Subscription Confirmed - Guards & Robbers{% endblock %}
+
+{% block content %}
+<section class="confirmation-section">
+    <div class="container">
+        <div class="confirmation-content">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>Subscription Confirmed!</h1>
+            <p>Thank you for confirming your email address. You've been successfully added to our newsletter.</p>
+            <p>You'll now receive the latest cybersecurity tips, product updates, and industry insights directly to your inbox.</p>
+            <div class="confirmation-actions">
+                <a href="/" class="cta-button"><i class="fas fa-home"></i> Return to Homepage</a>
+            </div>
+            <div class="subscription-settings">
+                <p>You can manage your subscription preferences or unsubscribe at any time by clicking the links in our emails.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .confirmation-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--light-blue), #ffffff);
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+    
+    .confirmation-content {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: white;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .success-icon {
+        font-size: 5rem;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+    
+    .confirmation-content h1 {
+        color: var(--dark-gray);
+        margin-bottom: 20px;
+    }
+    
+    .confirmation-content p {
+        font-size: 1.1rem;
+        color: var(--medium-gray);
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+    
+    .confirmation-actions {
+        margin: 30px 0;
+    }
+    
+    .subscription-settings {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .subscription-settings p {
+        font-size: 0.9rem;
+        color: var(--medium-gray);
+    }
+</style>
+{% endblock %} 

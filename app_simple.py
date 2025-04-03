@@ -12,6 +12,8 @@ from pymongo.server_api import ServerApi
 from pymongo.errors import ConnectionFailure, OperationFailure
 from admin_auth import login_required, authenticate, init_admin_users
 from PIL import Image, ImageDraw, ImageFont
+from utils.email_sender import send_welcome_email
+import hashlib
 
 # Load environment variables
 load_dotenv()
@@ -40,12 +42,15 @@ logger.info(f"Directory contents: {os.listdir(os.getcwd())}")
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
 MONGODB_DB = os.getenv('MONGODB_DB', 'guards_robbers_db')
 MONGODB_COLLECTION = os.getenv('MONGODB_COLLECTION', 'leads')
+MONGODB_SUBSCRIBERS_COLLECTION = os.getenv('MONGODB_SUBSCRIBERS_COLLECTION', 'subscribers')
 
 # Initialize MongoDB client
 mongo_client = None
 db = None
 leads_collection = None
-leads = []  # In-memory fallback for leads when MongoDB is not available
+subscribers_collection = None
+leads = []
+subscribers = []
 
 # Only attempt MongoDB connection if URI is provided and looks valid
 if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
@@ -70,6 +75,13 @@ if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_U
         mongo_client.admin.command('ping')
         db = mongo_client[MONGODB_DB]
         leads_collection = db[MONGODB_COLLECTION]
+        subscribers_collection = db[MONGODB_SUBSCRIBERS_COLLECTION]
+        
+        # Configure collection options if needed
+        # For example, adding indexes
+        leads_collection.create_index([("email", 1)], unique=True)
+        subscribers_collection.create_index([("email", 1)], unique=True)
+        
         logger.info(f"Connected to MongoDB: {MONGODB_DB}.{MONGODB_COLLECTION}")
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {e}")
@@ -243,55 +255,169 @@ def health():
 
 @app.route('/submit-lead', methods=['POST'])
 def submit_lead():
-    try:
-        data = request.get_json()
-        
-        # Validate required fields
-        required_fields = ['company', 'name', 'email', 'network']
-        for field in required_fields:
-            if not data.get(field):
-                return jsonify({'status': 'error', 'message': f'Missing required field: {field}'}), 400
-        
-        # Create lead document
-        lead_document = {
-            **data,
-            'status': 'New Lead',
-            'timestamp': datetime.now()
+    # Parse the request data
+    data = request.json
+    
+    # Validate required fields
+    required_fields = ['company', 'contact_name', 'email']
+    if not all(field in data for field in required_fields):
+        logger.warning(f"Missing required fields in lead submission: {data}")
+        return jsonify({'success': False, 'message': 'Missing required fields'}), 400
+    
+    # Extract lead data
+    lead = {
+        'company': data['company'],
+        'contact_name': data['contact_name'],
+        'email': data['email'],
+        'phone': data.get('phone', ''),
+        'network_type': data.get('network_type', ''),
+        'network_size': data.get('network_size', ''),
+        'message': data.get('message', ''),
+        'created_at': datetime.now().isoformat(),
+        'source': data.get('source', 'website'),
+        # Extract newsletter and marketing consent
+        'newsletter_consent': data.get('newsletter_consent', False),
+        'marketing_consent': data.get('marketing_consent', False),
+        'consent_timestamp': data.get('consent_timestamp', datetime.now().isoformat()),
+        'consent_version': data.get('consent_version', '1.0')
+    }
+    
+    # Create a subscriber record if user consented
+    if lead['newsletter_consent']:
+        subscriber = {
+            'email': lead['email'],
+            'name': lead['contact_name'],
+            'company': lead['company'],
+            'subscribed_at': datetime.now().isoformat(),
+            'marketing_consent': lead['marketing_consent'],
+            'consent_timestamp': lead['consent_timestamp'],
+            'consent_version': lead['consent_version'],
+            'source': 'lead_form',
+            'active': True,
+            'confirmed': False
         }
         
-        # Local JSON backup
-        if os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true':
-            json_path = os.getenv('JSON_BACKUP_PATH', 'leads.json')
-            with open(json_path, 'a') as f:
-                backup_data = {**lead_document, 'timestamp': lead_document['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}
-                f.write(json.dumps(backup_data) + '\n')
+        try:
+            # Store subscriber in MongoDB
+            if mongo_client:
+                # Check for existing subscriber
+                existing = subscribers_collection.find_one({"email": lead['email']})
                 
-            # Also add to in-memory list with string timestamp
-            memory_data = {**lead_document, 'timestamp': lead_document['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}
-            leads.append(memory_data)
-            logger.info(f"Lead saved to local JSON file: {json_path}")
-        
-        # Add to MongoDB
-        if mongo_client:
-            try:
-                result = leads_collection.insert_one(lead_document)
-                logger.info(f"Lead saved to MongoDB with ID: {result.inserted_id}")
-                return jsonify({'status': 'success', 'message': 'Lead submitted successfully!'}), 200
-            except Exception as e:
-                logger.error(f"Error saving to MongoDB: {e}")
-                if os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true':
-                    return jsonify({'status': 'success', 'message': 'Lead saved locally. MongoDB operation failed.'}), 200
+                if existing:
+                    # Update existing subscriber
+                    subscribers_collection.update_one(
+                        {"email": lead['email']},
+                        {"$set": {
+                            "name": lead['contact_name'],
+                            "company": lead['company'],
+                            "marketing_consent": lead['marketing_consent'],
+                            "consent_timestamp": lead['consent_timestamp'],
+                            "consent_version": lead['consent_version'],
+                            "active": True
+                        }}
+                    )
+                    logger.info(f"Updated existing subscriber: {lead['email']}")
                 else:
-                    return jsonify({'status': 'error', 'message': 'Database connection failed and local backup is disabled.'}), 500
-        elif os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true':
-            logger.warning("MongoDB client not available. Lead saved to local file only.")
-            return jsonify({'status': 'success', 'message': 'Lead saved locally. MongoDB integration not available.'}), 200
+                    # Insert new subscriber
+                    subscribers_collection.insert_one(subscriber)
+                    logger.info(f"Added new subscriber: {lead['email']}")
+                    
+                    # Send welcome email
+                    send_welcome_email(
+                        lead['email'],
+                        lead['contact_name'],
+                        lead['company']
+                    )
+            else:
+                # Fallback to local storage
+                try:
+                    # Check if subscribers directory exists, create it if not
+                    if not os.path.exists('data'):
+                        os.makedirs('data')
+                        
+                    # Check if subscribers file exists, create it if not
+                    if not os.path.exists('data/subscribers.json'):
+                        with open('data/subscribers.json', 'w') as f:
+                            json.dump([], f)
+                    
+                    # Read existing subscribers
+                    with open('data/subscribers.json', 'r') as f:
+                        subscribers = json.load(f)
+                    
+                    # Check for existing subscriber
+                    existing_subscriber = False
+                    for s in subscribers:
+                        if s.get('email') == lead['email']:
+                            s.update({
+                                "name": lead['contact_name'],
+                                "company": lead['company'],
+                                "marketing_consent": lead['marketing_consent'],
+                                "consent_timestamp": lead['consent_timestamp'],
+                                "consent_version": lead['consent_version'],
+                                "active": True
+                            })
+                            existing_subscriber = True
+                            break
+                    
+                    if not existing_subscriber:
+                        subscribers.append(subscriber)
+                        
+                        # Send welcome email
+                        send_welcome_email(
+                            lead['email'],
+                            lead['contact_name'],
+                            lead['company']
+                        )
+                    
+                    # Save updated subscribers
+                    with open('data/subscribers.json', 'w') as f:
+                        json.dump(subscribers, f, indent=2)
+                        
+                    logger.info(f"Stored subscriber locally: {lead['email']}")
+                    
+                except Exception as e:
+                    logger.error(f"Error storing subscriber locally: {str(e)}")
+        except Exception as e:
+            logger.error(f"Error processing subscriber: {str(e)}")
+    
+    # Try to save to MongoDB
+    try:
+        if mongo_client:
+            leads_collection.insert_one(lead)
+            logger.info(f"Lead saved to MongoDB: {lead['email']}")
         else:
-            return jsonify({'status': 'error', 'message': 'Database connection failed and local backup is disabled.'}), 500
-            
+            logger.warning("MongoDB not available, falling back to local storage")
+            raise Exception("MongoDB not available")
     except Exception as e:
-        logger.error(f"Error submitting lead: {e}")
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        logger.error(f"Error saving to MongoDB: {str(e)}")
+        # Fallback to local JSON storage
+        try:
+            # Check if data directory exists, create it if not
+            if not os.path.exists('data'):
+                os.makedirs('data')
+                
+            # Check if leads file exists, create it if not
+            if not os.path.exists('data/leads.json'):
+                with open('data/leads.json', 'w') as f:
+                    json.dump([], f)
+            
+            # Read existing leads
+            with open('data/leads.json', 'r') as f:
+                leads = json.load(f)
+            
+            # Add new lead
+            leads.append(lead)
+            
+            # Save updated leads
+            with open('data/leads.json', 'w') as f:
+                json.dump(leads, f, indent=2)
+                
+            logger.info(f"Lead saved locally: {lead['email']}")
+        except Exception as local_error:
+            logger.error(f"Error saving lead locally: {str(local_error)}")
+            return jsonify({'success': False, 'message': 'Error processing lead'}), 500
+    
+    return jsonify({'success': True, 'message': 'Lead submitted successfully'})
 
 @app.route('/leads/count', methods=['GET'])
 def leads_count():
@@ -391,6 +517,165 @@ def admin_change_password():
 def testimonials():
     """Render the testimonials page"""
     return render_template('testimonials.html')
+
+@app.route('/subscribers/count', methods=['GET'])
+@login_required
+def subscribers_count():
+    """Get count of newsletter subscribers"""
+    try:
+        if mongo_client:
+            count = subscribers_collection.count_documents({})
+            return jsonify({'status': 'success', 'count': count}), 200
+        else:
+            # Use in-memory fallback
+            return jsonify({'status': 'success', 'count': len(subscribers), 'source': 'memory'}), 200
+    except Exception as e:
+        logger.error(f"Error counting subscribers: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/confirm-subscription')
+def confirm_subscription():
+    email = request.args.get('email')
+    token = request.args.get('token')
+    
+    if not email or not token:
+        return render_template('subscription_confirmed.html', error="Invalid confirmation link")
+    
+    # Validate token here (simplified for example)
+    try:
+        # Find the subscriber in MongoDB
+        if MONGODB_URI and subscribers_collection:
+            subscriber = subscribers_collection.find_one({"email": email})
+            if subscriber:
+                # Update confirmation status
+                subscribers_collection.update_one(
+                    {"email": email},
+                    {"$set": {"confirmed": True, "confirmed_at": datetime.now().isoformat()}}
+                )
+                
+                # Log successful confirmation
+                logger.info(f"Subscription confirmed for: {email}")
+                return render_template('subscription_confirmed.html', success=True)
+            else:
+                logger.warning(f"Confirmation attempted for unknown email: {email}")
+                return render_template('subscription_confirmed.html', error="Email not found in our records")
+        else:
+            # Fallback to local storage
+            with open('data/subscribers.json', 'r') as f:
+                subscribers = json.load(f)
+                
+            updated = False
+            for subscriber in subscribers:
+                if subscriber.get('email') == email:
+                    subscriber['confirmed'] = True
+                    subscriber['confirmed_at'] = datetime.now().isoformat()
+                    updated = True
+                    break
+                    
+            if updated:
+                with open('data/subscribers.json', 'w') as f:
+                    json.dump(subscribers, f, indent=2)
+                logger.info(f"Subscription confirmed locally for: {email}")
+                return render_template('subscription_confirmed.html', success=True)
+            else:
+                logger.warning(f"Confirmation attempted for unknown email: {email}")
+                return render_template('subscription_confirmed.html', error="Email not found in our records")
+                
+    except Exception as e:
+        logger.error(f"Error confirming subscription: {str(e)}")
+        return render_template('subscription_confirmed.html', error="An error occurred processing your request")
+
+@app.route('/unsubscribe', methods=['GET', 'POST'])
+def unsubscribe():
+    email = request.args.get('email') or request.form.get('email')
+    token = request.args.get('token') or request.form.get('token')
+    
+    if not email or not token:
+        return render_template('unsubscribe.html', error="Invalid unsubscribe link")
+    
+    if request.method == 'POST':
+        # Process unsubscribe request
+        reason = request.form.get('reason')
+        other_reason = request.form.get('other_reason')
+        
+        try:
+            if MONGODB_URI and subscribers_collection:
+                # Log the unsubscribe reason
+                if reason:
+                    subscribers_collection.update_one(
+                        {"email": email},
+                        {"$set": {
+                            "unsubscribed": True, 
+                            "unsubscribed_at": datetime.now().isoformat(),
+                            "unsubscribe_reason": reason,
+                            "unsubscribe_other_reason": other_reason if reason == "other" else ""
+                        }}
+                    )
+                
+                # Remove or mark as unsubscribed
+                subscribers_collection.update_one(
+                    {"email": email},
+                    {"$set": {"active": False, "unsubscribed": True}}
+                )
+                
+                logger.info(f"User unsubscribed: {email}, reason: {reason}")
+                return render_template('unsubscribe.html', success=True)
+            else:
+                # Fallback to local storage
+                with open('data/subscribers.json', 'r') as f:
+                    subscribers = json.load(f)
+                    
+                updated = False
+                for subscriber in subscribers:
+                    if subscriber.get('email') == email:
+                        subscriber['active'] = False
+                        subscriber['unsubscribed'] = True
+                        subscriber['unsubscribed_at'] = datetime.now().isoformat()
+                        subscriber['unsubscribe_reason'] = reason
+                        if reason == "other":
+                            subscriber['unsubscribe_other_reason'] = other_reason
+                        updated = True
+                        break
+                        
+                if updated:
+                    with open('data/subscribers.json', 'w') as f:
+                        json.dump(subscribers, f, indent=2)
+                    logger.info(f"User unsubscribed locally: {email}, reason: {reason}")
+                    return render_template('unsubscribe.html', success=True)
+                else:
+                    logger.warning(f"Unsubscribe attempted for unknown email: {email}")
+                    return render_template('unsubscribe.html', error="Email not found in our records")
+                    
+        except Exception as e:
+            logger.error(f"Error processing unsubscribe: {str(e)}")
+            return render_template('unsubscribe.html', error="An error occurred processing your request")
+    
+    # Display unsubscribe confirmation form
+    return render_template('unsubscribe.html', email=email, token=token)
+
+@app.route('/admin/subscribers/count')
+@login_required
+def count_subscribers():
+    try:
+        if MONGODB_URI and subscribers_collection:
+            # Count active confirmed subscribers
+            count = subscribers_collection.count_documents({"active": True, "confirmed": True})
+            return jsonify({'success': True, 'count': count})
+        else:
+            # Fallback to local storage
+            try:
+                with open('data/subscribers.json', 'r') as f:
+                    subscribers = json.load(f)
+                    
+                # Count active confirmed subscribers
+                count = sum(1 for s in subscribers if s.get('active', False) and s.get('confirmed', False))
+                return jsonify({'success': True, 'count': count})
+            except Exception as e:
+                logger.error(f"Error counting local subscribers: {str(e)}")
+                return jsonify({'success': False, 'message': 'Error counting subscribers'}), 500
+    except Exception as e:
+        logger.error(f"Error counting subscribers: {str(e)}")
+        return jsonify({'success': False, 'message': 'Error counting subscribers'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 

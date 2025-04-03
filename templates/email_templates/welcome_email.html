@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Guards & Robbers Newsletter</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .header img {
+            max-width: 200px;
+            height: auto;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        h1 {
+            color: #003366;
+            margin-top: 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .benefits {
+            background-color: #f7f9fc;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .benefits h3 {
+            margin-top: 0;
+            color: #003366;
+        }
+        .benefits ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .benefits li {
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        .social-links {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 620px) {
+            .email-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img src="https://guardsnrobbers.com/static/img/logo.png" alt="Guards & Robbers Logo">
+        </div>
+        
+        <div class="content">
+            <h1>Welcome to the Guards & Robbers Community!</h1>
+            
+            <p>Dear {{name}},</p>
+            
+            <p>Thank you for subscribing to our newsletter. We're excited to have you join our community of security professionals dedicated to improving cybersecurity awareness and practices.</p>
+            
+            <p>To confirm your subscription and start receiving our newsletter, please click the button below:</p>
+            
+            <div style="text-align: center;">
+                <a href="{{confirmation_link}}" class="cta-button">Confirm Subscription</a>
+            </div>
+            
+            <div class="benefits">
+                <h3>What to expect from our newsletter:</h3>
+                <ul>
+                    <li><strong>Cybersecurity Tips:</strong> Practical advice to protect your organization from threats</li>
+                    <li><strong>Industry Insights:</strong> Analysis of emerging security trends and challenges</li>
+                    <li><strong>Product Updates:</strong> Latest features and improvements to our platform</li>
+                    <li><strong>Exclusive Content:</strong> Resources and tools available only to subscribers</li>
+                </ul>
+            </div>
+            
+            <p>We're committed to providing valuable content without overwhelming your inbox. You can expect to hear from us 1-2 times per month with curated content relevant to your security needs.</p>
+            
+            <p>If you have any questions or suggestions, feel free to reply to this email or contact our team at <a href="mailto:support@guardsnrobbers.com">support@guardsnrobbers.com</a>.</p>
+            
+            <p>Stay secure,</p>
+            <p>The Guards & Robbers Team</p>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://twitter.com/guardsnrobbers">Twitter</a> | 
+            <a href="https://linkedin.com/company/guardsnrobbers">LinkedIn</a> | 
+            <a href="https://guardsnrobbers.com">Website</a>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 Guards & Robbers. All rights reserved.</p>
+            <p>123 Security Ave, Cyber City, CS 12345</p>
+            <p>
+                <a href="{{unsubscribe_link}}">Unsubscribe</a> | 
+                <a href="https://guardsnrobbers.com/privacy">Privacy Policy</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

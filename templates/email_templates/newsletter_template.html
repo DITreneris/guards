@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{newsletter_title}} - Guards & Robbers Newsletter</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: white;
+        }
+        .header p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .logo {
+            text-align: center;
+            padding: 20px 0;
+            background-color: white;
+        }
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        h2 {
+            color: #003366;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .article {
+            margin-bottom: 25px;
+        }
+        .article img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .article h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #003366;
+        }
+        .article p {
+            margin-top: 0;
+        }
+        .read-more {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .resource-box {
+            background-color: #f7f9fc;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .resource-box h3 {
+            margin-top: 0;
+            color: #003366;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #eee;
+            background-color: #f7f9fc;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .social-links {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 620px) {
+            .email-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="logo">
+            <img src="https://guardsnrobbers.com/static/img/logo.png" alt="Guards & Robbers Logo">
+        </div>
+        
+        <div class="header">
+            <h1>{{newsletter_title}}</h1>
+            <p>{{newsletter_date}}</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>{{main_article_title}}</h2>
+                <div class="article">
+                    <img src="{{main_article_image}}" alt="{{main_article_title}}">
+                    <p>{{main_article_content}}</p>
+                    <a href="{{main_article_link}}" class="read-more">Read Full Article →</a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Security Tips & Insights</h2>
+                <div class="article">
+                    <h3>{{tip_title_1}}</h3>
+                    <p>{{tip_content_1}}</p>
+                </div>
+                
+                <div class="article">
+                    <h3>{{tip_title_2}}</h3>
+                    <p>{{tip_content_2}}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Product Updates</h2>
+                <div class="article">
+                    <h3>{{update_title}}</h3>
+                    <p>{{update_content}}</p>
+                    <a href="{{update_link}}" class="read-more">Learn More →</a>
+                </div>
+            </div>
+            
+            <div class="resource-box">
+                <h3>Featured Resource</h3>
+                <p>{{resource_description}}</p>
+                <div style="text-align: center;">
+                    <a href="{{resource_link}}" class="cta-button">Access Resource</a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>From Our Blog</h2>
+                
+                <div class="article">
+                    <h3>{{blog_title_1}}</h3>
+                    <p>{{blog_excerpt_1}}</p>
+                    <a href="{{blog_link_1}}" class="read-more">Read Post →</a>
+                </div>
+                
+                <div class="article">
+                    <h3>{{blog_title_2}}</h3>
+                    <p>{{blog_excerpt_2}}</p>
+                    <a href="{{blog_link_2}}" class="read-more">Read Post →</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://twitter.com/guardsnrobbers">Twitter</a> | 
+            <a href="https://linkedin.com/company/guardsnrobbers">LinkedIn</a> | 
+            <a href="https://guardsnrobbers.com">Website</a>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 Guards & Robbers. All rights reserved.</p>
+            <p>123 Security Ave, Cyber City, CS 12345</p>
+            <p>
+                <a href="{{unsubscribe_link}}">Unsubscribe</a> | 
+                <a href="https://guardsnrobbers.com/privacy">Privacy Policy</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

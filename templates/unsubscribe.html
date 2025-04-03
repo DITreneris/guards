@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block title %}Unsubscribe - Guards & Robbers{% endblock %}
+
+{% block content %}
+<section class="unsubscribe-section">
+    <div class="container">
+        <div class="unsubscribe-content">
+            <i class="fas fa-envelope-open text-muted"></i>
+            <h1>Unsubscribe from Our Newsletter</h1>
+            
+            {% if error %}
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+            
+            {% if success %}
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <p>You have been successfully unsubscribed from our newsletter.</p>
+                <p>We're sorry to see you go. If you'd like to share feedback on why you're leaving, we'd appreciate hearing from you.</p>
+                <a href="/" class="cta-button"><i class="fas fa-home"></i> Return to Homepage</a>
+            </div>
+            {% else %}
+            <p>We're sorry to see you go. Please confirm your unsubscription below:</p>
+            
+            <form id="unsubscribe-form" method="post" action="/unsubscribe">
+                <input type="hidden" name="email" value="{{ email }}">
+                <input type="hidden" name="token" value="{{ token }}">
+                
+                <div class="form-options">
+                    <h3>Would you mind telling us why you're unsubscribing?</h3>
+                    <div class="reason-option">
+                        <input type="radio" id="reason-toomany" name="reason" value="too_many_emails">
+                        <label for="reason-toomany">Too many emails</label>
+                    </div>
+                    <div class="reason-option">
+                        <input type="radio" id="reason-notrelevant" name="reason" value="not_relevant">
+                        <label for="reason-notrelevant">Content not relevant to me</label>
+                    </div>
+                    <div class="reason-option">
+                        <input type="radio" id="reason-didntsignup" name="reason" value="didnt_signup">
+                        <label for="reason-didntsignup">I didn't sign up for this</label>
+                    </div>
+                    <div class="reason-option">
+                        <input type="radio" id="reason-other" name="reason" value="other">
+                        <label for="reason-other">Other reason</label>
+                    </div>
+                    <div class="other-reason" id="other-reason-container" style="display: none;">
+                        <textarea name="other_reason" id="other-reason-text" placeholder="Please tell us more..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="unsubscribe-button">Confirm Unsubscription</button>
+                    <a href="/" class="cancel-button">Cancel</a>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reasonOther = document.getElementById('reason-other');
+        const otherReasonContainer = document.getElementById('other-reason-container');
+        
+        if (reasonOther && otherReasonContainer) {
+            reasonOther.addEventListener('change', function() {
+                otherReasonContainer.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Handle other radio buttons
+            const radioButtons = document.querySelectorAll('input[name="reason"]');
+            radioButtons.forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    if (this.id !== 'reason-other') {
+                        otherReasonContainer.style.display = 'none';
+                    } else {
+                        otherReasonContainer.style.display = 'block';
+                    }
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .unsubscribe-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--light-blue), #ffffff);
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+    
+    .unsubscribe-content {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: white;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .unsubscribe-content i {
+        font-size: 3rem;
+        color: var(--medium-gray);
+        margin-bottom: 20px;
+    }
+    
+    .unsubscribe-content h1 {
+        color: var(--dark-gray);
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+    
+    .unsubscribe-content h3 {
+        color: var(--dark-gray);
+        margin: 20px 0;
+        font-size: 1.2rem;
+        text-align: left;
+    }
+    
+    .unsubscribe-content p {
+        font-size: 1.1rem;
+        color: var(--medium-gray);
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+    
+    .form-options {
+        margin: 30px 0;
+        text-align: left;
+    }
+    
+    .reason-option {
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .reason-option input[type="radio"] {
+        margin-right: 10px;
+    }
+    
+    .reason-option label {
+        font-size: 1rem;
+        color: var(--dark-gray);
+    }
+    
+    .other-reason {
+        margin-top: 15px;
+    }
+    
+    .other-reason textarea {
+        width: 100%;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        min-height: 100px;
+        font-family: inherit;
+    }
+    
+    .form-actions {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .unsubscribe-button {
+        padding: 12px 30px;
+        border-radius: 5px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+    
+    .unsubscribe-button:hover {
+        background-color: #c82333;
+    }
+    
+    .cancel-button {
+        padding: 12px 30px;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: var(--dark-gray);
+        border: 1px solid #ddd;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .cancel-button:hover {
+        background-color: #e2e6ea;
+    }
+    
+    .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .error-message i {
+        font-size: 1.5rem;
+        color: #721c24;
+        margin-right: 10px;
+    }
+    
+    .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 20px;
+        border-radius: 5px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    
+    .success-message i {
+        font-size: 3rem;
+        color: #28a745;
+        margin-bottom: 15px;
+    }
+    
+    .success-message a {
+        margin-top: 20px;
+        display: inline-block;
+    }
+</style>
+{% endblock %} 
