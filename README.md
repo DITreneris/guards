@@ -39,6 +39,7 @@ A single-page marketing website for Guards & Robbers, an AI-powered cybersecurit
 - Animated statistics with count-up effect
 - Mobile-responsive navigation
 - Secure admin dashboard with authentication
+- Enhanced testimonials section with visual design and trust elements
 - Comprehensive test suite for all features
 - Health monitoring endpoints
 
@@ -179,10 +180,14 @@ heroku config:set SECRET_KEY="your-secret-key"
   - `admin_login.html` - Admin login page
   - `admin_dashboard.html` - Admin dashboard for lead management
   - `admin_settings.html` - Admin settings page
+  - `base.html` - Base template with common layout elements
+  - `testimonials.html` - Testimonials and trust signals page
 - `static/` - Static assets (CSS, JavaScript, images)
   - `css/` - Stylesheet files
+    - `testimonials.css` - Styles for the testimonials section
   - `js/` - JavaScript functionality
   - `images/` - Image assets
+    - `testimonials/` - Testimonial avatars, logos, and badges
 - `leads.json` - Local backup of form submissions
 - `admin_users.json` - Admin user information (encrypted)
 - `tests/` - Test scripts
@@ -272,8 +277,9 @@ For questions or support: info@guardsrobbers.com
 
 ## Change Log
 
-| Version | Date | Description |
-|---------|------|-------------|
-| 0.1.0 | 2025-03-30 | Initial setup and structure |
-| 1.0.0 | 2025-04-03 | First production release with MongoDB integration |
-| 1.1.0 | 2025-04-03 | Added admin authentication and enhanced MongoDB fallback | 
+### Version 1.1.0 (Current)
+
+- Added secure admin dashboard with authentication
+- Implemented MongoDB fallback mechanism with JSON and in-memory storage
+- Added comprehensive test suite with CI/CD integration
+- Added enhanced testimonials section with visual design and trust elements 
