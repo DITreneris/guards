@@ -16,6 +16,7 @@ The Guards & Robbers marketing website has recently undergone significant upgrad
   - [Tests](#tests)
   - [Utilities](#utilities)
 - [Quality Assurance](#quality-assurance)
+- [Deployment](#deployment)
 - [Quick Links](#quick-links)
   - [For New Team Members](#for-new-team-members)
   - [For Development](#for-development)
@@ -41,6 +42,10 @@ The Guards & Robbers marketing website has recently undergone significant upgrad
 - [**Responsive Design Testing**](responsive_design_testing.md): Results of layout testing across mobile, tablet, desktop, and large desktop breakpoints.
 - [**Lighthouse Audit**](lighthouse_audit.md): Performance, accessibility, and best practices audit results with optimization details.
 - [**W3C Validation**](w3c_validation.md): HTML and CSS validation results ensuring compliance with web standards.
+
+## Deployment
+
+- [**Deployment Checklist**](deployment_checklist.md): Comprehensive checklist for deploying the application to Heroku.
 
 ## Technical Reference
 

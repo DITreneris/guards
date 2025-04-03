@@ -1,15 +1,17 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session, send_file
 import os
 import json
 import logging
 import sys
 import secrets
+import io
 from datetime import datetime
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from pymongo.errors import ConnectionFailure, OperationFailure
 from admin_auth import login_required, authenticate, init_admin_users
+from PIL import Image, ImageDraw, ImageFont
 
 # Load environment variables
 load_dotenv()
@@ -96,6 +98,81 @@ else:
             logger.info(f"Loaded {len(leads)} leads from local JSON file")
     except Exception as e:
         logger.error(f"Failed to load leads from JSON file: {e}")
+
+# Placeholder image generator for testimonials
+def generate_placeholder_image(width, height, text, bg_color=(240, 240, 240), text_color=(100, 100, 100)):
+    """Generate a placeholder image with text"""
+    try:
+        # Create a new image with the given background color
+        image = Image.new('RGB', (width, height), color=bg_color)
+        draw = ImageDraw.Draw(image)
+        
+        # Try to use a default font, or use PIL's default if not available
+        try:
+            font = ImageFont.truetype("arial.ttf", size=width//10)
+        except IOError:
+            font = ImageFont.load_default()
+        
+        # Calculate text position to center it
+        text_width, text_height = draw.textsize(text, font=font) if hasattr(draw, 'textsize') else (width//2, height//2)
+        position = ((width - text_width) // 2, (height - text_height) // 2)
+        
+        # Draw the text
+        draw.text(position, text, font=font, fill=text_color)
+        
+        # Save the image to a BytesIO object
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='PNG')
+        img_byte_arr.seek(0)
+        
+        return img_byte_arr
+    except Exception as e:
+        logger.error(f"Error generating placeholder image: {e}")
+        # Return a simple colored box if image generation fails
+        image = Image.new('RGB', (width, height), color=bg_color)
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='PNG')
+        img_byte_arr.seek(0)
+        return img_byte_arr
+
+@app.route('/static/images/testimonials/<path:filename>')
+def placeholder_images(filename):
+    """Serve placeholder images if the requested image doesn't exist"""
+    file_path = os.path.join(app.root_path, 'static', 'images', 'testimonials', filename)
+    
+    # If the file exists, serve it directly
+    if os.path.exists(file_path):
+        return send_file(file_path)
+    
+    # Otherwise, generate a placeholder image
+    if filename.endswith(('.jpg', '.jpeg', '.png')):
+        # Extract dimensions from filename if possible (e.g., "avatar-100x100.jpg")
+        width, height = 200, 200  # Default size
+        
+        # Generate different placeholders based on file type
+        if 'logo' in filename:
+            # Company logo placeholder
+            company_name = filename.split('-')[0].title()
+            placeholder = generate_placeholder_image(300, 150, company_name, 
+                                                 bg_color=(230, 240, 255), 
+                                                 text_color=(70, 100, 150))
+        elif 'badge' in filename:
+            # Badge/certification placeholder
+            cert_name = filename.split('-')[0].upper()
+            placeholder = generate_placeholder_image(120, 120, cert_name, 
+                                                  bg_color=(240, 255, 240), 
+                                                  text_color=(60, 120, 60))
+        else:
+            # Avatar placeholder
+            name = filename.split('.')[0].replace('-', ' ').title()
+            placeholder = generate_placeholder_image(width, height, name[0].upper(), 
+                                                  bg_color=(200, 215, 245), 
+                                                  text_color=(60, 80, 120))
+        
+        return send_file(placeholder, mimetype=f'image/{filename.split(".")[-1]}')
+    
+    # For any other file type, return a 404
+    return "Image not found", 404
 
 @app.route('/')
 def index():
@@ -309,6 +386,11 @@ def admin_change_password():
         flash('Failed to update password')
     
     return redirect(url_for('admin_settings'))
+
+@app.route('/testimonials')
+def testimonials():
+    """Render the testimonials page"""
+    return render_template('testimonials.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 

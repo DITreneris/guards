@@ -1,0 +1,15 @@
+{
+    "admin": {
+        "password_hash": "7dde94fe35995ed72541df5e63d5b830135caa155c384e22ceb709f58ba0e179",
+        "salt": "ad46832e9d01ca245705643c87b225c1",
+        "created_at": "2025-04-03T15:52:12.066223",
+        "is_active": true
+    },
+    "newuser": {
+        "password_hash": "5709ea08d4e5025d558a5dbf83994d8aa8efcc6c67e5efcc3d642f1ff24127e3",
+        "salt": "6dc46060554c560ff85b963c1caf07db",
+        "created_at": "2025-04-03T15:52:12.157944",
+        "is_active": true,
+        "updated_at": "2025-04-03T15:52:12.191429"
+    }
+}

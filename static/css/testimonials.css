@@ -1,0 +1,298 @@
+/* Testimonials Section Styles */
+.testimonials-section {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, #f8faff, #ffffff);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Section header styles */
+.testimonials-section .section-header {
+    margin-bottom: 50px;
+}
+
+.testimonials-section .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 16px;
+}
+
+.testimonials-section .section-subheading {
+    font-size: 1.1rem;
+    color: #4a5568;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Testimonial cards container */
+.testimonial-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+/* Individual card styling */
+.testimonial-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(31, 66, 135, 0.08);
+    padding: 30px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(31, 66, 135, 0.12);
+}
+
+/* Quote icon styling */
+.testimonial-card .quote-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.testimonial-card:hover .quote-icon {
+    opacity: 1;
+}
+
+/* Testimonial content */
+.testimonial-card .testimonial-content {
+    margin: 15px 0 30px;
+    flex-grow: 1;
+}
+
+.testimonial-card .testimonial-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4a5568;
+    font-style: italic;
+}
+
+.testimonial-card .testimonial-content strong {
+    color: #3755c9;
+    font-weight: 700;
+}
+
+/* Author information styling */
+.testimonial-card .testimonial-author {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+}
+
+.testimonial-card .author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    border: 2px solid #e2e8f0;
+}
+
+.testimonial-card .author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-card .author-info h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0 0 5px;
+}
+
+.testimonial-card .author-info p {
+    font-size: 0.875rem;
+    color: #718096;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-card .author-info .company {
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.testimonial-card .verification-icon {
+    color: #4299e1;
+    margin-left: 5px;
+    font-size: 0.875rem;
+}
+
+.testimonial-card .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a5568;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    transition: color 0.2s ease;
+}
+
+.testimonial-card .social-link:hover {
+    color: #4B73FF;
+}
+
+/* Trusted by section */
+.trusted-by-section {
+    margin: 60px 0;
+    text-align: center;
+}
+
+.trusted-by-section h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 30px;
+}
+
+.trusted-by-section .logo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.trusted-by-section .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    filter: grayscale(100%);
+    opacity: 0.7;
+}
+
+.trusted-by-section .logo-item:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.trusted-by-section .client-logo {
+    max-width: 120px;
+    max-height: 60px;
+}
+
+/* Compliance section */
+.compliance-section {
+    margin: 60px 0 20px;
+    text-align: center;
+}
+
+.compliance-section h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 30px;
+}
+
+.compliance-section .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.compliance-section .compliance-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7fafc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 120px;
+    height: 120px;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: help;
+    border: 1px solid #e2e8f0;
+}
+
+.compliance-section .compliance-badge:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+.compliance-section .compliance-badge img {
+    max-width: 60px;
+    max-height: 60px;
+    margin-bottom: 10px;
+}
+
+.compliance-section .compliance-badge span {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 60px 0;
+    }
+    
+    .testimonial-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .trusted-by-section .logo-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .compliance-section .badge-container {
+        gap: 20px;
+    }
+    
+    .compliance-section .compliance-badge {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Animation for card appearance */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.testimonial-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.testimonial-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.testimonial-card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.testimonial-card:nth-child(3) {
+    animation-delay: 0.5s;
+} 

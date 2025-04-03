@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Testimonials - Guards & Robbers{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/testimonials.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Trusted by Security Leaders</h2>
+            <p class="section-subheading">Hear what our clients have to say about how Guards & Robbers has transformed their security posture.</p>
+        </div>
+        
+        <div class="testimonial-cards">
+            <div class="testimonial-card">
+                <i class="fas fa-quote-right quote-icon"></i>
+                <div class="testimonial-content">
+                    <p>"After implementing <strong>Guards & Robbers</strong>, we identified 23 critical vulnerabilities that our previous penetration tests had missed. Their approach to continuous testing has fundamentally changed how we think about our security."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="{{ url_for('static', filename='images/testimonials/michael-chen.jpg') }}" alt="Michael Chen">
+                    </div>
+                    <div class="author-info">
+                        <h4>Michael Chen</h4>
+                        <p>CISO at <span class="company">TechCorp</span> <i class="fas fa-check-circle verification-icon" title="Verified Client"></i></p>
+                        <a href="https://linkedin.com" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin"></i> Connect
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <i class="fas fa-quote-right quote-icon"></i>
+                <div class="testimonial-content">
+                    <p>"The ROI with <strong>Guards & Robbers</strong> has been incredible. We've reduced our security incidents by 47% and saved over $1.2M in potential breach costs in the first year alone. Their adversarial approach finds what traditional methods miss."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="{{ url_for('static', filename='images/testimonials/sarah-johnson.jpg') }}" alt="Sarah Johnson">
+                    </div>
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>VP of Security at <span class="company">GlobalBank</span> <i class="fas fa-check-circle verification-icon" title="Verified Client"></i></p>
+                        <a href="https://linkedin.com" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin"></i> Connect
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <i class="fas fa-quote-right quote-icon"></i>
+                <div class="testimonial-content">
+                    <p>"In healthcare, security isn't just about compliance—it's about patient safety. <strong>Guards & Robbers</strong> understands this and has helped us build a security program that exceeds regulatory requirements while protecting what matters most: our patients' data."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="{{ url_for('static', filename='images/testimonials/james-wilson.jpg') }}" alt="Dr. James Wilson">
+                    </div>
+                    <div class="author-info">
+                        <h4>Dr. James Wilson</h4>
+                        <p>CTO at <span class="company">HealthSystems</span> <i class="fas fa-check-circle verification-icon" title="Verified Client"></i></p>
+                        <a href="https://linkedin.com" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin"></i> Connect
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="trusted-by-section">
+            <h3>Trusted By Industry Leaders</h3>
+            <div class="logo-container">
+                <div class="logo-item">
+                    <img src="{{ url_for('static', filename='images/testimonials/techcorp-logo.png') }}" alt="TechCorp Logo" class="client-logo">
+                </div>
+                <div class="logo-item">
+                    <img src="{{ url_for('static', filename='images/testimonials/globalbank-logo.png') }}" alt="GlobalBank Logo" class="client-logo">
+                </div>
+                <div class="logo-item">
+                    <img src="{{ url_for('static', filename='images/testimonials/healthsystems-logo.png') }}" alt="HealthSystems Logo" class="client-logo">
+                </div>
+                <div class="logo-item">
+                    <img src="{{ url_for('static', filename='images/testimonials/retailgiant-logo.png') }}" alt="RetailGiant Logo" class="client-logo">
+                </div>
+            </div>
+        </div>
+        
+        <div class="compliance-section">
+            <h3>Compliance & Certifications</h3>
+            <div class="badge-container">
+                <div class="compliance-badge" title="ISO 27001 Certified">
+                    <img src="{{ url_for('static', filename='images/testimonials/iso-badge.png') }}" alt="ISO 27001">
+                    <span>ISO 27001</span>
+                </div>
+                <div class="compliance-badge" title="SOC 2 Type II Compliant">
+                    <img src="{{ url_for('static', filename='images/testimonials/soc2-badge.png') }}" alt="SOC 2 Type II">
+                    <span>SOC 2 Type II</span>
+                </div>
+                <div class="compliance-badge" title="HIPAA Compliant">
+                    <img src="{{ url_for('static', filename='images/testimonials/hipaa-badge.png') }}" alt="HIPAA">
+                    <span>HIPAA</span>
+                </div>
+                <div class="compliance-badge" title="GDPR Compliant">
+                    <img src="{{ url_for('static', filename='images/testimonials/gdpr-badge.png') }}" alt="GDPR">
+                    <span>GDPR</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add any future JavaScript for testimonials here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize any interactive elements
+        console.log('Testimonials page loaded');
+    });
+</script>
+{% endblock %} 
