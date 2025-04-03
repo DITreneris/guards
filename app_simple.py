@@ -6,6 +6,7 @@ import sys
 from datetime import datetime
 from dotenv import load_dotenv
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
 from pymongo.errors import ConnectionFailure, OperationFailure
 
 # Load environment variables
@@ -39,8 +40,13 @@ leads_collection = None
 # Only attempt MongoDB connection if URI is provided and looks valid
 if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
     try:
-        logger.info(f"Attempting to connect to MongoDB with URI: {MONGODB_URI.split('@')[0]}@...")
-        mongo_client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
+        # Mask the password in logs
+        log_uri = MONGODB_URI.split('@')[0] + '@...' if '@' in MONGODB_URI else 'mongodb://...'
+        logger.info(f"Attempting to connect to MongoDB with URI: {log_uri}")
+        
+        # Use ServerApi for MongoDB Atlas connection
+        mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'), serverSelectionTimeoutMS=5000)
+        
         # Test connection
         mongo_client.admin.command('ping')
         db = mongo_client[MONGODB_DB]
