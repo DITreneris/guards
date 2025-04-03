@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import os
 import json
 import logging
+import sys
 from datetime import datetime
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -15,6 +16,15 @@ app = Flask(__name__)
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+# Debug template folder location
+logger.info(f"Flask app root path: {app.root_path}")
+logger.info(f"Template folder path: {os.path.join(app.root_path, 'templates')}")
+logger.info(f"Template folder exists: {os.path.exists(os.path.join(app.root_path, 'templates'))}")
+if os.path.exists(os.path.join(app.root_path, 'templates')):
+    logger.info(f"Template folder contents: {os.listdir(os.path.join(app.root_path, 'templates'))}")
+logger.info(f"Current working directory: {os.getcwd()}")
+logger.info(f"Directory contents: {os.listdir(os.getcwd())}")
 
 # MongoDB connection
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
@@ -35,7 +45,26 @@ except (ConnectionFailure, OperationFailure) as e:
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        logger.error(f"Error rendering template: {e}")
+        return f"""
+        <html>
+            <head><title>Guards & Robbers</title></head>
+            <body>
+                <h1>Guards & Robbers</h1>
+                <p>Welcome to our marketing website!</p>
+                <p>Template error: {str(e)}</p>
+                <p>Debug info:</p>
+                <ul>
+                    <li>App root: {app.root_path}</li>
+                    <li>Templates path: {os.path.join(app.root_path, 'templates')}</li>
+                    <li>Path exists: {os.path.exists(os.path.join(app.root_path, 'templates'))}</li>
+                </ul>
+            </body>
+        </html>
+        """
 
 @app.route('/health')
 def health():
