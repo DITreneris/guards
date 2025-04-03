@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings - Guards & Robbers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            background-color: #212529;
+            color: white;
+            min-height: calc(100vh - 56px);
+            padding-top: 20px;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .settings-section {
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .flash-messages {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">G&R Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center text-white">
+                    <span class="me-3">Welcome, {{ username }}</span>
+                    <a href="{{ url_for('admin_logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin_settings') }}">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">
+                            <i class="bi bi-house"></i> View Site
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Main Content -->
+            <main class="col-md-10">
+                <h1>Admin Settings</h1>
+                
+                <!-- Flash Messages -->
+                <div class="flash-messages">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-info alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                
+                <!-- Password Change Section -->
+                <div class="settings-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Change Password</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="{{ url_for('admin_change_password') }}">
+                                <div class="mb-3">
+                                    <label for="current_password" class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="new_password" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                                    <div class="form-text">Password should be at least 8 characters long.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_password" class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Application Settings Section -->
+                <div class="settings-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Application Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>MongoDB Connection</h6>
+                                    <p id="mongodb-status">Checking...</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Local Storage</h6>
+                                    <p id="local-storage-status">Checking...</p>
+                                </div>
+                            </div>
+                            <button id="refresh-status" class="btn btn-outline-secondary mt-3">
+                                <i class="bi bi-arrow-clockwise"></i> Refresh Status
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Admin Info Section -->
+                <div class="settings-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Environment Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            App Version
+                                            <span class="badge bg-primary">1.0.0</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Last Deployment
+                                            <span>{{ 'now'|strftime('%Y-%m-%d') }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Environment
+                                            <span class="badge bg-success">Production</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            JSON Backup
+                                            <span class="badge bg-success">Enabled</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to fetch and update status
+        function updateStatus() {
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    // Update MongoDB status
+                    const mongoStatus = document.getElementById('mongodb-status');
+                    if (data.mongodb === "Connected") {
+                        mongoStatus.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Connected</span>';
+                    } else {
+                        mongoStatus.innerHTML = '<span class="text-danger"><i class="bi bi-x-circle"></i> ' + data.mongodb + '</span>';
+                    }
+                    
+                    // Update local storage status
+                    const localStorageStatus = document.getElementById('local-storage-status');
+                    if (data.environment.JSON_BACKUP_ENABLED) {
+                        localStorageStatus.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Enabled</span>';
+                    } else {
+                        localStorageStatus.innerHTML = '<span class="text-warning"><i class="bi bi-exclamation-circle"></i> Disabled</span>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching status:', error);
+                    document.getElementById('mongodb-status').innerHTML = '<span class="text-danger"><i class="bi bi-x-circle"></i> Error checking status</span>';
+                    document.getElementById('local-storage-status').innerHTML = '<span class="text-danger"><i class="bi bi-x-circle"></i> Error checking status</span>';
+                });
+        }
+        
+        // Update status on page load
+        document.addEventListener('DOMContentLoaded', updateStatus);
+        
+        // Add event listener for refresh button
+        document.getElementById('refresh-status').addEventListener('click', updateStatus);
+    </script>
+</body>
+</html> 

@@ -1,18 +1,25 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 import os
 import json
 import logging
 import sys
+import secrets
 from datetime import datetime
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from pymongo.errors import ConnectionFailure, OperationFailure
+from admin_auth import login_required, authenticate, init_admin_users
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
+# Set secret key for session management
+app.secret_key = os.getenv('SECRET_KEY', secrets.token_hex(16))
+
+# Make sure admin users are initialized
+init_admin_users()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -222,7 +229,31 @@ def leads_count():
         logger.error(f"Error counting leads: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if authenticate(username, password):
+            session['admin_logged_in'] = True
+            session['admin_username'] = username
+            session['last_activity'] = datetime.now().timestamp()
+            flash('Login successful!')
+            return redirect(url_for('admin_dashboard'))
+        else:
+            flash('Invalid username or password')
+    
+    return render_template('admin_login.html')
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.clear()
+    flash('You have been logged out')
+    return redirect(url_for('admin_login'))
+
 @app.route('/admin')
+@login_required
 def admin_dashboard():
     dashboard_leads = []
     
@@ -243,7 +274,41 @@ def admin_dashboard():
         # Use in-memory fallback
         dashboard_leads = leads
     
-    return render_template('admin_dashboard.html', leads=dashboard_leads)
+    return render_template('admin_dashboard.html', leads=dashboard_leads, username=session.get('admin_username'))
+
+@app.route('/admin/settings')
+@login_required
+def admin_settings():
+    return render_template('admin_settings.html', username=session.get('admin_username'))
+
+@app.route('/admin/change-password', methods=['POST'])
+@login_required
+def admin_change_password():
+    from admin_auth import update_admin_password
+    
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+    username = session.get('admin_username')
+    
+    if not all([current_password, new_password, confirm_password]):
+        flash('All fields are required')
+        return redirect(url_for('admin_settings'))
+    
+    if new_password != confirm_password:
+        flash('New passwords do not match')
+        return redirect(url_for('admin_settings'))
+    
+    if not authenticate(username, current_password):
+        flash('Current password is incorrect')
+        return redirect(url_for('admin_settings'))
+    
+    if update_admin_password(username, new_password):
+        flash('Password updated successfully')
+    else:
+        flash('Failed to update password')
+    
+    return redirect(url_for('admin_settings'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
