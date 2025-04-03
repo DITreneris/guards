@@ -86,31 +86,45 @@ function initCountUp() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = entry.target;
-                const targetValue = parseFloat(target.textContent.replace(/[^\d.-]/g, ''));
-                const prefix = target.textContent.match(/^[^\d]*/)[0] || '';
+                const valueText = target.textContent;
+                const prefix = valueText.match(/^\D*/)[0] || '';
+                let targetValue = parseFloat(valueText.replace(/[^\d.]/g, ''));
+                const suffix = valueText.includes('+') ? '+' : '';
                 
                 if (!isNaN(targetValue)) {
+                    // Add a "viewed" class to the parent element for additional styling
+                    target.parentElement.classList.add('viewed');
+                    
                     let startValue = 0;
-                    const duration = 2000;
+                    const duration = 2500; // Slightly longer animation
                     const increment = targetValue / (duration / 16);
                     
-                    target.textContent = prefix + '0';
+                    target.textContent = prefix + '0' + suffix;
                     
                     const updateCounter = () => {
                         startValue += increment;
                         if (startValue < targetValue) {
                             if (targetValue >= 1000) {
-                                target.textContent = prefix + Math.ceil(startValue).toLocaleString();
+                                // Add commas for thousands separator
+                                const formattedValue = Math.ceil(startValue).toLocaleString();
+                                target.textContent = prefix + formattedValue + suffix;
                             } else {
-                                target.textContent = prefix + Math.ceil(startValue);
+                                target.textContent = prefix + Math.ceil(startValue) + suffix;
                             }
                             requestAnimationFrame(updateCounter);
                         } else {
                             if (targetValue >= 1000) {
-                                target.textContent = prefix + Math.ceil(targetValue).toLocaleString();
+                                const formattedValue = Math.ceil(targetValue).toLocaleString();
+                                target.textContent = prefix + formattedValue + suffix;
                             } else {
-                                target.textContent = prefix + Math.ceil(targetValue);
+                                target.textContent = prefix + Math.ceil(targetValue) + suffix;
                             }
+                            
+                            // Apply a scaling animation when count is complete
+                            target.style.transform = 'scale(1.1)';
+                            setTimeout(() => {
+                                target.style.transform = 'scale(1)';
+                            }, 200);
                         }
                     };
                     

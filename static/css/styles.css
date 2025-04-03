@@ -486,10 +486,48 @@ nav {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin-right: 1.5rem;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInStats 0.6s forwards;
+    animation-play-state: paused;
+}
+
+.stat.viewed {
+    animation-play-state: running;
+}
+
+.stat:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.stat:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.stat:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient-blue);
+    transform: translateX(-100%);
+    transition: transform 0.8s ease;
+}
+
+.stat.viewed:before {
+    transform: translateX(0);
 }
 
 .stat:last-child {
     margin-right: 0;
+}
+
+.stat:last-child:before {
+    background: var(--gradient-red);
 }
 
 .stat:hover {
@@ -498,9 +536,28 @@ nav {
 }
 
 .stat h3 {
-    color: var(--primary-red);
-    font-size: 2.5rem;
+    color: var(--primary-blue);
+    font-size: 2.8rem;
     margin-bottom: 0.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.stat:last-child h3 {
+    color: var(--primary-red);
+}
+
+.stat p {
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+    line-height: 1.4;
+    transition: opacity 0.5s ease;
+    opacity: 0.8;
+}
+
+.stat.viewed p {
+    opacity: 1;
 }
 
 .problem-visual {
@@ -1247,5 +1304,12 @@ footer {
     .tagline {
         font-size: 1.1rem;
         margin-top: 16px;
+    }
+}
+
+@keyframes fadeInStats {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 } 
