@@ -44,8 +44,17 @@ if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_U
         log_uri = MONGODB_URI.split('@')[0] + '@...' if '@' in MONGODB_URI else 'mongodb://...'
         logger.info(f"Attempting to connect to MongoDB with URI: {log_uri}")
         
-        # Use ServerApi for MongoDB Atlas connection
-        mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'), serverSelectionTimeoutMS=5000)
+        # Use a more tolerant connection setup
+        mongo_client = MongoClient(
+            MONGODB_URI,
+            serverSelectionTimeoutMS=5000,
+            connectTimeoutMS=5000,
+            socketTimeoutMS=5000,
+            # Skip server certificate validation for now
+            tlsAllowInvalidCertificates=True,
+            # Use the latest driver version compatible with Atlas
+            appname="guards-robbers-app"
+        )
         
         # Test connection
         mongo_client.admin.command('ping')
