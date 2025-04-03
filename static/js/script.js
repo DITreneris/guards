@@ -145,19 +145,23 @@ function initScrollHeader() {
 function initSmoothScrolling() {
     const navLinks = document.querySelectorAll('a[href^="#"]');
     
-    // Add scroll indicator to hero section
-    const heroSection = document.getElementById('hero');
-    if (heroSection && !document.querySelector('.scroll-indicator')) {
-        const scrollIndicator = document.createElement('div');
-        scrollIndicator.className = 'scroll-indicator';
-        scrollIndicator.innerHTML = '<i class="fas fa-chevron-down"></i>';
+    // Add scroll functionality to the existing scroll indicator
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
         scrollIndicator.addEventListener('click', () => {
+            const heroSection = document.getElementById('hero');
             const nextSection = heroSection.nextElementSibling;
             if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth' });
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const elementPosition = nextSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
             }
         });
-        heroSection.appendChild(scrollIndicator);
     }
     
     navLinks.forEach(link => {

@@ -227,13 +227,14 @@ nav {
 /* Hero Section */
 #hero {
     background: linear-gradient(135deg, var(--light-blue), var(--light-red));
-    height: 80vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
-    margin-top: 60px;
+    margin-top: 70px;
+    padding: 0 20px;
 }
 
 #hero:before {
@@ -248,23 +249,47 @@ nav {
     opacity: 0.3;
 }
 
+/* Add translucent overlay for contrast */
+#hero:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 0;
+}
+
 .hero-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
+    padding-top: 60px; /* Added top padding for breathing room */
 }
 
 .hero-content h1 {
     color: var(--dark-gray);
     margin-bottom: 1.5rem;
     animation: fadeInDown 1s ease-out;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow for readability */
+}
+
+/* Highlight for the AI-Powered text */
+.hero-content h1 .highlight {
+    color: var(--primary-blue);
+    font-weight: 900;
 }
 
 .tagline {
     font-size: 1.5rem;
     color: var(--medium-gray);
     margin-bottom: 2.5rem;
+    margin-top: 20px; /* Increase space between title and subheadline */
     animation: fadeInUp 1s ease-out 0.3s;
     animation-fill-mode: both;
 }
@@ -307,9 +332,26 @@ nav {
     left: 50%;
     transform: translateX(-50%);
     font-size: 2rem;
-    color: var(--dark-gray);
-    animation: bounce 2s infinite;
+    color: var(--primary-blue);
     cursor: pointer;
+    z-index: 2;
+    animation: pulse-and-bounce 2s infinite;
+}
+
+/* Enhanced animation for scroll indicator */
+@keyframes pulse-and-bounce {
+    0%, 100% {
+        transform: translateY(0) translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(-15px) translateX(-50%) scale(1.05);
+        opacity: 0.8;
+    }
+    60% {
+        transform: translateY(-7px) translateX(-50%) scale(1.02);
+        opacity: 0.9;
+    }
 }
 
 /* Animation Keyframes */
@@ -1073,6 +1115,10 @@ footer {
     .footer-links a {
         margin: 0 0.75rem;
     }
+    
+    .hero-content h1 {
+        font-size: 3rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1111,7 +1157,7 @@ footer {
     }
     
     .hero-content h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
     .tagline {
@@ -1143,5 +1189,15 @@ footer {
         margin-top: 0;
         height: auto;
         padding: 7rem 0;
+    }
+    
+    .hero-content {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
     }
 } 
