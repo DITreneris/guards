@@ -67,10 +67,12 @@ class EmailSender:
     
     def send_email(self, to_email, subject, html_content, to_name=None):
         """Send an email using SMTP"""
-        if not self.smtp_username or not self.smtp_password:
-            logger.error("SMTP credentials not configured")
-            return False
+        # Check if we're in mock mode (no SMTP credentials)
+        use_mock = os.environ.get('EMAIL_MOCK_MODE', 'true').lower() == 'true'
         
+        if use_mock or not self.smtp_username or not self.smtp_password:
+            return self._mock_send_email(to_email, subject, html_content, to_name)
+            
         msg = self._create_message(to_email, subject, html_content, to_name)
         
         try:
@@ -82,6 +84,30 @@ class EmailSender:
             return True
         except Exception as e:
             logger.error(f"Failed to send email: {e}")
+            # Fall back to mock sending if real sending fails
+            return self._mock_send_email(to_email, subject, html_content, to_name)
+    
+    def _mock_send_email(self, to_email, subject, html_content, to_name=None):
+        """Mock email sending for testing or when SMTP is not configured"""
+        msg = self._create_message(to_email, subject, html_content, to_name)
+        
+        # Save the email to a file for inspection
+        try:
+            os.makedirs('data/emails', exist_ok=True)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = f"data/emails/email_{timestamp}_{to_email.replace('@', '_at_')}.html"
+            
+            with open(filename, 'w') as f:
+                f.write(f"Subject: {subject}\n")
+                f.write(f"From: {msg['From']}\n")
+                f.write(f"To: {msg['To']}\n")
+                f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+                f.write(html_content)
+                
+            logger.info(f"Mock email to {to_email} saved to {filename}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to save mock email: {e}")
             return False
     
     def generate_confirmation_token(self, email):

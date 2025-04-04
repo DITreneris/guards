@@ -14,6 +14,7 @@ from admin_auth import login_required, authenticate, init_admin_users
 from PIL import Image, ImageDraw, ImageFont
 from utils.email_sender import send_welcome_email
 import hashlib
+import time
 
 # Load environment variables
 load_dotenv()
@@ -52,56 +53,75 @@ subscribers_collection = None
 leads = []
 subscribers = []
 
-# Only attempt MongoDB connection if URI is provided and looks valid
-if MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
-    try:
-        # Mask the password in logs
-        log_uri = MONGODB_URI.split('@')[0] + '@...' if '@' in MONGODB_URI else 'mongodb://...'
-        logger.info(f"Attempting to connect to MongoDB with URI: {log_uri}")
-        
-        # Use a more tolerant connection setup
-        mongo_client = MongoClient(
-            MONGODB_URI,
-            serverSelectionTimeoutMS=5000,
-            connectTimeoutMS=5000,
-            socketTimeoutMS=5000,
-            # Skip server certificate validation for now
-            tlsAllowInvalidCertificates=True,
-            # Use the latest driver version compatible with Atlas
-            appname="guards-robbers-app"
-        )
-        
-        # Test connection
-        mongo_client.admin.command('ping')
-        db = mongo_client[MONGODB_DB]
-        leads_collection = db[MONGODB_COLLECTION]
-        subscribers_collection = db[MONGODB_SUBSCRIBERS_COLLECTION]
-        
-        # Configure collection options if needed
-        # For example, adding indexes
-        leads_collection.create_index([("email", 1)], unique=True)
-        subscribers_collection.create_index([("email", 1)], unique=True)
-        
-        logger.info(f"Connected to MongoDB: {MONGODB_DB}.{MONGODB_COLLECTION}")
-    except Exception as e:
-        logger.error(f"Failed to connect to MongoDB: {e}")
-        mongo_client = None
-        # Load any existing leads from JSON file as fallback
+# Check if we should use MongoDB
+USE_MONGODB = os.getenv('USE_MONGODB', 'false').lower() == 'true'
+
+if USE_MONGODB and MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
+    max_retries = 3
+    retry_count = 0
+    retry_delay = 1
+    
+    while retry_count < max_retries:
         try:
-            json_path = os.getenv('JSON_BACKUP_PATH', 'leads.json')
-            if os.path.exists(json_path):
-                with open(json_path, 'r') as f:
-                    for line in f:
-                        if line.strip():
-                            leads.append(json.loads(line))
-                logger.info(f"Loaded {len(leads)} leads from local JSON file as fallback")
+            # Mask the password in logs
+            log_uri = MONGODB_URI.split('@')[0] + '@...' if '@' in MONGODB_URI else 'mongodb://...'
+            logger.info(f"Attempting to connect to MongoDB (Attempt {retry_count+1}/{max_retries}) with URI: {log_uri}")
+            
+            # Use a more robust connection setup
+            mongo_client = MongoClient(
+                MONGODB_URI,
+                serverSelectionTimeoutMS=10000,  # Increased timeout
+                connectTimeoutMS=10000,          # Increased timeout
+                socketTimeoutMS=15000,           # Increased timeout
+                ssl=True,                        # Enable SSL
+                tlsAllowInvalidCertificates=True,# Skip certificate validation
+                retryWrites=True,                # Enable retry writes
+                appname="guards-robbers-app"     # App name
+            )
+            
+            # Test connection with timeout
+            mongo_client.admin.command('ping', serverSelectionTimeoutMS=5000)
+            db = mongo_client[MONGODB_DB]
+            leads_collection = db[MONGODB_COLLECTION]
+            subscribers_collection = db[MONGODB_SUBSCRIBERS_COLLECTION]
+            
+            # Configure collection options if needed
+            # For example, adding indexes
+            leads_collection.create_index([("email", 1)], unique=True)
+            subscribers_collection.create_index([("email", 1)], unique=True)
+            
+            logger.info(f"Successfully connected to MongoDB: {MONGODB_DB}.{MONGODB_COLLECTION}")
+            break  # Exit the retry loop on success
+            
         except Exception as e:
-            logger.error(f"Failed to load leads from JSON file: {e}")
+            retry_count += 1
+            logger.error(f"Failed to connect to MongoDB (Attempt {retry_count}/{max_retries}): {e}")
+            
+            if retry_count >= max_retries:
+                logger.error(f"Maximum retry attempts ({max_retries}) reached. Falling back to local storage.")
+                mongo_client = None
+                
+                # Load any existing leads from JSON file as fallback
+                try:
+                    json_path = os.getenv('JSON_BACKUP_PATH', 'leads.json')
+                    if os.path.exists(json_path):
+                        with open(json_path, 'r') as f:
+                            for line in f:
+                                if line.strip():
+                                    leads.append(json.loads(line))
+                        logger.info(f"Loaded {len(leads)} leads from local JSON file as fallback")
+                except Exception as json_err:
+                    logger.error(f"Failed to load leads from JSON file: {json_err}")
+            else:
+                # Exponential backoff: 1s, 2s, 4s, etc.
+                wait_time = retry_delay * (2 ** (retry_count - 1))
+                logger.info(f"Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
 else:
-    logger.warning(f"No valid MongoDB URI provided. Using local JSON storage instead.")
+    logger.warning(f"MongoDB connection disabled or no valid MongoDB URI provided. Using in-memory storage.")
     # Load any existing leads from JSON file
     try:
-        json_path = os.getenv('JSON_BACKUP_PATH', 'leads.json')
+        json_path = os.getenv('JSON_BACKUP_PATH', 'data/leads.json')
         if os.path.exists(json_path):
             with open(json_path, 'r') as f:
                 for line in f:
@@ -110,6 +130,17 @@ else:
             logger.info(f"Loaded {len(leads)} leads from local JSON file")
     except Exception as e:
         logger.error(f"Failed to load leads from JSON file: {e}")
+        
+    # Initialize subscribers list
+    try:
+        json_path = 'data/subscribers.json'
+        if os.path.exists(json_path):
+            with open(json_path, 'r') as f:
+                subscribers = json.load(f)
+            logger.info(f"Loaded {len(subscribers)} subscribers from local JSON file")
+    except Exception as e:
+        logger.error(f"Failed to load subscribers from JSON file: {e}")
+        subscribers = []
 
 # Placeholder image generator for testimonials
 def generate_placeholder_image(width, height, text, bg_color=(240, 240, 240), text_color=(100, 100, 100)):
