@@ -659,10 +659,11 @@ Assuming a small team (3-5 people), total duration: 2-3 weeks.
 
 ### Phase 1: Analytics Integration (Priority: High)
 - [ ] Implement comprehensive analytics:
-  - Add Google Analytics or alternative tracking
-  - Set up conversion funnels for lead capture
-  - Create dashboard for subscription metrics
-  - Implement A/B testing framework for landing pages
+  - Add Google Analytics 4 with custom event tracking
+  - Set up server-side event tracking for more reliable data collection
+  - Create conversion funnels for lead capture
+  - Implement data warehouse foundation for ML features
+  - Add A/B testing capabilities for content optimization
 
 ### Phase 2: Email Production Configuration (Priority: Medium)
 - [ ] Configure production email service:
@@ -671,12 +672,20 @@ Assuming a small team (3-5 people), total duration: 2-3 weeks.
   - Set up email delivery monitoring
   - Create additional email templates for marketing campaigns
 
-### Phase 3: Feature Enhancements (Priority: Medium)
+### Phase 3: ML Foundation (Priority: Medium)
+- [ ] Establish machine learning baseline:
+  - Implement behavioral data collection (scroll depth, time on page)
+  - Create lead scoring prototype using historical data
+  - Add ML model serving infrastructure
+  - Implement simple content personalization rules
+
+### Phase 4: Feature Enhancements (Priority: Medium)
 - [ ] Expand Admin Dashboard:
   - Add lead filtering and searching capabilities
   - Implement lead status updates (New, Contacted, Qualified, Closed)
   - Add data export functionality (CSV, Excel)
   - Create lead analytics and reporting
+  - Add ML-based lead quality indicators
 
 - [ ] Improve UI/UX:
   - Add favicon and improve branding
@@ -684,13 +693,13 @@ Assuming a small team (3-5 people), total duration: 2-3 weeks.
   - Implement client-side form validation
   - Add success/error notifications
 
-### Phase 4: Security Enhancements (Priority: Medium)
+### Phase 5: Security Enhancements (Priority: Medium)
 - [ ] Implement CSRF protection for forms
 - [ ] Add rate limiting for login attempts
 - [ ] Set up Content Security Policy
 - [ ] Implement HTTPS redirects
 
-### Phase 5: Infrastructure Improvements (Priority: Low)
+### Phase 6: Infrastructure Improvements (Priority: Low)
 - [ ] Update Python runtime to the latest version
 - [ ] Set up CI/CD pipeline for automated testing and deployment
 - [ ] Implement database migrations system
@@ -701,6 +710,7 @@ Assuming a small team (3-5 people), total duration: 2-3 weeks.
 - [ ] Implement email notification system for new leads
 - [ ] Add multi-user admin support with different permission levels
 - [ ] Create API endpoints for third-party integrations
+- [ ] Implement ML-driven lead scoring and content personalization (see [ML Enhancement Plan](ml_enhancement_plan.md))
 
 ## Maintenance Tasks
 - [ ] Regular dependency updates
