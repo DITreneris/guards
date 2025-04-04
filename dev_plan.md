@@ -1,7 +1,7 @@
 # Guards & Robbers - Marketing Website: Project Development Plan
 
-*Version: 1.0.0*  
-*Last Updated: April 3, 2025*  
+*Version: 1.2.0*  
+*Last Updated: April 5, 2025*  
 *Document Owner: Project Manager*
 
 ## Table of Contents
@@ -587,6 +587,8 @@ Assuming a small team (3-5 people), total duration: 2-3 weeks.
 | 0.2.0 | 2025-04-01 | Lead Developer | Added technical requirements |
 | 0.3.0 | 2025-04-02 | Designer | Added UI/UX specifications |
 | 1.0.0 | 2025-04-03 | Project Manager | Finalized plan, switched from Google Sheets to MongoDB |
+| 1.1.0 | 2025-04-04 | Backend Developer | Added admin dashboard, MongoDB fallback, and testing features |
+| 1.2.0 | 2025-04-05 | Project Manager | Added newsletter system, ML enhancement plan, and updated project phases |
 
 ## Approval
 
