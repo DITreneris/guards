@@ -1,0 +1,48 @@
+{
+  "latest": "1.2.0",
+  "releases": [
+    {
+      "version": "1.2.0",
+      "date": "2025-04-05",
+      "commit": "ed78e14a1b",
+      "highlights": [
+        "Added newsletter subscription system",
+        "Implemented ML enhancement plan",
+        "Updated project phases"
+      ],
+      "documents": [
+        {"name": "README.md", "version": "1.2.0"},
+        {"name": "dev_plan.md", "version": "1.2.0"},
+        {"name": "version_management.md", "version": "1.0.0"}
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "date": "2025-04-04",
+      "commit": "cf02d6a9a9",
+      "highlights": [
+        "Added admin dashboard",
+        "Implemented MongoDB fallback",
+        "Added test suite"
+      ],
+      "documents": [
+        {"name": "README.md", "version": "1.1.0"},
+        {"name": "dev_plan.md", "version": "1.1.0"}
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2025-04-03",
+      "commit": "8c61c1bee2",
+      "highlights": [
+        "Initial production release",
+        "MongoDB integration",
+        "Flask backend"
+      ],
+      "documents": [
+        {"name": "README.md", "version": "1.0.0"},
+        {"name": "dev_plan.md", "version": "1.0.0"}
+      ]
+    }
+  ]
+} 
