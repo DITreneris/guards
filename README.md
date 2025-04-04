@@ -1,7 +1,7 @@
 # Guards & Robbers - Marketing Website
 
-*Version: 1.1.0*  
-*Last Updated: April 3, 2025*
+*Version: 1.2.0*  
+*Last Updated: April 4, 2025*
 
 A single-page marketing website for Guards & Robbers, an AI-powered cybersecurity platform that combines defense (ARP Guard) and offense (Evader) capabilities.
 
@@ -23,6 +23,7 @@ A single-page marketing website for Guards & Robbers, an AI-powered cybersecurit
   - [Quality Assurance](#quality-assurance)
 - [Admin Dashboard](#admin-dashboard)
 - [MongoDB Fallback Mechanism](#mongodb-fallback-mechanism)
+- [Email System](#email-system)
 - [Testing](#testing)
 - [Customization](#customization)
 - [License](#license)
@@ -42,6 +43,8 @@ A single-page marketing website for Guards & Robbers, an AI-powered cybersecurit
 - Enhanced testimonials section with visual design and trust elements
 - Comprehensive test suite for all features
 - Health monitoring endpoints
+- Newsletter subscription system with double opt-in
+- Mock email system for local development
 
 ## Project Documentation
 
@@ -108,6 +111,18 @@ pip install -r requirements.txt
    export MONGODB_URI="your-connection-string"
    export MONGODB_DB="guards_robbers_db"
    export MONGODB_COLLECTION="leads"
+   export MONGODB_SUBSCRIBERS_COLLECTION="subscribers"
+   export USE_MONGODB="false"  # Set to "true" to use MongoDB
+   
+   # Email Configuration
+   export SMTP_SERVER="smtp.gmail.com"
+   export SMTP_PORT="587"
+   export SMTP_USERNAME="your-email@gmail.com"
+   export SMTP_PASSWORD="your-app-password"
+   export SENDER_EMAIL="noreply@guardsnrobbers.com"
+   export SENDER_NAME="Guards & Robbers"
+   export BASE_URL="http://localhost:5000"
+   export EMAIL_MOCK_MODE="true"  # Set to "false" to use actual SMTP
    
    # Admin authentication (default values will be generated if not set)
    export SECRET_KEY="your-secret-key"
@@ -116,7 +131,7 @@ pip install -r requirements.txt
    
    # Backup configuration
    export ENABLE_JSON_BACKUP="True"
-   export JSON_BACKUP_PATH="leads.json"
+   export JSON_BACKUP_PATH="data/leads.json"
    ```
    
    For Windows, use:
@@ -162,6 +177,8 @@ git push heroku main
 ```
 heroku config:set MONGODB_URI="your-connection-string"
 heroku config:set SECRET_KEY="your-secret-key"
+heroku config:set USE_MONGODB="true"
+heroku config:set EMAIL_MOCK_MODE="false"
 # (and other variables as needed)
 ```
 
@@ -175,6 +192,8 @@ heroku config:set SECRET_KEY="your-secret-key"
 
 - `app_simple.py` - Main Flask application
 - `admin_auth.py` - Admin authentication module
+- `utils/` - Utility modules
+  - `email_sender.py` - Email sending functionality
 - `templates/` - HTML templates
   - `index.html` - Main marketing page
   - `admin_login.html` - Admin login page
@@ -182,13 +201,21 @@ heroku config:set SECRET_KEY="your-secret-key"
   - `admin_settings.html` - Admin settings page
   - `base.html` - Base template with common layout elements
   - `testimonials.html` - Testimonials and trust signals page
+  - `subscription_confirmed.html` - Email subscription confirmation page
+  - `unsubscribe.html` - Email unsubscribe page
+  - `email_templates/` - Email HTML templates
+    - `welcome_email.html` - Welcome email template
+    - `newsletter_template.html` - Newsletter template
 - `static/` - Static assets (CSS, JavaScript, images)
   - `css/` - Stylesheet files
     - `testimonials.css` - Styles for the testimonials section
   - `js/` - JavaScript functionality
   - `images/` - Image assets
     - `testimonials/` - Testimonial avatars, logos, and badges
-- `leads.json` - Local backup of form submissions
+- `data/` - Local data storage
+  - `leads.json` - Local backup of form submissions
+  - `subscribers.json` - Local storage for newsletter subscribers
+  - `emails/` - Saved mock emails for testing
 - `admin_users.json` - Admin user information (encrypted)
 - `tests/` - Test scripts
   - `admin_auth_test.py` - Tests for admin authentication
@@ -242,6 +269,25 @@ The application features a robust fallback system for data storage:
 
 If the MongoDB connection fails, the system automatically falls back to the local JSON file storage. All data is maintained in-memory during the application runtime for fast access.
 
+The connection system includes:
+- Exponential backoff retry logic (1s, 2s, 4s)
+- Configurable SSL/TLS settings
+- Environment variable control (USE_MONGODB)
+- Detailed error logging
+
+## Email System
+
+The application includes a comprehensive email system for newsletter subscriptions:
+
+1. **Double Opt-in**: New subscribers must confirm their email
+2. **Templated Emails**: HTML templates for all communications
+3. **Mock Mode**: Development mode saves emails to files instead of sending
+4. **Fallback Logic**: If SMTP fails, falls back to mock mode
+
+To view mock emails during development:
+- Configure EMAIL_MOCK_MODE=true in your environment
+- Check the data/emails/ directory for saved email files
+
 ## Testing
 
 The application includes a comprehensive test suite:
@@ -277,7 +323,15 @@ For questions or support: info@guardsrobbers.com
 
 ## Change Log
 
-### Version 1.1.0 (Current)
+### Version 1.2.0 (Current)
+
+- Added newsletter subscription system with double opt-in confirmation
+- Implemented mock email system for local development
+- Enhanced MongoDB connection with retry logic and fallback
+- Improved robustness of local file storage system
+- Added detailed environment configuration options
+
+### Version 1.1.0
 
 - Added secure admin dashboard with authentication
 - Implemented MongoDB fallback mechanism with JSON and in-memory storage
