@@ -88,22 +88,19 @@ logger.info(f"Directory contents: {os.listdir(os.getcwd())}")
 # Setup MongoDB connection
 try:
     if mongodb_uri and not os.environ.get('DISABLE_MONGODB', '').lower() == 'true':
-        # Use the updated parameters for MongoDB client
-        ssl_settings = {
-            'ssl': True,
-            'tls': True,
-            'tlsAllowInvalidCertificates': True
-        }
-        
+        # Create a more reliable MongoDB connection
+        # Simplified connection options to avoid compatibility issues
         client = MongoClient(
             mongodb_uri,
-            server_api=ServerApi('1'),
-            **ssl_settings
+            connectTimeoutMS=5000,
+            socketTimeoutMS=10000,
+            serverSelectionTimeoutMS=10000,
+            connect=False  # Don't connect immediately (defer until first operation)
         )
         
-        # Test the connection
+        # Test the connection with a fast timeout
         try:
-            client.admin.command('ping')
+            client.server_info()  # Simplest command to test connection
             logger.info("Successfully connected to MongoDB")
             db = client.get_database(mongodb_dbname)
             leads_collection = db[MONGODB_COLLECTION]
@@ -293,11 +290,17 @@ def placeholder_images(filename):
 
 @app.route('/')
 def index():
-    # Make sure OG image exists for social media previews
+    # Check if OG image exists but don't block the request
     og_image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
     if not os.path.exists(og_image_path):
-        # Trigger OG image creation via the serve_og_image function
-        app.view_functions['serve_og_image']()
+        # Schedule OG image creation in background instead of blocking
+        try:
+            import threading
+            thread = threading.Thread(target=lambda: app.view_functions['serve_og_image']())
+            thread.daemon = True
+            thread.start()
+        except Exception as e:
+            logger.warning(f"Could not start background thread for OG image: {e}")
     
     return render_template('index.html')
 
@@ -686,11 +689,17 @@ def admin_change_password():
 @app.route('/testimonials')
 @cache.cached(timeout=3600)  # Cache for 1 hour
 def testimonials():
-    # Make sure OG image exists for social media previews
+    # Check if OG image exists but don't block the request
     og_image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
     if not os.path.exists(og_image_path):
-        # Trigger OG image creation via the serve_og_image function
-        app.view_functions['serve_og_image']()
+        # Schedule OG image creation in background instead of blocking
+        try:
+            import threading
+            thread = threading.Thread(target=lambda: app.view_functions['serve_og_image']())
+            thread.daemon = True
+            thread.start()
+        except Exception as e:
+            logger.warning(f"Could not start background thread for OG image: {e}")
         
     return render_template('testimonials.html')
 
@@ -1138,57 +1147,32 @@ def serve_og_image():
     image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
     
     if not os.path.exists(image_path):
-        # Create a simple OG image if it doesn't exist
-        width, height = 1200, 630
-        image = Image.new('RGB', (width, height), color=(10, 25, 50))
-        draw = ImageDraw.Draw(image)
-        
-        # Add simple blocks of color
-        draw.rectangle([(0, 0), (width, height//3)], fill=(0, 30, 70))
-        draw.rectangle([(0, height//3), (width, 2*height//3)], fill=(10, 40, 100))
-        draw.rectangle([(0, 2*height//3), (width, height)], fill=(20, 60, 130))
-        
-        # Get a font - try several alternatives
-        font_large = None
-        font_small = None
-        
-        # List of fonts to try, from most preferred to default
-        font_paths = [
-            "arial.ttf",
-            "Arial.ttf", 
-            "DejaVuSans.ttf",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
-        ]
-        
-        # Try to load a font
-        for font_path in font_paths:
-            try:
-                font_large = ImageFont.truetype(font_path, 60)
-                font_small = ImageFont.truetype(font_path, 40)
-                logger.info(f"Successfully loaded font: {font_path}")
-                break
-            except (IOError, OSError):
-                continue
-                
-        # If no fonts loaded successfully, use default
-        if font_large is None:
-            logger.warning("Could not load any fonts, using default")
-            font_large = ImageFont.load_default()
-            font_small = ImageFont.load_default()
-            
-        # Draw the text - be careful with text positioning
-        draw.text((width//10, height//4), "GUARDS & ROBBERS", fill=(255, 255, 255), font=font_large)
-        draw.text((width//10, height//2), "AI-Powered Cybersecurity", fill=(200, 220, 255), font=font_small)
-        
-        # Save the image
-        os.makedirs(os.path.dirname(image_path), exist_ok=True)
         try:
+            # Create a simple OG image if it doesn't exist - very basic version
+            width, height = 1200, 630
+            image = Image.new('RGB', (width, height), color=(10, 25, 50))
+            draw = ImageDraw.Draw(image)
+            
+            # Just use 3 simple colored rectangles for background
+            draw.rectangle([(0, 0), (width, height//3)], fill=(0, 30, 70))
+            draw.rectangle([(0, height//3), (width, 2*height//3)], fill=(10, 40, 100))
+            draw.rectangle([(0, 2*height//3), (width, height)], fill=(20, 60, 130))
+            
+            # Use default font for simplicity
+            font = ImageFont.load_default()
+            
+            # Simple text
+            draw.text((50, height//4), "GUARDS & ROBBERS", fill=(255, 255, 255), font=font)
+            draw.text((50, height//2), "AI-Powered Cybersecurity", fill=(200, 220, 255), font=font)
+            
+            # Save the image
+            os.makedirs(os.path.dirname(image_path), exist_ok=True)
             image.save(image_path, "PNG")
-            logger.info(f"Successfully created OG image at {image_path}")
+            logger.info(f"Created simple OG image at {image_path}")
         except Exception as e:
-            logger.error(f"Failed to save OG image: {e}")
-            # Return a placeholder image if we can't save
+            logger.error(f"Failed to create OG image: {e}")
+            # Return a solid blue image as fallback
+            image = Image.new('RGB', (1200, 630), color=(0, 50, 100))
             response = make_response(image.tobytes())
             response.headers.set('Content-Type', 'image/png')
             return response
