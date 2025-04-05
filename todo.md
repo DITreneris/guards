@@ -1,13 +1,14 @@
 # Guards & Robbers - Project To-Do List
 
 *Updated from Development Plan v1.5.0*  
-*Last Updated: June 15, 2025*
+*Last Updated: June 17, 2025*
 
 ## Table of Contents
 
 - [Current Priority Tasks](#current-priority-tasks)
 - [Admin Interface](#admin-interface)
 - [Website Enhancement](#website-enhancement)
+- [Performance & Stability](#performance--stability)
 - [Email System Setup](#email-system-setup)
 - [Monitoring & Maintenance](#monitoring--maintenance)
 - [Documentation](#documentation)
@@ -18,12 +19,14 @@
 
 ## Current Priority Tasks
 
-### Admin Interface (High Priority)
-- [x] Create admin dashboard UI
-- [x] Implement lead filtering and sorting
-- [x] Add export functionality
-- [x] Test admin interface across browsers
-- [x] Add analytics visualization for lead data
+### Performance & Stability (Critical Priority)
+- [ ] Fix timeout issues in Heroku workers
+- [ ] Optimize MongoDB connection to prevent failures
+- [ ] Reduce image processing load at startup
+- [ ] Fix custom domain (guardsandrobbers.com) configuration 
+- [ ] Implement background processing for CPU-intensive tasks
+- [ ] Ensure smooth operation with high traffic
+- [ ] Address worker timeouts during startup
 
 ### Website Enhancement (High Priority)
 - [ ] Enhance site navigation with improved menu
@@ -56,6 +59,7 @@
 - [ ] Set up performance monitoring
 
 ## Custom Domain & SSL (Low Priority)
+- [ ] Troubleshoot custom domain connection issues
 - [ ] Configure email MX records
 - [ ] Set up SPF and DKIM records
 - [ ] Test domain security configuration
@@ -120,6 +124,11 @@
 - [x] Create dedicated testimonials page with client feedback
 - [x] Implement responsive design for testimonials
 - [x] Add trusted company logos section
+- [x] Add social media preview support with Open Graph tags
+- [x] Generate OG image for social media shares
+- [x] Fix worker timeouts with background processing
+- [x] Optimize MongoDB connection parameters
+- [x] Improve application startup performance
 - [x] Conduct pre-launch checklist review
 - [x] Deploy to production environment
 - [x] Comprehensive website performance optimization (June 16, 2025)
@@ -142,4 +151,5 @@
 - [ ] Monitor MongoDB access logs
 - [ ] Update deployed application with latest fixes
 - [ ] Verify email system functionality
+- [ ] Check for Heroku application errors and timeouts
 - [ ] Check recent leads for any issues 
