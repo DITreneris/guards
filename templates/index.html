@@ -13,9 +13,14 @@
     <meta name="msapplication-TileColor" content="#0066cc">
     <meta name="theme-color" content="#0066cc">
     
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ css_url('styles.css') }}">
+    
+    <!-- Preconnect to CDN domains -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
     <!-- Meta tags for SEO -->
     <meta name="description" content="Guards & Robbers combines AI-powered defense and offense capabilities to secure your enterprise network against cyber threats.">
     <meta name="keywords" content="cybersecurity, AI security, network defense, threat detection, ARP Guard, Evader">
@@ -357,6 +362,34 @@
         </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Load JavaScript with defer attribute -->
+    <script src="{{ js_url('script.js') }}" defer></script>
+    
+    <!-- Add inline script for critical rendering path optimizations -->
+    <script>
+        // Preload images that will be visible in the viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize smooth scrolling immediately for better UX
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html> 

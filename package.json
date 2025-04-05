@@ -1,0 +1,14 @@
+{
+  "name": "guards-and-robbers-website",
+  "version": "1.0.0",
+  "description": "Guards & Robbers AI-Powered Cybersecurity Website",
+  "scripts": {
+    "optimize": "node static/js/optimize-assets.js",
+    "build": "npm run optimize"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "clean-css": "^5.3.2",
+    "terser": "^5.19.2"
+  }
+} 

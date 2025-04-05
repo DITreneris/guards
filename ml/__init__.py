@@ -5,7 +5,7 @@ Machine learning capabilities for Guards & Robbers products.
 
 __version__ = "0.1.0"
 __author__ = "Guards & Robbers Team"
-__email__ = "info@guardsrobbers.com"
+__email__ = "info@guardsandrobbers.com"
 
 # Import main components for easier access
 from ml.bot_intelligence.nlp_pipeline import NLPPipeline

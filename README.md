@@ -38,15 +38,27 @@ Intelligent network penetration testing and vulnerability assessment tool.
 
 ## Development Status
 
-### Latest Updates (v1.5.0)
+### Latest Updates (v2.1.0)
 - Implemented Product Navigator Bot with ML integration
 - Added TensorFlow.js analytics capabilities
 - Enhanced security with post-quantum cryptography
 - Improved UI/UX with color-coded interface
 - Added feature and capability tracking system
-- **NEW**: ML performance optimization with 38% throughput improvement
-- **NEW**: Implemented model quantization with up to 17% size reduction
-- **NEW**: Created comprehensive performance monitoring dashboard
+- Added ML performance optimization with 38% throughput improvement
+- Implemented model quantization with up to 17% size reduction
+- Created comprehensive performance monitoring dashboard
+- **NEW**: Added proper favicon with Guards & Robbers shield logo
+- **NEW**: Enhanced browser compatibility with additional meta tags
+- **NEW**: Created dedicated testimonials page with client feedback
+- **NEW**: Updated email configuration with secure credentials
+- **NEW**: Verified and tested email sending functionality
+
+### Website Enhancements (April 2025)
+- Favicon with Guards & Robbers shield logo for better brand identity
+- Browser compatibility improvements with additional meta tags
+- Dedicated testimonials page with responsive design
+- Added trusted company logos section
+- Email system fully configured and tested
 
 ### Performance Metrics (Q2 2025)
 - Model inference speed: 38% faster (7,713 → 10,668 predictions/second)
@@ -61,6 +73,8 @@ Intelligent network penetration testing and vulnerability assessment tool.
 - Security feature enhancement
 - Product integration improvements
 - Distributed performance monitoring
+- Email marketing and automation
+- User experience optimization
 
 ## Getting Started
 
@@ -89,6 +103,8 @@ pip install -r requirements.txt
 - [ML Strategy](ml_strategy.md)
 - [Performance Optimization Summary](performance_optimization_summary.md)
 - [Model Quantization](docs/model_quantization.md)
+- [Roadmap](roadmap.md)
+- [Todo List](todo.md)
 - [Product Documentation](docs/)
   - [ARP Guard v0.6.0](docs/arp_guard/v0.6.0)
   - [Evader v0.8.0](docs/evader/v0.8.0)
@@ -105,5 +121,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 - Project Manager: [Name]
-- Email: [email@example.com]
-- Website: [www.guardsandrobers.com] 
+- Email: info@guardsandrobbers.com
+- Website: https://guards-robbers-8c61c1bee243.herokuapp.com/ 

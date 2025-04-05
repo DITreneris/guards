@@ -6,17 +6,26 @@
     <title>{% block title %}Guards & Robbers - Security Testing{% endblock %} - Guards & Robbers</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ css_url('styles.css') }}">
     {% block extra_css %}{% endblock %}
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <!-- Use Font Awesome CDN instead of kit loader for better performance -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{{ css_url('styles.css') }}" as="style">
+    {% block head_meta %}{% endblock %}
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">
                 <a href="/">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Guards & Robbers Logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Guards & Robbers Logo" width="180" height="36">
                 </a>
             </div>
             <nav>
@@ -40,7 +49,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Guards & Robbers Logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Guards & Robbers Logo" width="150" height="30">
                 </div>
                 <div class="footer-links">
                     <h3>Quick Links</h3>
@@ -71,6 +80,8 @@
         </div>
     </footer>
 
+    <!-- Defer non-critical JavaScript loading -->
+    <script src="{{ js_url('script.js') }}" defer></script>
     {% block scripts %}{% endblock %}
 </body>
 </html> 

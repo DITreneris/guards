@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize mobile menu
     initMobileMenu();
     
-    // Initialize section animations
+    // Initialize section animations with IntersectionObserver
     initSectionAnimations();
     
     // Initialize count-up effect for statistics
     initCountUp();
     
-    // Initialize header scroll effect
+    // Initialize header scroll effect with debounce
     initScrollHeader();
     
     // Smooth scrolling for navigation links
@@ -40,7 +40,7 @@ function initMobileMenu() {
                 : '<i class="fas fa-bars"></i>';
         });
         
-        // Close menu when clicking outside
+        // Close menu when clicking outside - delegated event
         document.addEventListener('click', (e) => {
             if (!navLinks.contains(e.target) && !menuToggle.contains(e.target) && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
@@ -50,9 +50,11 @@ function initMobileMenu() {
     }
 }
 
-// Section Animations
+// Section Animations with IntersectionObserver
 function initSectionAnimations() {
     const sections = document.querySelectorAll('section');
+    if (!sections.length) return;
+    
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -73,9 +75,11 @@ function initSectionAnimations() {
     });
 }
 
-// Count-up Animation for Statistics
+// Count-up Animation for Statistics using IntersectionObserver
 function initCountUp() {
     const stats = document.querySelectorAll('.stat h3');
+    if (!stats.length) return;
+    
     const options = {
         root: null,
         rootMargin: '0px',
@@ -96,7 +100,7 @@ function initCountUp() {
                     target.parentElement.classList.add('viewed');
                     
                     let startValue = 0;
-                    const duration = 2500; // Slightly longer animation
+                    const duration = 2500;
                     const increment = targetValue / (duration / 16);
                     
                     target.textContent = prefix + '0' + suffix;
@@ -104,27 +108,12 @@ function initCountUp() {
                     const updateCounter = () => {
                         startValue += increment;
                         if (startValue < targetValue) {
-                            if (targetValue >= 1000) {
-                                // Add commas for thousands separator
-                                const formattedValue = Math.ceil(startValue).toLocaleString();
-                                target.textContent = prefix + formattedValue + suffix;
-                            } else {
-                                target.textContent = prefix + Math.ceil(startValue) + suffix;
-                            }
+                            const formattedValue = Math.ceil(startValue).toLocaleString();
+                            target.textContent = prefix + formattedValue + suffix;
                             requestAnimationFrame(updateCounter);
                         } else {
-                            if (targetValue >= 1000) {
-                                const formattedValue = Math.ceil(targetValue).toLocaleString();
-                                target.textContent = prefix + formattedValue + suffix;
-                            } else {
-                                target.textContent = prefix + Math.ceil(targetValue) + suffix;
-                            }
-                            
-                            // Apply a scaling animation when count is complete
-                            target.style.transform = 'scale(1.1)';
-                            setTimeout(() => {
-                                target.style.transform = 'scale(1)';
-                            }, 200);
+                            const formattedValue = Math.ceil(targetValue).toLocaleString();
+                            target.textContent = prefix + formattedValue + suffix;
                         }
                     };
                     
@@ -140,19 +129,45 @@ function initCountUp() {
     });
 }
 
-// Header Scroll Effect
+// Header Scroll Effect with Debounce
 function initScrollHeader() {
     const header = document.querySelector('header');
+    if (!header) return;
     
-    if (header) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+    // Simple debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
     }
+    
+    // Use requestAnimationFrame for smoother scrolling effect
+    let lastScrollPosition = 0;
+    let ticking = false;
+    
+    function updateHeaderClass() {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        lastScrollPosition = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateHeaderClass();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
 }
 
 // Smooth Scrolling
@@ -209,127 +224,94 @@ function initSmoothScrolling() {
     });
 }
 
-// Form Submission
+// Form Submission with validation
 function initFormSubmission() {
     const leadForm = document.getElementById('lead-form');
     const formStatus = document.getElementById('form-status');
 
-    if (leadForm) {
-        // Add icons to form inputs
-        enhanceFormInputs();
+    if (!leadForm) return;
+    
+    // Add validation before submission
+    leadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        leadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Show loading state
-            const submitButton = leadForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            submitButton.disabled = true;
-            
-            // Prepare form data
-            const formData = new FormData(leadForm);
-            const data = {
-                name: formData.get('name') || '',
-                email: formData.get('email') || '',
-                phone: formData.get('phone') || '123-456-7890', // Default value if not provided
-                message: `Company: ${formData.get('company')}, Network Type: ${formData.get('network')}`,
-            };
+        // Validate form
+        const nameInput = leadForm.querySelector('input[name="name"]');
+        const emailInput = leadForm.querySelector('input[name="email"]');
+        
+        if (!nameInput.value.trim()) {
+            formStatus.innerHTML = '<div class="error">Please enter your name</div>';
+            return;
+        }
+        
+        if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
+            formStatus.innerHTML = '<div class="error">Please enter a valid email address</div>';
+            return;
+        }
+        
+        // Show loading state
+        const submitButton = leadForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        submitButton.disabled = true;
+        
+        // Prepare form data
+        const formData = new FormData(leadForm);
+        const data = {
+            name: formData.get('name') || '',
+            email: formData.get('email') || '',
+            phone: formData.get('phone') || '',
+            message: `Company: ${formData.get('company') || 'Not provided'}, Network Type: ${formData.get('network') || 'Not provided'}`,
+        };
 
-            try {
-                // Send data to backend
-                const response = await fetch('/submit_lead', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
+        try {
+            // Send data to backend
+            const response = await fetch('/submit_lead', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-                const result = await response.json();
-                
-                // Show success or error message
-                formStatus.classList.remove('hidden', 'success', 'error');
-                
-                if (result.message && !result.error) {
-                    // Success
-                    formStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${result.message || 'Demo requested successfully!'}`;
-                    formStatus.classList.add('success');
-                    leadForm.reset();
-                    
-                    // If user consented to newsletter, show additional confirmation
-                    if (formData.get('newsletter_consent') === 'on') {
-                        const newsConfirmation = document.createElement('p');
-                        newsConfirmation.innerHTML = '<strong>Thanks for subscribing!</strong> Please check your email to confirm your subscription.';
-                        formStatus.appendChild(newsConfirmation);
-                    }
-                } else {
-                    // Error
-                    formStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.error || 'Something went wrong. Please try again.'}`;
-                    formStatus.classList.add('error');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                formStatus.classList.remove('hidden');
-                formStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Network error. Please try again later.';
-                formStatus.classList.add('error');
-            } finally {
-                // Reset button state
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
-                
-                // Scroll to form status
-                setTimeout(() => {
-                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 100);
-                
-                // Hide status message after 5 seconds
-                setTimeout(() => {
-                    formStatus.classList.add('hidden');
-                }, 5000);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        });
-    }
-}
-
-// Enhance form inputs with icons
-function enhanceFormInputs() {
-    // Update CTA button with icon and microcopy
-    const ctaButtons = document.querySelectorAll('.cta-button');
-    ctaButtons.forEach(button => {
-        if (!button.querySelector('i') && button.textContent.includes('Demo')) {
-            const text = button.textContent;
-            button.innerHTML = `<i class="fas fa-calendar-check"></i> ${text}`;
-            if (button.closest('#hero')) {
-                button.innerHTML += '<span class="microcopy">No credit card needed</span>';
-            }
+            
+            const result = await response.json();
+            
+            // Reset form on success
+            leadForm.reset();
+            
+            // Show success message
+            formStatus.innerHTML = '<div class="success">Thank you! We will contact you shortly.</div>';
+        } catch (error) {
+            formStatus.innerHTML = '<div class="error">Something went wrong. Please try again later.</div>';
+        } finally {
+            submitButton.innerHTML = originalButtonText;
+            submitButton.disabled = false;
         }
     });
-    
-    // Style the form submit button
-    const submitButton = document.querySelector('.submit-button');
-    if (submitButton && !submitButton.querySelector('i')) {
-        submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> ${submitButton.textContent}`;
-    }
 }
 
-// Feature card hover effects
+// Email validation helper
+function isValidEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+// Feature Cards Interaction
 function initFeatureCards() {
     const featureCards = document.querySelectorAll('.feature-card');
+    if (!featureCards.length) return;
     
     featureCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
-            const icon = card.querySelector('.feature-icon i');
-            if (icon) {
-                icon.classList.add('fa-bounce');
-            }
+            card.classList.add('active');
         });
         
         card.addEventListener('mouseleave', () => {
-            const icon = card.querySelector('.feature-icon i');
-            if (icon) {
-                icon.classList.remove('fa-bounce');
-            }
+            card.classList.remove('active');
         });
     });
 } 

@@ -5,7 +5,7 @@ import logging
 import sys
 import secrets
 import io
-from datetime import datetime
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
@@ -20,13 +20,33 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import re
+from flask_compress import Compress
+from flask_caching import Cache
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
+# Apply proxy fix for proper client IP behind proxy
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
+# Initialize compression
+Compress(app)
+
 # Set secret key for session management
 app.secret_key = os.getenv('SECRET_KEY', secrets.token_hex(16))
+
+# Setup Flask caching
+cache_config = {
+    'CACHE_TYPE': os.getenv('CACHE_TYPE', 'SimpleCache'),
+    'CACHE_DEFAULT_TIMEOUT': int(os.getenv('CACHE_TIMEOUT', 300)),
+}
+if os.getenv('REDIS_URL'):
+    cache_config['CACHE_TYPE'] = 'RedisCache'
+    cache_config['CACHE_REDIS_URL'] = os.getenv('REDIS_URL')
+
+cache = Cache(app, config=cache_config)
 
 # Configure MongoDB settings
 MONGODB_DB = os.getenv('MONGODB_DB', 'guards_db')
@@ -242,36 +262,7 @@ def placeholder_images(filename):
 
 @app.route('/')
 def index():
-    try:
-        # Try to render the original index.html template
-        return render_template('index.html')
-    except Exception as e:
-        logger.warning(f"Failed to render index.html: {e}")
-        
-        try:
-            # Try to render our simplified template as fallback
-            return render_template('index_simple.html')
-        except Exception as e2:
-            logger.error(f"Failed to render index_simple.html: {e2}")
-            
-            # Last resort: return inline HTML
-            return f"""
-            <html>
-                <head><title>Guards & Robbers</title></head>
-                <body>
-                    <h1>Guards & Robbers</h1>
-                    <p>Welcome to our marketing website!</p>
-                    <p>Template error: {str(e2)}</p>
-                    <p>Debug info:</p>
-                    <ul>
-                        <li>App root: {app.root_path}</li>
-                        <li>Templates path: {os.path.join(app.root_path, 'templates')}</li>
-                        <li>Path exists: {os.path.exists(os.path.join(app.root_path, 'templates'))}</li>
-                        <li>Templates available: {os.listdir(os.path.join(app.root_path, 'templates')) if os.path.exists(os.path.join(app.root_path, 'templates')) else 'None'}</li>
-                    </ul>
-                </body>
-            </html>
-            """
+    return render_template('index.html')
 
 @app.route('/health')
 def health():
@@ -506,8 +497,8 @@ def admin_change_password():
     return redirect(url_for('admin_settings'))
 
 @app.route('/testimonials')
+@cache.cached(timeout=3600)  # Cache for 1 hour
 def testimonials():
-    """Render the testimonials page"""
     return render_template('testimonials.html')
 
 @app.route('/subscribers/count', methods=['GET'])
@@ -749,6 +740,43 @@ def chat():
     except Exception as e:
         print(f"Error in chat endpoint: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
+
+# Add headers to all responses
+@app.after_request
+def add_header(response):
+    # Cache static resources for 1 week
+    if request.path.startswith('/static'):
+        if '.css' in request.path or '.js' in request.path:
+            cache_timeout = 604800  # 1 week in seconds
+            response.headers['Cache-Control'] = f'public, max-age={cache_timeout}'
+        elif '.png' in request.path or '.jpg' in request.path or '.svg' in request.path or '.ico' in request.path:
+            cache_timeout = 2592000  # 30 days in seconds
+            response.headers['Cache-Control'] = f'public, max-age={cache_timeout}'
+    
+    # Add security headers
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    
+    return response
+
+# Cache static assets when in production
+USE_MINIFIED_ASSETS = os.getenv('USE_MINIFIED_ASSETS', 'false').lower() == 'true'
+
+@app.context_processor
+def inject_asset_paths():
+    """Add asset path helpers to template context"""
+    def css_url(filename):
+        if USE_MINIFIED_ASSETS and filename == 'styles.css':
+            return url_for('static', filename='dist/styles.min.css')
+        return url_for('static', filename=f'css/{filename}')
+    
+    def js_url(filename):
+        if USE_MINIFIED_ASSETS and filename == 'script.js':
+            return url_for('static', filename='dist/script.min.js')
+        return url_for('static', filename=f'js/{filename}')
+        
+    return dict(css_url=css_url, js_url=js_url)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 

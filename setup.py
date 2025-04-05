@@ -5,7 +5,7 @@ setup(
     version="0.1.0",
     description="Machine Learning Framework for Guards & Robbers",
     author="Guards & Robbers Team",
-    author_email="info@guardsrobbers.com",
+    author_email="info@guardsandrobbers.com",
     packages=find_packages(),
     install_requires=[
         "beautifulsoup4>=4.9.0",
