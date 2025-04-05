@@ -21,14 +21,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import re
 
-# Try to import ML dependencies, but make them optional
-try:
-    from transformers import AutoModelForCausalLM, AutoTokenizer
-    ML_ENABLED = True
-except ImportError:
-    print("ML dependencies not available. Chat functionality will use fallback responses.")
-    ML_ENABLED = False
-
 # Load environment variables
 load_dotenv()
 
@@ -709,52 +701,34 @@ def process_message(message):
             'what services do you offer': 'We offer a range of cybersecurity services including network security, threat detection, and incident response.',
             'how can i contact you': 'You can contact us through our website form or email us at info@guardsandrobbers.com',
             'what are your prices': 'Our pricing depends on your specific needs. Please contact us for a customized quote.',
-            'do you offer free consultation': 'Yes, we offer a free initial consultation to assess your security needs.'
+            'do you offer free consultation': 'Yes, we offer a free initial consultation to assess your security needs.',
+            'security': 'Security is our top priority. We offer comprehensive security solutions for businesses of all sizes.',
+            'network': 'We provide network security solutions including firewall setup, VPN configuration, and intrusion detection systems.',
+            'incident': 'Our incident response team is available 24/7 to help you manage and recover from security incidents.',
+            'threat': 'We offer threat detection and prevention services to identify and mitigate potential security risks.',
+            'assessment': 'Our security assessment services help identify vulnerabilities in your systems before they can be exploited.',
+            'training': 'We provide security awareness training for your employees to help prevent social engineering attacks.',
+            'compliance': 'We can help your business achieve and maintain compliance with industry regulations like GDPR, HIPAA, and PCI DSS.',
+            'malware': 'Our anti-malware solutions protect your systems from viruses, ransomware, and other malicious software.',
+            'data protection': 'We offer data protection services including encryption, backup solutions, and secure data storage.',
+            'cloud security': 'Our cloud security services ensure your cloud-based applications and data remain protected.'
         }
         
+        # Check if any question keywords are in the message
         for key, value in questions.items():
             if key in message:
                 return value
                 
-        # If no specific match, use ML model if available or fallback to default responses
-        if ML_ENABLED:
-            try:
-                # Load the model and tokenizer
-                model = AutoModelForCausalLM.from_pretrained("gpt2")
-                tokenizer = AutoTokenizer.from_pretrained("gpt2")
-                
-                # Prepare the input
-                input_text = f"User: {message}\nAssistant:"
-                inputs = tokenizer(input_text, return_tensors="pt", max_length=100, truncation=True)
-                
-                # Generate response
-                outputs = model.generate(
-                    inputs["input_ids"],
-                    max_length=150,
-                    num_return_sequences=1,
-                    no_repeat_ngram_size=2,
-                    temperature=0.7,
-                    top_p=0.9
-                )
-                
-                response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-                response = response.split("Assistant:")[-1].strip()
-                
-                return response if response else "I'm not sure how to respond to that. Could you please rephrase your question?"
-                
-            except Exception as e:
-                print(f"Error generating ML response: {str(e)}")
-                return "I'm having trouble processing your request. Please try again later."
-        else:
-            # Fallback responses when ML is not available
-            fallback_responses = [
-                "I understand you're asking about that. Could you please provide more details?",
-                "That's an interesting question. Let me get back to you with more information.",
-                "I'd be happy to help with that. Please contact our team for personalized assistance.",
-                "Thank you for your question. We'll have our experts answer that for you soon."
-            ]
-            import random
-            return random.choice(fallback_responses)
+        # Fallback responses when no match is found
+        fallback_responses = [
+            "I understand you're asking about that. Could you please provide more details?",
+            "That's an interesting question. Let me get back to you with more information.",
+            "I'd be happy to help with that. Please contact our team for personalized assistance.",
+            "Thank you for your question. We'll have our experts answer that for you soon.",
+            "For more specific information on that topic, please email us at info@guardsandrobbers.com"
+        ]
+        import random
+        return random.choice(fallback_responses)
             
     except Exception as e:
         print(f"Error processing message: {str(e)}")
