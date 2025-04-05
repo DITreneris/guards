@@ -1546,4 +1546,55 @@ footer .social-links a:hover {
     .testimonials-page .company-logo {
         height: 30px;
     }
+}
+
+/* Social Media Preview Styles */
+.og-image-container {
+    width: 1200px;
+    height: 630px;
+    background-color: #121212;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.og-image-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,100,255,0.3) 0%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
+}
+
+.og-image-content {
+    position: relative;
+    z-index: 2;
+}
+
+.og-image-container h1 {
+    font-size: 72px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.og-image-container h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
+
+.og-image-logo {
+    margin-bottom: 40px;
+    font-size: 48px;
+    font-weight: bold;
+    color: #4d90fe;
 } 

@@ -264,6 +264,12 @@ def placeholder_images(filename):
 
 @app.route('/')
 def index():
+    # Make sure OG image exists for social media previews
+    og_image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
+    if not os.path.exists(og_image_path):
+        # Trigger OG image creation via the serve_og_image function
+        app.view_functions['serve_og_image']()
+    
     return render_template('index.html')
 
 @app.route('/health')
@@ -651,6 +657,12 @@ def admin_change_password():
 @app.route('/testimonials')
 @cache.cached(timeout=3600)  # Cache for 1 hour
 def testimonials():
+    # Make sure OG image exists for social media previews
+    og_image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
+    if not os.path.exists(og_image_path):
+        # Trigger OG image creation via the serve_og_image function
+        app.view_functions['serve_og_image']()
+        
     return render_template('testimonials.html')
 
 @app.route('/subscribers/count', methods=['GET'])
@@ -1082,6 +1094,98 @@ def update_lead_status():
         flash('Error updating lead status', 'danger')
     
     return redirect(url_for('admin_dashboard'))
+
+@app.route('/static/images/og-image.png')
+def serve_og_image():
+    """Serve the Open Graph image, generating it if it doesn't exist"""
+    image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
+    
+    if not os.path.exists(image_path):
+        # Create a simple OG image if it doesn't exist
+        width, height = 1200, 630
+        image = Image.new('RGB', (width, height), color=(10, 25, 50))
+        draw = ImageDraw.Draw(image)
+        
+        # Add simple blocks of color
+        draw.rectangle([(0, 0), (width, height//3)], fill=(0, 30, 70))
+        draw.rectangle([(0, height//3), (width, 2*height//3)], fill=(10, 40, 100))
+        draw.rectangle([(0, 2*height//3), (width, height)], fill=(20, 60, 130))
+        
+        # Add text with simple positioning
+        try:
+            font = ImageFont.truetype("arial.ttf", 60)
+        except:
+            font = ImageFont.load_default()
+            
+        draw.text((width//6, height//3), "GUARDS & ROBBERS", fill=(255, 255, 255))
+        draw.text((width//6, height//2), "AI-Powered Cybersecurity", fill=(200, 220, 255))
+        
+        # Save the image
+        os.makedirs(os.path.dirname(image_path), exist_ok=True)
+        image.save(image_path, "PNG")
+    
+    return send_file(image_path, mimetype='image/png')
+
+@app.route('/generate-og-image')
+def generate_og_image():
+    """Generate Open Graph image for social media previews"""
+    try:
+        # Define image dimensions (standard OG size)
+        width, height = 1200, 630
+        
+        # Create image with dark background
+        image = Image.new('RGB', (width, height), color=(18, 18, 18))
+        draw = ImageDraw.Draw(image)
+        
+        # Simple background with blocks of color
+        # Top block (dark blue)
+        draw.rectangle([(0, 0), (width, height//3)], fill=(0, 40, 90))
+        
+        # Middle block (medium blue)
+        draw.rectangle([(0, height//3), (width, 2*height//3)], fill=(10, 50, 120))
+        
+        # Bottom block (lighter blue with gradient effect)
+        for i in range(10):
+            y_start = 2*height//3 + (i * (height//3)//10)
+            y_end = 2*height//3 + ((i+1) * (height//3)//10)
+            blue_val = 120 + (i * 10)
+            draw.rectangle([(0, y_start), (width, y_end)], fill=(20, 80, blue_val))
+        
+        # Try to use a system font, or use default if not available
+        try:
+            logo_font = ImageFont.truetype("arial.ttf", 60)
+            title_font = ImageFont.truetype("arial.ttf", 72)
+            subtitle_font = ImageFont.truetype("arial.ttf", 36)
+        except IOError:
+            # Fall back to default fonts
+            logo_font = ImageFont.load_default()
+            title_font = ImageFont.load_default()
+            subtitle_font = ImageFont.load_default()
+        
+        # Add text with simple positioning
+        logo_text = "GUARDS & ROBBERS"
+        title_text = "AI-Powered Cybersecurity"
+        subtitle_text = "Outsmart threats. Secure your network."
+        
+        # Position text (simple fixed positions)
+        draw.text((width//6, height//4), logo_text, font=logo_font, fill=(130, 180, 255))
+        draw.text((width//6, height//2 - 30), title_text, font=title_font, fill=(255, 255, 255))
+        draw.text((width//6, height//2 + 60), subtitle_text, font=subtitle_font, fill=(220, 220, 220))
+        
+        # Save the image
+        image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
+        image.save(image_path, "PNG")
+        
+        return jsonify({"status": "success", "message": "OG image generated successfully"}), 200
+        
+    except Exception as e:
+        logger.error(f"Error generating OG image: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/og-image-template')
+def og_image_template():
+    """Template for creating the Open Graph image"""
+    return render_template('og_image_template.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
