@@ -40,6 +40,7 @@
     <meta name="theme-color" content="#0066cc">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/testimonials.css') }}">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -130,32 +131,30 @@
                 </div>
                 
                 <section class="trusted-by-section">
-                    <div class="container">
-                        <h2>Trusted By Industry Leaders</h2>
-                        <p class="subtitle">Join hundreds of enterprises that trust Guards & Robbers to protect their digital assets</p>
-                        
-                        <div class="logo-grid">
-                            <div class="logo-item">
-                                <img src="{{ url_for('static', filename='images/testimonials/itcorp-logo.svg') }}" alt="ITCorp" class="client-logo">
-                            </div>
-                            <div class="logo-item">
-                                <img src="{{ url_for('static', filename='images/testimonials/bankgb-logo.svg') }}" alt="BankGB" class="client-logo">
-                            </div>
-                            <div class="logo-item">
-                                <img src="{{ url_for('static', filename='images/testimonials/healthsy-logo.svg') }}" alt="HealthSY" class="client-logo">
-                            </div>
-                            <div class="logo-item">
-                                <img src="{{ url_for('static', filename='images/testimonials/shoppy-logo.svg') }}" alt="ShoPPy" class="client-logo">
-                            </div>
-                            <div class="logo-item">
-                                <img src="{{ url_for('static', filename='images/testimonials/energyq-logo.svg') }}" alt="EnergyQ" class="client-logo">
-                            </div>
+                    <h2>Trusted By Industry Leaders</h2>
+                    <p class="subtitle">Join hundreds of enterprises that trust Guards & Robbers to protect their digital assets</p>
+                    
+                    <div class="logo-grid">
+                        <div class="logo-item">
+                            <img src="{{ url_for('static', filename='images/testimonials/itcorp-logo.svg') }}" alt="ITCorp" class="client-logo">
                         </div>
-                        
-                        <div class="cta-section">
-                            <h3>Ready to join these successful organizations?</h3>
-                            <a href="{{ url_for('request_demo') }}" class="cta-button">Request a Demo</a>
+                        <div class="logo-item">
+                            <img src="{{ url_for('static', filename='images/testimonials/bankgb-logo.svg') }}" alt="BankGB" class="client-logo">
                         </div>
+                        <div class="logo-item">
+                            <img src="{{ url_for('static', filename='images/testimonials/healthsy-logo.svg') }}" alt="HealthSY" class="client-logo">
+                        </div>
+                        <div class="logo-item">
+                            <img src="{{ url_for('static', filename='images/testimonials/shoppy-logo.svg') }}" alt="ShoPPy" class="client-logo">
+                        </div>
+                        <div class="logo-item">
+                            <img src="{{ url_for('static', filename='images/testimonials/energyq-logo.svg') }}" alt="EnergyQ" class="client-logo">
+                        </div>
+                    </div>
+                    
+                    <div class="cta-section">
+                        <h3>Ready to join these successful organizations?</h3>
+                        <a href="/#contact" class="cta-button">Request a Demo</a>
                     </div>
                 </section>
             </div>
