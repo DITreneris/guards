@@ -23,7 +23,7 @@ from email.mime.multipart import MIMEMultipart
 
 # Third-party imports
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, send_file, make_response
 from flask_compress import Compress
 from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -62,9 +62,12 @@ if os.getenv('REDIS_URL'):
 cache = Cache(app, config=cache_config)
 
 # Configure MongoDB settings
-MONGODB_DB = os.getenv('MONGODB_DB', 'guards_db')
-MONGODB_COLLECTION = os.getenv('MONGODB_COLLECTION', 'leads')
-MONGODB_SUBSCRIBERS_COLLECTION = os.getenv('MONGODB_SUBSCRIBERS_COLLECTION', 'subscribers')
+mongodb_uri = os.getenv("MONGODB_URI", "")
+mongodb_dbname = os.getenv("MONGODB_DBNAME", "guardsAndRobbers")
+MONGODB_COLLECTION = os.getenv("MONGODB_COLLECTION", "leads")
+MONGODB_SUBSCRIBERS_COLLECTION = os.getenv("MONGODB_SUBSCRIBERS_COLLECTION", "subscribers")
+MONGODB_ADMIN_COLLECTION = os.getenv("MONGODB_ADMIN_COLLECTION", "admins")
+mongodb_connected = False
 
 # Make sure admin users are initialized
 init_admin_users()
@@ -82,24 +85,39 @@ if os.path.exists(os.path.join(app.root_path, 'templates')):
 logger.info(f"Current working directory: {os.getcwd()}")
 logger.info(f"Directory contents: {os.listdir(os.getcwd())}")
 
-# MongoDB connection
-mongo_uri = os.getenv('MONGODB_URI', '')
+# Setup MongoDB connection
 try:
-    if mongo_uri:
-        client = MongoClient(mongo_uri, 
-                           ssl=True,
-                           ssl_cert_reqs=ssl.CERT_NONE,
-                           connectTimeoutMS=30000,
-                           socketTimeoutMS=45000)
-        db = client.get_database()
-        print("Successfully connected to MongoDB")
+    if mongodb_uri and not os.environ.get('DISABLE_MONGODB', '').lower() == 'true':
+        # Use the updated parameters for MongoDB client
+        ssl_settings = {
+            'ssl': True,
+            'tls': True,
+            'tlsAllowInvalidCertificates': True
+        }
+        
+        client = MongoClient(
+            mongodb_uri,
+            server_api=ServerApi('1'),
+            **ssl_settings
+        )
+        
+        # Test the connection
+        try:
+            client.admin.command('ping')
+            logger.info("Successfully connected to MongoDB")
+            db = client.get_database(mongodb_dbname)
+            leads_collection = db[MONGODB_COLLECTION]
+            subscribers_collection = db[MONGODB_SUBSCRIBERS_COLLECTION]
+            mongodb_connected = True
+        except Exception as e:
+            logger.error(f"Failed to connect to MongoDB: {e}")
+            mongodb_connected = False
     else:
-        print("No MongoDB URI provided, using in-memory storage")
-        db = None
+        logger.warning("MongoDB connection disabled or no valid MongoDB URI provided. Using in-memory storage.")
+        mongodb_connected = False
 except Exception as e:
-    print(f"Failed to connect to MongoDB: {str(e)}")
-    print("Falling back to in-memory storage")
-    db = None
+    logger.error(f"Failed to setup MongoDB: {e}")
+    mongodb_connected = False
 
 # Initialize MongoDB client
 mongo_client = None
@@ -112,7 +130,7 @@ subscribers = []
 # Check if we should use MongoDB
 USE_MONGODB = os.getenv('USE_MONGODB', 'false').lower() == 'true'
 
-if USE_MONGODB and mongo_uri and ('mongodb://' in mongo_uri or 'mongodb+srv://' in mongo_uri):
+if USE_MONGODB and mongodb_uri and ('mongodb://' in mongodb_uri or 'mongodb+srv://' in mongodb_uri):
     max_retries = 3
     retry_count = 0
     retry_delay = 1
@@ -120,12 +138,12 @@ if USE_MONGODB and mongo_uri and ('mongodb://' in mongo_uri or 'mongodb+srv://' 
     while retry_count < max_retries:
         try:
             # Mask the password in logs
-            log_uri = mongo_uri.split('@')[0] + '@...' if '@' in mongo_uri else 'mongodb://...'
+            log_uri = mongodb_uri.split('@')[0] + '@...' if '@' in mongodb_uri else 'mongodb://...'
             logger.info(f"Attempting to connect to MongoDB (Attempt {retry_count+1}/{max_retries}) with URI: {log_uri}")
             
             # Use a more robust connection setup
             mongo_client = MongoClient(
-                mongo_uri,
+                mongodb_uri,
                 serverSelectionTimeoutMS=10000,  # Increased timeout
                 connectTimeoutMS=10000,          # Increased timeout
                 socketTimeoutMS=15000,           # Increased timeout
@@ -137,7 +155,7 @@ if USE_MONGODB and mongo_uri and ('mongodb://' in mongo_uri or 'mongodb+srv://' 
             
             # Test connection with timeout
             mongo_client.admin.command('ping', serverSelectionTimeoutMS=5000)
-            db = mongo_client[MONGODB_DB]
+            db = mongo_client[mongodb_dbname]
             leads_collection = db[MONGODB_COLLECTION]
             subscribers_collection = db[MONGODB_SUBSCRIBERS_COLLECTION]
             
@@ -146,7 +164,7 @@ if USE_MONGODB and mongo_uri and ('mongodb://' in mongo_uri or 'mongodb+srv://' 
             leads_collection.create_index([("email", 1)], unique=True)
             subscribers_collection.create_index([("email", 1)], unique=True)
             
-            logger.info(f"Successfully connected to MongoDB: {MONGODB_DB}.{MONGODB_COLLECTION}")
+            logger.info(f"Successfully connected to MongoDB: {mongodb_dbname}.{MONGODB_COLLECTION}")
             break  # Exit the retry loop on success
             
         except Exception as e:
@@ -297,8 +315,8 @@ def health():
     
     # Get environment info
     env_info = {
-        "MONGODB_URI": mongo_uri.split('@')[0] + '@...' if mongo_uri and '@' in mongo_uri else "Not set",
-        "MONGODB_DB": MONGODB_DB,
+        "MONGODB_URI": mongodb_uri.split('@')[0] + '@...' if mongodb_uri and '@' in mongodb_uri else "Not set",
+        "MONGODB_DB": mongodb_dbname,
         "MONGODB_COLLECTION": MONGODB_COLLECTION,
         "JSON_BACKUP_ENABLED": os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true',
         "FLASK_ENV": os.getenv('FLASK_ENV', 'production'),
@@ -835,21 +853,30 @@ def count_subscribers():
         logger.error(f"Error counting subscribers: {str(e)}")
         return jsonify({'success': False, 'message': 'Error counting subscribers'}), 500
 
-def load_subscribers():
+def load_subscribers_from_json():
     try:
-        if os.path.exists('subscribers.json'):
-            with open('subscribers.json', 'r', encoding='utf-8') as f:
-                return json.load(f)
+        subscribers_file = os.path.join(app.root_path, 'data', 'subscribers.json')
+        if os.path.exists(subscribers_file):
+            try:
+                with open(subscribers_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except UnicodeDecodeError:
+                # Try with different encodings if UTF-8 fails
+                with open(subscribers_file, 'r', encoding='latin-1') as f:
+                    return json.load(f)
+        return []
     except Exception as e:
-        print(f"Error loading subscribers: {str(e)}")
-    return []
+        logger.error(f"Failed to load subscribers from JSON file: {e}")
+        return []
 
-def save_subscribers(subscribers):
+def save_subscribers_to_json(subscribers):
     try:
-        with open('subscribers.json', 'w', encoding='utf-8') as f:
-            json.dump(subscribers, f, ensure_ascii=False, indent=2)
+        os.makedirs(os.path.join(app.root_path, 'data'), exist_ok=True)
+        subscribers_file = os.path.join(app.root_path, 'data', 'subscribers.json')
+        with open(subscribers_file, 'w', encoding='utf-8') as f:
+            json.dump(subscribers, f, indent=4)
     except Exception as e:
-        print(f"Error saving subscribers: {str(e)}")
+        logger.error(f"Failed to save subscribers to JSON file: {e}")
 
 def process_message(message):
     try:
@@ -1121,18 +1148,50 @@ def serve_og_image():
         draw.rectangle([(0, height//3), (width, 2*height//3)], fill=(10, 40, 100))
         draw.rectangle([(0, 2*height//3), (width, height)], fill=(20, 60, 130))
         
-        # Add text with simple positioning
-        try:
-            font = ImageFont.truetype("arial.ttf", 60)
-        except:
-            font = ImageFont.load_default()
+        # Get a font - try several alternatives
+        font_large = None
+        font_small = None
+        
+        # List of fonts to try, from most preferred to default
+        font_paths = [
+            "arial.ttf",
+            "Arial.ttf", 
+            "DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
+        ]
+        
+        # Try to load a font
+        for font_path in font_paths:
+            try:
+                font_large = ImageFont.truetype(font_path, 60)
+                font_small = ImageFont.truetype(font_path, 40)
+                logger.info(f"Successfully loaded font: {font_path}")
+                break
+            except (IOError, OSError):
+                continue
+                
+        # If no fonts loaded successfully, use default
+        if font_large is None:
+            logger.warning("Could not load any fonts, using default")
+            font_large = ImageFont.load_default()
+            font_small = ImageFont.load_default()
             
-        draw.text((width//6, height//3), "GUARDS & ROBBERS", fill=(255, 255, 255))
-        draw.text((width//6, height//2), "AI-Powered Cybersecurity", fill=(200, 220, 255))
+        # Draw the text - be careful with text positioning
+        draw.text((width//10, height//4), "GUARDS & ROBBERS", fill=(255, 255, 255), font=font_large)
+        draw.text((width//10, height//2), "AI-Powered Cybersecurity", fill=(200, 220, 255), font=font_small)
         
         # Save the image
         os.makedirs(os.path.dirname(image_path), exist_ok=True)
-        image.save(image_path, "PNG")
+        try:
+            image.save(image_path, "PNG")
+            logger.info(f"Successfully created OG image at {image_path}")
+        except Exception as e:
+            logger.error(f"Failed to save OG image: {e}")
+            # Return a placeholder image if we can't save
+            response = make_response(image.tobytes())
+            response.headers.set('Content-Type', 'image/png')
+            return response
     
     return send_file(image_path, mimetype='image/png')
 
@@ -1161,32 +1220,59 @@ def generate_og_image():
             blue_val = 120 + (i * 10)
             draw.rectangle([(0, y_start), (width, y_end)], fill=(20, 80, blue_val))
         
-        # Try to use a system font, or use default if not available
-        try:
-            logo_font = ImageFont.truetype("arial.ttf", 60)
-            title_font = ImageFont.truetype("arial.ttf", 72)
-            subtitle_font = ImageFont.truetype("arial.ttf", 36)
-        except IOError:
-            # Fall back to default fonts
+        # Get a font - try several alternatives
+        logo_font = None
+        title_font = None
+        subtitle_font = None
+        
+        # List of fonts to try, from most preferred to default
+        font_paths = [
+            "arial.ttf",
+            "Arial.ttf", 
+            "DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
+        ]
+        
+        # Try to load a font
+        for font_path in font_paths:
+            try:
+                logo_font = ImageFont.truetype(font_path, 60)
+                title_font = ImageFont.truetype(font_path, 72)
+                subtitle_font = ImageFont.truetype(font_path, 36)
+                logger.info(f"Successfully loaded font: {font_path}")
+                break
+            except (IOError, OSError):
+                continue
+                
+        # If no fonts loaded successfully, use default
+        if logo_font is None:
+            logger.warning("Could not load any fonts, using default")
             logo_font = ImageFont.load_default()
             title_font = ImageFont.load_default()
             subtitle_font = ImageFont.load_default()
         
-        # Add text with simple positioning
+        # Add text
         logo_text = "GUARDS & ROBBERS"
         title_text = "AI-Powered Cybersecurity"
         subtitle_text = "Outsmart threats. Secure your network."
         
         # Position text (simple fixed positions)
-        draw.text((width//6, height//4), logo_text, font=logo_font, fill=(130, 180, 255))
-        draw.text((width//6, height//2 - 30), title_text, font=title_font, fill=(255, 255, 255))
-        draw.text((width//6, height//2 + 60), subtitle_text, font=subtitle_font, fill=(220, 220, 220))
+        draw.text((width//6, height//4), logo_text, fill=(130, 180, 255), font=logo_font)
+        draw.text((width//6, height//2 - 30), title_text, fill=(255, 255, 255), font=title_font)
+        draw.text((width//6, height//2 + 60), subtitle_text, fill=(220, 220, 220), font=subtitle_font)
         
         # Save the image
         image_path = os.path.join(app.root_path, 'static', 'images', 'og-image.png')
-        image.save(image_path, "PNG")
+        os.makedirs(os.path.dirname(image_path), exist_ok=True)
         
-        return jsonify({"status": "success", "message": "OG image generated successfully"}), 200
+        try:
+            image.save(image_path, "PNG")
+            logger.info(f"Successfully created OG image at {image_path}")
+            return jsonify({"status": "success", "message": "OG image generated successfully"}), 200
+        except Exception as e:
+            logger.error(f"Failed to save OG image: {e}")
+            return jsonify({"status": "error", "message": f"Failed to save image: {str(e)}"}), 500
         
     except Exception as e:
         logger.error(f"Error generating OG image: {e}")
@@ -1196,6 +1282,81 @@ def generate_og_image():
 def og_image_template():
     """Template for creating the Open Graph image"""
     return render_template('og_image_template.html')
+
+# Initialize in-memory storage as a fallback
+SUBSCRIBERS = []
+if not mongodb_connected:
+    # Load subscribers from JSON file if MongoDB is not available
+    SUBSCRIBERS = load_subscribers_from_json()
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    email = request.form.get('email', '').strip().lower()
+    name = request.form.get('name', '').strip()
+    
+    if not email or not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return jsonify({'success': False, 'message': 'Please enter a valid email address'}), 400
+    
+    subscriber = {
+        'email': email,
+        'name': name,
+        'subscription_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'unsubscribe_token': str(uuid.uuid4())
+    }
+    
+    # If MongoDB is connected, save to database
+    if mongodb_connected:
+        try:
+            try:
+                result = subscribers_collection.update_one(
+                    {'email': email},
+                    {'$set': subscriber},
+                    upsert=True
+                )
+                
+                if result.modified_count > 0 or result.upserted_id:
+                    logger.info(f"Subscriber saved to MongoDB: {email}")
+                else:
+                    logger.warning(f"Failed to save subscriber to MongoDB: {email}")
+            except Exception as e:
+                error_message = str(e)
+                logger.error(f"Error updating subscriber in MongoDB: {error_message}")
+                
+        except Exception as e:
+            error_message = str(e)
+            logger.error(f"Error saving to MongoDB: {error_message}")
+    # Otherwise save to in-memory list and JSON file
+    else:
+        try:
+            # Check if email already exists
+            existing = False
+            for i, sub in enumerate(SUBSCRIBERS):
+                if sub['email'] == email:
+                    # Update existing subscriber
+                    SUBSCRIBERS[i] = subscriber
+                    existing = True
+                    break
+            
+            if not existing:
+                SUBSCRIBERS.append(subscriber)
+            
+            # Save to JSON file
+            save_subscribers_to_json(SUBSCRIBERS)
+            logger.info(f"Subscriber saved to JSON: {email}")
+        except Exception as e:
+            logger.error(f"Error saving to JSON: {e}")
+    
+    # Send welcome email
+    try:
+        result = send_welcome_email(email, name, subscriber['unsubscribe_token'])
+        if result:
+            logger.info(f"Welcome email sent to {email}")
+        else:
+            logger.warning(f"Failed to send welcome email to {email}")
+    except Exception as e:
+        logger.error(f"Error sending welcome email: {e}")
+    
+    return jsonify({'success': True, 'message': 'Thank you for subscribing!'}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
