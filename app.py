@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, g
+from flask import Flask, render_template, request, jsonify, g, redirect, url_for, flash, session
 import os
 import json
 from datetime import datetime
@@ -12,6 +12,7 @@ from security_contract import requires_auth, requires_role, log_database_access
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'dev_secret_key')  # Add secret key for flash messages
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -97,6 +98,146 @@ def get_lead_count():
     except Exception as e:
         logger.error(f"Error getting lead count: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+# Admin dashboard route
+@app.route('/admin/dashboard')
+@requires_auth
+@requires_role(['admin', 'manager'])
+def admin_dashboard():
+    try:
+        # Get query parameters for filtering and sorting
+        status_filter = request.args.get('status', '')
+        sort_by = request.args.get('sort', 'timestamp')
+        sort_dir = request.args.get('dir', 'desc')
+        search_query = request.args.get('q', '')
+        
+        # Build filter query
+        filter_query = {}
+        if status_filter and status_filter != 'all':
+            filter_query['status'] = status_filter
+            
+        # Add search functionality
+        if search_query:
+            # Search in multiple fields
+            filter_query['$or'] = [
+                {'name': {'$regex': search_query, '$options': 'i'}},
+                {'email': {'$regex': search_query, '$options': 'i'}},
+                {'company': {'$regex': search_query, '$options': 'i'}},
+                {'network': {'$regex': search_query, '$options': 'i'}}
+            ]
+        
+        # Determine sort direction
+        sort_direction = -1 if sort_dir == 'desc' else 1
+        
+        # Get leads with filtering and sorting
+        leads = secure_mongo.find_documents(
+            filter_query, 
+            sort=[(sort_by, sort_direction)]
+        )
+        
+        # Convert ObjectId to string and format timestamp for template
+        serializable_leads = []
+        for lead in leads:
+            lead['_id'] = str(lead['_id'])
+            lead['timestamp'] = lead['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
+            serializable_leads.append(lead)
+        
+        # Get available statuses for filter dropdown
+        statuses = secure_mongo.distinct_values('status') or ['New Lead']
+        
+        # Get today's lead count for dashboard stats
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        today_leads_count = secure_mongo.count_documents({
+            'timestamp': {'$gte': today}
+        })
+        
+        # Pass username from session if available
+        username = session.get('username', 'Admin')
+        
+        return render_template(
+            'admin_dashboard.html',
+            leads=serializable_leads,
+            username=username,
+            status_filter=status_filter,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
+            search_query=search_query,
+            statuses=statuses,
+            today_leads_count=today_leads_count
+        )
+    except Exception as e:
+        logger.error(f"Error rendering admin dashboard: {e}")
+        flash(f"Error loading dashboard: {str(e)}", "danger")
+        return render_template('admin_dashboard.html', leads=[], username='Admin')
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.clear()
+    flash("You have been logged out successfully", "info")
+    return redirect(url_for('admin_login'))
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    # Simple implementation - security is handled by requires_auth decorator
+    if request.method == 'POST':
+        username = request.form.get('username')
+        session['username'] = username
+        return redirect(url_for('admin_dashboard'))
+    return render_template('admin_login.html')
+
+@app.route('/admin/leads/export', methods=['GET'])
+@requires_auth
+@requires_role(['admin', 'manager'])
+def export_leads():
+    try:
+        # Get query parameters for filtering
+        status_filter = request.args.get('status', '')
+        search_query = request.args.get('q', '')
+        
+        # Build filter query
+        filter_query = {}
+        if status_filter and status_filter != 'all':
+            filter_query['status'] = status_filter
+            
+        # Add search functionality
+        if search_query:
+            # Search in multiple fields
+            filter_query['$or'] = [
+                {'name': {'$regex': search_query, '$options': 'i'}},
+                {'email': {'$regex': search_query, '$options': 'i'}},
+                {'company': {'$regex': search_query, '$options': 'i'}},
+                {'network': {'$regex': search_query, '$options': 'i'}}
+            ]
+        
+        # Get leads with filtering
+        leads = secure_mongo.find_documents(filter_query)
+        
+        # Convert to CSV format
+        csv_data = "ID,Company,Name,Email,Network,Status,Timestamp\n"
+        for lead in leads:
+            # Format CSV row, handle potential commas in fields
+            csv_row = [
+                str(lead['_id']),
+                f'"{lead["company"]}"',
+                f'"{lead["name"]}"',
+                lead["email"],
+                f'"{lead["network"]}"',
+                lead.get("status", "New Lead"),
+                lead["timestamp"].strftime('%Y-%m-%d %H:%M:%S')
+            ]
+            csv_data += ",".join(csv_row) + "\n"
+        
+        # Return as downloadable CSV
+        from flask import Response
+        return Response(
+            csv_data,
+            mimetype="text/csv",
+            headers={"Content-disposition": "attachment; filename=leads_export.csv"}
+        )
+    except Exception as e:
+        logger.error(f"Error exporting leads: {e}")
+        flash(f"Error exporting leads: {str(e)}", "danger")
+        return redirect(url_for('admin_dashboard'))
 
 # Admin endpoints with security measures
 @app.route('/admin/leads', methods=['GET'])

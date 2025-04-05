@@ -114,7 +114,7 @@ class SecureMongoClient:
             logger.error(f"Error finding document: {e}")
             return None
     
-    def find_documents(self, query, limit=0, collection_name=None):
+    def find_documents(self, query, limit=0, collection_name=None, sort=None):
         """Find multiple documents with security checks and logging"""
         collection = self._get_collection(collection_name)
         if not collection:
@@ -122,10 +122,25 @@ class SecureMongoClient:
         
         try:
             # Log database access
-            log_database_access(collection.name, "find", query=query)
+            log_info = {
+                "query": query,
+                "limit": limit if limit > 0 else "no limit"
+            }
+            if sort:
+                log_info["sort"] = sort
+            log_database_access(collection.name, "find", **log_info)
             
             # Find documents
-            cursor = collection.find(query).limit(limit) if limit > 0 else collection.find(query)
+            cursor = collection.find(query)
+            
+            # Apply sorting if provided
+            if sort:
+                cursor = cursor.sort(sort)
+                
+            # Apply limit if provided
+            if limit > 0:
+                cursor = cursor.limit(limit)
+                
             documents = list(cursor)
             
             logger.info(f"Found {len(documents)} documents matching query")
@@ -193,23 +208,63 @@ class SecureMongoClient:
             logger.error(f"Error counting documents: {e}")
             return 0
     
+    def distinct_values(self, field, query=None, collection_name=None):
+        """Get distinct values for a field with security checks and logging"""
+        collection = self._get_collection(collection_name)
+        if not collection:
+            return []
+        
+        query = query or {}
+        
+        try:
+            # Log database access
+            log_database_access(collection.name, "distinct", field=field, query=query)
+            
+            # Get distinct values
+            values = collection.distinct(field, query)
+            
+            logger.info(f"Found {len(values)} distinct values for {field}")
+            return values
+        except Exception as e:
+            logger.error(f"Error getting distinct values: {e}")
+            return []
+    
+    def aggregate(self, pipeline, collection_name=None):
+        """Perform aggregation with security checks and logging"""
+        collection = self._get_collection(collection_name)
+        if not collection:
+            return []
+        
+        try:
+            # Log database access
+            log_database_access(collection.name, "aggregate", pipeline=pipeline)
+            
+            # Perform aggregation
+            result = list(collection.aggregate(pipeline))
+            
+            logger.info(f"Aggregation returned {len(result)} documents")
+            return result
+        except Exception as e:
+            logger.error(f"Error performing aggregation: {e}")
+            return []
+    
     def _get_collection(self, collection_name=None):
         """Get a collection, reconnecting if necessary"""
         if not self.client:
             if not self.connect():
                 return None
         
-        collection = self.collection
         if collection_name:
-            collection = self.db[collection_name]
-        
-        return collection
+            return self.db[collection_name]
+        else:
+            return self.collection
 
 def get_secure_mongo_client():
-    """Get a secure MongoDB client singleton"""
-    global _secure_mongo_client
-    
-    if '_secure_mongo_client' not in globals() or _secure_mongo_client is None:
-        _secure_mongo_client = SecureMongoClient()
-    
-    return _secure_mongo_client 
+    """Get a secure MongoDB client singleton instance"""
+    try:
+        if not hasattr(get_secure_mongo_client, 'instance'):
+            get_secure_mongo_client.instance = SecureMongoClient()
+        return get_secure_mongo_client.instance
+    except Exception as e:
+        logger.error(f"Error initializing secure MongoDB client: {e}")
+        return None 

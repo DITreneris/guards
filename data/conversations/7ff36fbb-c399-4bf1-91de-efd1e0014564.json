@@ -1,0 +1,207 @@
+{
+  "id": "7ff36fbb-c399-4bf1-91de-efd1e0014564",
+  "state": {
+    "current_topic": "help",
+    "topics_discussed": [
+      "help",
+      "problem"
+    ],
+    "user_profile": {
+      "known_interests": [],
+      "concerns": [],
+      "detected_sentiment": "neutral",
+      "detected_satisfaction": null
+    },
+    "session": {
+      "start_time": "2025-04-05T10:15:17.832954",
+      "message_count": 4,
+      "last_user_message_time": "2025-04-05T10:15:17.920544",
+      "last_bot_message_time": "2025-04-05T10:15:17.941482"
+    },
+    "flags": {
+      "needs_human_intervention": false,
+      "user_frustrated": false,
+      "urgent": false
+    },
+    "context_memory": [
+      {
+        "time": "2025-04-05T10:15:17.838940",
+        "type": "user_message",
+        "intent": "help",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T10:15:17.843931",
+        "type": "bot_message",
+        "content": "I understand your request."
+      },
+      {
+        "time": "2025-04-05T10:15:17.875254",
+        "type": "user_message",
+        "intent": "problem",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T10:15:17.877256",
+        "type": "bot_message",
+        "content": "I understand your request."
+      },
+      {
+        "time": "2025-04-05T10:15:17.911561",
+        "type": "user_message",
+        "intent": "problem",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T10:15:17.915552",
+        "type": "bot_message",
+        "content": "I understand your request."
+      },
+      {
+        "time": "2025-04-05T10:15:17.937492",
+        "type": "user_message",
+        "intent": "help",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T10:15:17.941482",
+        "type": "bot_message",
+        "content": "I understand your request."
+      }
+    ],
+    "product": "ARP Guard",
+    "support_level": "premium",
+    "messages": [
+      {
+        "id": "859224ee-735d-4ac1-a088-0f6c61eeef64",
+        "text": "Hello, I need help with setting up ARP Guard.",
+        "sender": "user",
+        "timestamp": "2025-04-05T10:15:17.832954",
+        "analysis": {
+          "id": "0c374c9e-ceba-4072-a02f-aca17f81e2dc",
+          "timestamp": "2025-04-05T10:15:17.833952",
+          "text": "Hello, I need help with setting up ARP Guard.",
+          "preprocessed_text": "hello need help setting arp guard",
+          "conversation_id": "7ff36fbb-c399-4bf1-91de-efd1e0014564",
+          "intent": {
+            "intent": "help",
+            "confidence": 0.8444444444444444,
+            "method": "rule-based",
+            "alternatives": []
+          },
+          "sentiment": {
+            "overall": "neutral",
+            "confidence": 0.6,
+            "method": "rule-based"
+          }
+        }
+      },
+      {
+        "id": "65b591e1-bf11-4e74-9ce1-c946ada890a7",
+        "text": "I understand your request.",
+        "sender": "bot",
+        "timestamp": "2025-04-05T10:15:17.843931"
+      },
+      {
+        "id": "a60d6c76-8cd6-4c32-9f87-62c7970e6274",
+        "text": "I can't get the network monitoring to work properly.",
+        "sender": "user",
+        "timestamp": "2025-04-05T10:15:17.846930",
+        "analysis": {
+          "id": "352d06c1-c900-4729-a458-ab2398db5476",
+          "timestamp": "2025-04-05T10:15:17.846930",
+          "text": "I can't get the network monitoring to work properly.",
+          "preprocessed_text": "cant get network monitoring work properly",
+          "conversation_id": "7ff36fbb-c399-4bf1-91de-efd1e0014564",
+          "intent": {
+            "intent": "problem",
+            "confidence": 0.9,
+            "method": "rule-based",
+            "alternatives": []
+          },
+          "sentiment": {
+            "overall": "neutral",
+            "confidence": 0.6,
+            "method": "rule-based"
+          }
+        }
+      },
+      {
+        "id": "bc5d89ce-714d-4b1c-9c78-f314edc4ed7b",
+        "text": "I understand your request.",
+        "sender": "bot",
+        "timestamp": "2025-04-05T10:15:17.877256"
+      },
+      {
+        "id": "595bb233-0abe-45cb-bc37-480fcad7c9bb",
+        "text": "This is so frustrating! Nothing seems to work as described in the manual.",
+        "sender": "user",
+        "timestamp": "2025-04-05T10:15:17.880242",
+        "analysis": {
+          "id": "51461ace-0fe3-405d-bf7e-36ac5a86e80d",
+          "timestamp": "2025-04-05T10:15:17.880242",
+          "text": "This is so frustrating! Nothing seems to work as described in the manual.",
+          "preprocessed_text": "frustrating nothing seems work described manual",
+          "conversation_id": "7ff36fbb-c399-4bf1-91de-efd1e0014564",
+          "intent": {
+            "intent": "problem",
+            "confidence": 0.4737791652791654,
+            "method": "ml",
+            "alternatives": [
+              {
+                "intent": "help",
+                "confidence": 0.34789477189477197
+              },
+              {
+                "intent": "greeting",
+                "confidence": 0.09053729603729604
+              }
+            ]
+          },
+          "sentiment": {
+            "overall": "neutral",
+            "confidence": 0.6,
+            "method": "rule-based"
+          }
+        }
+      },
+      {
+        "id": "77e6f92e-9a22-4aee-af0a-cab71dacc48f",
+        "text": "I understand your request.",
+        "sender": "bot",
+        "timestamp": "2025-04-05T10:15:17.915552"
+      },
+      {
+        "id": "f27900b7-9543-462c-b2a6-5a902ce8a36f",
+        "text": "Can someone from your team help me configure this directly?",
+        "sender": "user",
+        "timestamp": "2025-04-05T10:15:17.920544",
+        "analysis": {
+          "id": "d62d8cd3-e21d-42f7-8945-bc90564abf9e",
+          "timestamp": "2025-04-05T10:15:17.920544",
+          "text": "Can someone from your team help me configure this directly?",
+          "preprocessed_text": "can someone team help configure directly",
+          "conversation_id": "7ff36fbb-c399-4bf1-91de-efd1e0014564",
+          "intent": {
+            "intent": "help",
+            "confidence": 0.771186440677966,
+            "method": "rule-based",
+            "alternatives": []
+          },
+          "sentiment": {
+            "overall": "neutral",
+            "confidence": 0.6,
+            "method": "rule-based"
+          }
+        }
+      },
+      {
+        "id": "a57352eb-80bc-4927-8b15-a25ef20513a5",
+        "text": "I understand your request.",
+        "sender": "bot",
+        "timestamp": "2025-04-05T10:15:17.941482"
+      }
+    ]
+  },
+  "updated_at": "2025-04-05T10:15:17.941482"
+}

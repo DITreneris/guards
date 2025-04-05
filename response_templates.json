@@ -1,0 +1,10 @@
+{
+    "greeting": "Hello! Thank you for reaching out to Guards & Robbers. How can I assist you with our security services today?",
+    "farewell": "Thank you for contacting Guards & Robbers. Have a great day!",
+    "question": "I understand you have a question about {topic}. Let me help you with that.",
+    "support": "I'm sorry to hear you're experiencing an issue. Let me help you resolve this. Could you please provide more details about the problem?",
+    "pricing": "I'd be happy to provide information about our pricing options. Our security services are tailored to your specific needs. Would you like to discuss your requirements in more detail?",
+    "feature": "Yes, our security system includes {feature}. Would you like more details about this capability?",
+    "schedule": "I can help you schedule a {type}. When would you like to meet? We have availability for the following time slots: [time slots]",
+    "fallback": "I'm not sure I understand. Could you please rephrase your question? I'm here to help with information about our security services, pricing, features, or scheduling a consultation."
+} 

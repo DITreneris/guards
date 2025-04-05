@@ -1,0 +1,42 @@
+# Ignore Patterns for Documentation Spell Checker
+version: 1.0.0
+last_updated: 2025-05-16
+
+patterns:
+  # Code-related patterns
+  - pattern: "```.*?```"  # Code blocks
+  - pattern: "`.*?`"      # Inline code
+  - pattern: "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"  # URLs
+  - pattern: "[A-Z][a-z]+[A-Z][a-z]+"  # CamelCase
+  - pattern: "[A-Z]+[a-z]+"  # PascalCase
+  - pattern: "[a-z]+_[a-z]+"  # snake_case
+  - pattern: "[A-Z]+_[A-Z]+"  # SCREAMING_SNAKE_CASE
+  - pattern: "[a-z]+-[a-z]+"  # kebab-case
+  
+  # Version numbers and dates
+  - pattern: "v?\\d+\\.\\d+\\.\\d+"  # Version numbers
+  - pattern: "\\d{4}-\\d{2}-\\d{2}"  # Dates (YYYY-MM-DD)
+  - pattern: "\\d{2}:\\d{2}:\\d{2}"  # Times (HH:MM:SS)
+  
+  # File paths and commands
+  - pattern: "/[^\\s]+"  # Unix paths
+  - pattern: "[A-Z]:\\\\[^\\s]+"  # Windows paths
+  - pattern: "\\$[^\\s]+"  # Environment variables
+  - pattern: "\\.[^\\s]+"  # File extensions
+  
+  # Special characters and formatting
+  - pattern: "&[^;]+;"  # HTML entities
+  - pattern: "\\*\\*[^\\*]+\\*\\*"  # Bold text
+  - pattern: "\\*[^\\*]+\\*"  # Italic text
+  - pattern: "~~[^~]+~~"  # Strikethrough text
+  - pattern: "\\[[^\\]]+\\]\\([^\\)]+\\)"  # Markdown links
+  
+  # Numbers and measurements
+  - pattern: "\\d+"  # Numbers
+  - pattern: "\\d+\\.\\d+"  # Decimal numbers
+  - pattern: "\\d+[kmgt]b?"  # File sizes
+  - pattern: "\\d+[km]bps"  # Network speeds
+  - pattern: "\\d+[km]hz"  # Frequencies
+  
+  # Email addresses
+  - pattern: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}" 

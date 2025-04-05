@@ -1,0 +1,49 @@
+{
+  "id": "07c5ff71-e0f6-4dba-ad82-30cf5fe227bd",
+  "timestamp": "2025-04-05T09:43:26.244673",
+  "text": "\n    Customer Information:\n    Name: Jane Wilson\n    Email: jane.wilson@example.org\n    Company: TechSolutions Inc.\n    \n    Product: ARP Guard Pro\n    License: EF-12345-67890\n    Version: 0.6.0\n    \n    Issue Details:\n    The system is reporting false positives when detecting ARP attacks from IP address 192.168.1.45.\n    This has been happening since Tuesday, June 15th.\n    \n    Network Configuration:\n    - Router Model: Cisco RV340\n    - Network Size: 120 devices\n    - Firewall: Enabled\n    - IPS Mode: Active\n    \n    Error Code: ERR-5523\n    ",
+  "confidence": 1.0,
+  "entity_count": 13,
+  "entities": {
+    "email": [
+      "jane.wilson@example.org"
+    ],
+    "ip_address": [
+      "192.168.1.45"
+    ],
+    "version": [
+      ".0",
+      ".1"
+    ],
+    "error_code": [
+      "ERR-5523"
+    ],
+    "license_key": [
+      "EF-12345-67890"
+    ],
+    "product": [
+      "ARP Guard",
+      "ARP Guard Pro"
+    ],
+    "issue_type": [
+      "false positive",
+      "Error",
+      "attack"
+    ],
+    "network_device": [
+      "Router",
+      "Firewall"
+    ]
+  },
+  "requires_validation": false,
+  "customer": {
+    "name": "Jane Wilson",
+    "email": "jane.wilson@example.org",
+    "company": "TechSolutions Inc"
+  },
+  "product": {
+    "name": "ARP Guard",
+    "version": ".0",
+    "license": "EF-12345-67890"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "id": "e14c5f1c-fc98-4317-971c-d139e9d3748c",
+  "processed_at": "2025-04-05T10:16:14.792826",
+  "metadata": {
+    "subject": "Urgent: Security breach detected by ARP Guard",
+    "from": "John Smith <john.smith@acmecorp.com>",
+    "to": "Support Team <support@guardsrobbers.com>",
+    "cc": "",
+    "date": "Fri, 14 Apr 2023 09:32:45 -0500",
+    "message_id": "",
+    "in_reply_to": "",
+    "references": "",
+    "sender_domain": "acmecorp.com"
+  },
+  "content": {
+    "text": "Hello Support,\n\nOur ARP Guard installation just detected a potential security breach on our network.\nThe alert shows several suspicious ARP packets coming from IP 192.168.1.45 which\ndoesn't belong to any of our registered devices.\n\nWe've temporarily isolated that segment of the network, but we need guidance on\nhow to proceed with the investigation. Is there a way to determine if this is a \nfalse positive?\n\nThis is quite urgent as we need to restore full network functionality as soon as possible.\n\nBest regards,\nJohn Smith\nIT Security Manager\nACME Corporation\n+1 (555) 123-4567\n",
+    "html": false,
+    "html_preview": null,
+    "attachment_count": 0,
+    "attachments": [],
+    "urls": []
+  },
+  "analysis": {
+    "categorization": {
+      "enabled": true,
+      "primary_category": "support",
+      "confidence": 1.0,
+      "categories": [
+        {
+          "category": "support",
+          "confidence": 1.0
+        }
+      ],
+      "method": "rule-based"
+    },
+    "sentiment": {
+      "overall": "neutral",
+      "confidence": 0.6,
+      "method": "rule-based"
+    },
+    "word_count": 94,
+    "character_count": 582,
+    "keywords": [
+      {
+        "word": "security",
+        "count": 2
+      },
+      {
+        "word": "need",
+        "count": 2
+      },
+      {
+        "word": "hello",
+        "count": 1
+      },
+      {
+        "word": "support,",
+        "count": 1
+      },
+      {
+        "word": "guard",
+        "count": 1
+      },
+      {
+        "word": "installation",
+        "count": 1
+      },
+      {
+        "word": "just",
+        "count": 1
+      },
+      {
+        "word": "detected",
+        "count": 1
+      },
+      {
+        "word": "potential",
+        "count": 1
+      },
+      {
+        "word": "breach",
+        "count": 1
+      }
+    ],
+    "urgent": true
+  },
+  "is_auto_reply": false,
+  "priority": {
+    "level": "high",
+    "score": 9,
+    "factors": [
+      "urgent keywords",
+      "support request"
+    ]
+  }
+}

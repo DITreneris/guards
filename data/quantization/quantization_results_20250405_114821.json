@@ -1,0 +1,496 @@
+{
+  "intent": {
+    "model_type": "intent",
+    "model_name": "Intent Recognition",
+    "bit_depth": 16,
+    "weight_threshold": 0.001,
+    "original_size_bytes": 210982,
+    "quantized_size_bytes": 211714,
+    "size_reduction_percent": -0.34694902882710377,
+    "performance_comparison": {
+      "sample_count": 5,
+      "differences": 0,
+      "difference_percent": 0.0,
+      "original_predictions": [
+        {
+          "intent": "greeting",
+          "confidence": 0.39,
+          "method": "ml"
+        },
+        {
+          "intent": "help",
+          "confidence": 0.8,
+          "method": "ml"
+        },
+        {
+          "intent": "farewell",
+          "confidence": 0.36,
+          "method": "ml"
+        },
+        {
+          "intent": "farewell",
+          "confidence": 0.75,
+          "method": "ml"
+        },
+        {
+          "intent": "problem",
+          "confidence": 0.77,
+          "method": "ml"
+        }
+      ],
+      "quantized_predictions": [
+        {
+          "intent": "greeting",
+          "confidence": 0.39,
+          "method": "ml"
+        },
+        {
+          "intent": "help",
+          "confidence": 0.8,
+          "method": "ml"
+        },
+        {
+          "intent": "farewell",
+          "confidence": 0.36,
+          "method": "ml"
+        },
+        {
+          "intent": "farewell",
+          "confidence": 0.75,
+          "method": "ml"
+        },
+        {
+          "intent": "problem",
+          "confidence": 0.77,
+          "method": "ml"
+        }
+      ]
+    },
+    "timestamp": "2025-04-05 11:48:21"
+  },
+  "sentiment": {
+    "model_type": "sentiment",
+    "model_name": "Sentiment Analysis",
+    "bit_depth": 16,
+    "weight_threshold": 0.001,
+    "original_size_bytes": 5053,
+    "quantized_size_bytes": 5174,
+    "size_reduction_percent": -2.3946170591727656,
+    "performance_comparison": {
+      "sample_count": 5,
+      "differences": 0,
+      "difference_percent": 0.0,
+      "original_predictions": [
+        {
+          "overall": "positive",
+          "confidence": 0.9,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 1.0,
+          "details": {
+            "score": 1.0,
+            "word_count": 7,
+            "sentiment_words": 1,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 1,
+              "question_count": 0
+            }
+          }
+        },
+        {
+          "overall": "positive",
+          "confidence": 0.7543295463381762,
+          "method": "ml",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.5086590926763523,
+          "details": {}
+        },
+        {
+          "overall": "neutral",
+          "confidence": 0.6,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.0,
+          "details": {
+            "score": 0.0,
+            "word_count": 7,
+            "sentiment_words": 0,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 0,
+              "question_count": 0
+            }
+          }
+        },
+        {
+          "overall": "positive",
+          "confidence": 0.85,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.7,
+          "details": {
+            "score": 0.7,
+            "word_count": 7,
+            "sentiment_words": 1,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 0,
+              "question_count": 0
+            }
+          }
+        },
+        {
+          "overall": "neutral",
+          "confidence": 0.6,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.0,
+          "details": {
+            "score": 0.0,
+            "word_count": 7,
+            "sentiment_words": 0,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 0,
+              "question_count": 1
+            }
+          }
+        }
+      ],
+      "quantized_predictions": [
+        {
+          "overall": "positive",
+          "confidence": 0.9,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 1.0,
+          "details": {
+            "score": 1.0,
+            "word_count": 7,
+            "sentiment_words": 1,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 1,
+              "question_count": 0
+            }
+          }
+        },
+        {
+          "overall": "positive",
+          "confidence": 0.7543295463381762,
+          "method": "ml",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.5086590926763523,
+          "details": {}
+        },
+        {
+          "overall": "neutral",
+          "confidence": 0.6,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.0,
+          "details": {
+            "score": 0.0,
+            "word_count": 7,
+            "sentiment_words": 0,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 0,
+              "question_count": 0
+            }
+          }
+        },
+        {
+          "overall": "positive",
+          "confidence": 0.85,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.7,
+          "details": {
+            "score": 0.7,
+            "word_count": 7,
+            "sentiment_words": 1,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 0,
+              "question_count": 0
+            }
+          }
+        },
+        {
+          "overall": "neutral",
+          "confidence": 0.6,
+          "method": "rule-based",
+          "emotion": null,
+          "emotion_confidence": null,
+          "intensity": 0.0,
+          "details": {
+            "score": 0.0,
+            "word_count": 7,
+            "sentiment_words": 0,
+            "modifiers": {
+              "has_intensifier": false,
+              "has_diminisher": false,
+              "has_negation": false,
+              "exclamation_count": 0,
+              "question_count": 1
+            }
+          }
+        }
+      ]
+    },
+    "timestamp": "2025-04-05 11:48:21"
+  },
+  "email": {
+    "model_type": "email",
+    "model_name": "Email Categorization",
+    "bit_depth": 16,
+    "weight_threshold": 0.001,
+    "original_size_bytes": 5687,
+    "quantized_size_bytes": 4748,
+    "size_reduction_percent": 16.51134165640935,
+    "performance_comparison": {
+      "sample_count": 5,
+      "differences": 0,
+      "difference_percent": 0.0,
+      "original_predictions": [
+        {
+          "enabled": true,
+          "primary_category": "support",
+          "confidence": 0.4306481374632516,
+          "categories": [
+            {
+              "category": "support",
+              "confidence": 0.4306481374632516
+            },
+            {
+              "category": "sales",
+              "confidence": 0.14233796563418716
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.14233796563418716
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "feature_request",
+          "confidence": 0.2927542705460612,
+          "categories": [
+            {
+              "category": "feature_request",
+              "confidence": 0.2927542705460612
+            },
+            {
+              "category": "other",
+              "confidence": 0.20925849414950015
+            },
+            {
+              "category": "sales",
+              "confidence": 0.16599574510147969
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "bug",
+          "confidence": 0.42465732331298894,
+          "categories": [
+            {
+              "category": "bug",
+              "confidence": 0.42465732331298894
+            },
+            {
+              "category": "sales",
+              "confidence": 0.1438356691717529
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.1438356691717529
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "sales",
+          "confidence": 0.24946149680364707,
+          "categories": [
+            {
+              "category": "sales",
+              "confidence": 0.24946149680364707
+            },
+            {
+              "category": "other",
+              "confidence": 0.24946149680364688
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.16702566879756886
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "other",
+          "confidence": 0.28389225420610403,
+          "categories": [
+            {
+              "category": "other",
+              "confidence": 0.28389225420610403
+            },
+            {
+              "category": "sales",
+              "confidence": 0.21726837067623486
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.16627979170588722
+            }
+          ],
+          "method": "ml"
+        }
+      ],
+      "quantized_predictions": [
+        {
+          "enabled": true,
+          "primary_category": "support",
+          "confidence": 0.4306481374632516,
+          "categories": [
+            {
+              "category": "support",
+              "confidence": 0.4306481374632516
+            },
+            {
+              "category": "sales",
+              "confidence": 0.14233796563418716
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.14233796563418716
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "feature_request",
+          "confidence": 0.2927542705460612,
+          "categories": [
+            {
+              "category": "feature_request",
+              "confidence": 0.2927542705460612
+            },
+            {
+              "category": "other",
+              "confidence": 0.20925849414950015
+            },
+            {
+              "category": "sales",
+              "confidence": 0.16599574510147969
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "bug",
+          "confidence": 0.42465732331298894,
+          "categories": [
+            {
+              "category": "bug",
+              "confidence": 0.42465732331298894
+            },
+            {
+              "category": "sales",
+              "confidence": 0.1438356691717529
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.1438356691717529
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "sales",
+          "confidence": 0.24946149680364707,
+          "categories": [
+            {
+              "category": "sales",
+              "confidence": 0.24946149680364707
+            },
+            {
+              "category": "other",
+              "confidence": 0.24946149680364688
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.16702566879756886
+            }
+          ],
+          "method": "ml"
+        },
+        {
+          "enabled": true,
+          "primary_category": "other",
+          "confidence": 0.28389225420610403,
+          "categories": [
+            {
+              "category": "other",
+              "confidence": 0.28389225420610403
+            },
+            {
+              "category": "sales",
+              "confidence": 0.21726837067623486
+            },
+            {
+              "category": "feature_request",
+              "confidence": 0.16627979170588722
+            }
+          ],
+          "method": "ml"
+        }
+      ]
+    },
+    "timestamp": "2025-04-05 11:48:21"
+  },
+  "summary": {
+    "total_original_size_bytes": 221722,
+    "total_quantized_size_bytes": 221636,
+    "overall_size_reduction_percent": 0.03878731023534421,
+    "models_processed": 3,
+    "bit_depth": 16,
+    "weight_threshold": 0.001,
+    "timestamp": "2025-04-05 11:48:21"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "test_model": {
+    "model_id": "test_model",
+    "accuracy": 1.0,
+    "latency_avg_ms": 62.86096511933074,
+    "latency_p95_ms": 115.0424603195284,
+    "latency_p99_ms": 118.49815382864077,
+    "throughput_per_minute": 110,
+    "error_rate": 0.0,
+    "prediction_count": 110,
+    "last_updated": "2025-04-05T11:54:58.667756"
+  }
+}

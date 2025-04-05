@@ -1,0 +1,84 @@
+# Documentation Validation Rules
+version: 1.0.0
+last_updated: 2025-05-16
+
+# Required sections in all documentation files
+required_sections:
+  - Overview
+  - Table of Contents
+  - Change Log
+  - Contact
+
+# Required metadata fields
+required_metadata:
+  - Version
+  - Last Updated
+  - Document Owner
+  - Access Level
+
+# Markdown formatting standards
+markdown_standards:
+  max_line_length: 100
+  heading_levels:
+    - "#"
+    - "##"
+    - "###"
+    - "####"
+  code_block_languages:
+    - python
+    - bash
+    - json
+    - yaml
+    - markdown
+    - http
+    - mermaid
+
+# File naming conventions
+file_naming:
+  pattern: "^[a-z0-9_]+\.md$"
+  exceptions:
+    - "README.md"
+    - "CHANGELOG.md"
+
+# Directory structure validation
+directory_structure:
+  required_directories:
+    - "1. Project Overview"
+    - "2. Product Documentation"
+    - "3. Technical Documentation"
+    - "4. Development"
+    - "5. Operations"
+  required_files:
+    - "README.md"
+    - "CHANGELOG.md"
+    - "documentation_hierarchy.md"
+
+# Link validation
+link_validation:
+  allowed_domains:
+    - "guardsandrobers.com"
+    - "github.com"
+  require_https: true
+  validate_internal_links: true
+
+# Content validation
+content_validation:
+  min_section_length: 50
+  max_section_length: 2000
+  require_examples: true
+  require_diagrams: false
+
+# Version control
+version_control:
+  require_semantic_versioning: true
+  version_pattern: "^\\d+\\.\\d+\\.\\d+$"
+  require_changelog_entry: true
+
+# Review process
+review_process:
+  require_review_history: true
+  min_reviewers: 2
+  required_roles:
+    - Technical Writer
+    - Subject Matter Expert
+    - Documentation Lead 

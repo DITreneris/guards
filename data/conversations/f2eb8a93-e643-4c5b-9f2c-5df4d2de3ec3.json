@@ -1,0 +1,100 @@
+{
+  "id": "f2eb8a93-e643-4c5b-9f2c-5df4d2de3ec3",
+  "state": {
+    "current_topic": null,
+    "topics_discussed": [],
+    "user_profile": {
+      "known_interests": [],
+      "concerns": [],
+      "detected_sentiment": "neutral",
+      "detected_satisfaction": null
+    },
+    "session": {
+      "start_time": "2025-04-05T09:43:25.972622",
+      "message_count": 4,
+      "last_user_message_time": "2025-04-05T09:43:26.134705",
+      "last_bot_message_time": "2025-04-05T09:43:26.164848"
+    },
+    "flags": {
+      "needs_human_intervention": true,
+      "user_frustrated": false,
+      "urgent": false
+    },
+    "context_memory": [
+      {
+        "time": "2025-04-05T09:43:25.979602",
+        "type": "user_message",
+        "content": "Hello, I need help with setting up ARP Guard",
+        "intent": "unknown",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T09:43:25.982595",
+        "type": "bot_message",
+        "content": "I understand you're asking about unknown. How can I help with that?"
+      },
+      {
+        "time": "2025-04-05T09:43:26.033168",
+        "type": "user_message",
+        "content": "I can't get the network monitoring to work properly",
+        "intent": "unknown",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T09:43:26.036154",
+        "type": "bot_message",
+        "content": "I understand you're asking about unknown. How can I help with that?"
+      },
+      {
+        "time": "2025-04-05T09:43:26.098507",
+        "type": "user_message",
+        "content": "This is so frustrating! Nothing is working as described in the documentation",
+        "intent": "unknown",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T09:43:26.105487",
+        "type": "bot_message",
+        "content": "I understand you're asking about unknown. How can I help with that?"
+      },
+      {
+        "time": "2025-04-05T09:43:26.161856",
+        "type": "user_message",
+        "content": "Can someone from your team help me configure this?",
+        "intent": "unknown",
+        "sentiment": "neutral"
+      },
+      {
+        "time": "2025-04-05T09:43:26.164848",
+        "type": "bot_message",
+        "content": "I understand you're asking about unknown. How can I help with that?"
+      }
+    ]
+  },
+  "updated_at": "2025-04-05T09:43:26.181894",
+  "analyses": [
+    {
+      "id": "8a51600b-ca07-417e-811f-c920a4f3f1c1",
+      "timestamp": "2025-04-05T09:43:26.167842",
+      "text": "Can someone from your team help me configure this?",
+      "conversation_id": "f2eb8a93-e643-4c5b-9f2c-5df4d2de3ec3",
+      "word_count": 9,
+      "character_count": 50,
+      "preprocessed_text": "can someone your team help me configure this",
+      "intent": {
+        "name": "unknown",
+        "confidence": 0.1
+      },
+      "sentiment": {
+        "enabled": true,
+        "method": "rule-based",
+        "scores": {
+          "positive": 0.0,
+          "negative": 0.0,
+          "neutral": 1.0
+        },
+        "overall": "neutral"
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-04-05T11:25:44.188418",
+  "standard_monitor": {
+    "total_time_sec": 0.1411755084991455,
+    "avg_time_per_prediction_ms": 0.282351016998291,
+    "health_check_time_sec": 0.0,
+    "metrics_collection_time_sec": 0.0029916763305664062,
+    "predictions_per_second": 3541.6908025730704,
+    "optimized": false
+  },
+  "optimized_monitor": {
+    "total_time_sec": 0.10361623764038086,
+    "avg_time_per_prediction_ms": 0.20723247528076172,
+    "health_check_time_sec": 0.0,
+    "metrics_collection_time_sec": 0.003316640853881836,
+    "predictions_per_second": 4825.49850666593,
+    "optimized": true
+  },
+  "memory_optimization": {
+    "optimization_time_sec": 0.020594358444213867,
+    "memory_used_before_percent": 45.88095619048558,
+    "memory_used_after_percent": 60.21814196701534,
+    "memory_improvement_percent": -14.337185776529765
+  },
+  "disk_optimization": {
+    "optimization_time_sec": 0.0019965171813964844,
+    "disk_used_before_percent": 51.71826920863282,
+    "disk_used_after_percent": 61.72747126399383,
+    "disk_improvement_percent": -10.009202055361008
+  },
+  "system_metrics": {
+    "cpu_percent": 44.141523409400676,
+    "memory_used_percent": 59.94003948992089,
+    "disk_used_percent": 53.29500609061826,
+    "process_memory_mb": 299.12771844997894
+  },
+  "summary": {
+    "monitor_speedup_percent": 26.604664830367504,
+    "memory_improvement_percent": -14.337185776529765,
+    "disk_improvement_percent": -10.009202055361008
+  }
+}

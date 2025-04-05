@@ -62,9 +62,12 @@
         }
         
         .status-new { background-color: #cfe2ff; color: #084298; }
+        .status-new-lead { background-color: #cfe2ff; color: #084298; }
         .status-contacted { background-color: #d1e7dd; color: #0f5132; }
-        .status-qualified { background-color: #f8d7da; color: #842029; }
-        .status-rejected { background-color: #e2e3e5; color: #41464b; }
+        .status-qualified { background-color: #fff3cd; color: #664d03; }
+        .status-converted { background-color: #d1e7dd; color: #0f5132; }
+        .status-rejected { background-color: #f8d7da; color: #842029; }
+        .status-closed { background-color: #e2e3e5; color: #41464b; }
         
         .lead-meta {
             font-size: 0.85rem;
@@ -73,6 +76,25 @@
         
         .flash-messages {
             margin: 20px 0;
+        }
+        
+        .sort-icon {
+            margin-left: 5px;
+        }
+        
+        th[data-sort] {
+            cursor: pointer;
+        }
+        
+        th[data-sort]:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .filter-bar {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -127,10 +149,10 @@
                 
                 <!-- Flash Messages -->
                 <div class="flash-messages">
-                    {% with messages = get_flashed_messages() %}
+                    {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert alert-info alert-dismissible fade show">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show">
                                     {{ message }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                 </div>
@@ -154,17 +176,54 @@
                             <div class="card-body">
                                 <h5 class="card-title">New Leads (Today)</h5>
                                 <p class="card-text display-5">
-                                    {{ leads|length }}
+                                    {{ today_leads_count }}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Filtering and Search -->
+                <div class="filter-bar">
+                    <form id="filterForm" action="{{ url_for('admin_dashboard') }}" method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text" id="search-addon"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="q" name="q" placeholder="Search..." 
+                                       value="{{ search_query }}" aria-label="Search" aria-describedby="search-addon">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="status" name="status">
+                                <option value="all" {% if status_filter == 'all' or not status_filter %}selected{% endif %}>All Statuses</option>
+                                {% for status in statuses %}
+                                    <option value="{{ status }}" {% if status_filter == status %}selected{% endif %}>{{ status }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="hidden" name="sort" id="sort" value="{{ sort_by }}">
+                            <input type="hidden" name="dir" id="dir" value="{{ sort_dir }}">
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="bi bi-filter"></i> Filter
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="resetFilters()">
+                                <i class="bi bi-x-circle"></i> Reset
+                            </button>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <a href="{{ url_for('export_leads', status=status_filter, q=search_query) }}" class="btn btn-success">
+                                <i class="bi bi-download"></i> Export CSV
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                
                 <!-- Leads Table -->
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Lead List</h5>
+                        <span class="text-muted">Showing {{ leads|length }} lead{% if leads|length != 1 %}s{% endif %}</span>
                     </div>
                     <div class="card-body">
                         {% if leads %}
@@ -172,12 +231,42 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Company</th>
-                                            <th>Contact</th>
-                                            <th>Email</th>
-                                            <th>Network</th>
-                                            <th>Status</th>
-                                            <th>Date</th>
+                                            <th data-sort="company" onclick="sortTable('company')">
+                                                Company
+                                                {% if sort_by == 'company' %}
+                                                    <i class="bi bi-arrow-{{ 'down' if sort_dir == 'asc' else 'up' }} sort-icon"></i>
+                                                {% endif %}
+                                            </th>
+                                            <th data-sort="name" onclick="sortTable('name')">
+                                                Contact
+                                                {% if sort_by == 'name' %}
+                                                    <i class="bi bi-arrow-{{ 'down' if sort_dir == 'asc' else 'up' }} sort-icon"></i>
+                                                {% endif %}
+                                            </th>
+                                            <th data-sort="email" onclick="sortTable('email')">
+                                                Email
+                                                {% if sort_by == 'email' %}
+                                                    <i class="bi bi-arrow-{{ 'down' if sort_dir == 'asc' else 'up' }} sort-icon"></i>
+                                                {% endif %}
+                                            </th>
+                                            <th data-sort="network" onclick="sortTable('network')">
+                                                Network
+                                                {% if sort_by == 'network' %}
+                                                    <i class="bi bi-arrow-{{ 'down' if sort_dir == 'asc' else 'up' }} sort-icon"></i>
+                                                {% endif %}
+                                            </th>
+                                            <th data-sort="status" onclick="sortTable('status')">
+                                                Status
+                                                {% if sort_by == 'status' %}
+                                                    <i class="bi bi-arrow-{{ 'down' if sort_dir == 'asc' else 'up' }} sort-icon"></i>
+                                                {% endif %}
+                                            </th>
+                                            <th data-sort="timestamp" onclick="sortTable('timestamp')">
+                                                Date
+                                                {% if sort_by == 'timestamp' %}
+                                                    <i class="bi bi-arrow-{{ 'down' if sort_dir == 'asc' else 'up' }} sort-icon"></i>
+                                                {% endif %}
+                                            </th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -191,17 +280,37 @@
                                                 </td>
                                                 <td>{{ lead.network }}</td>
                                                 <td>
-                                                    <span class="lead-status status-{{ lead.status|lower|replace(' ', '-') if lead.status else 'new' }}">
-                                                        {{ lead.status if lead.status else 'New Lead' }}
-                                                    </span>
+                                                    <div class="dropdown">
+                                                        <span class="lead-status status-{{ lead.status|lower|replace(' ', '-') if lead.status else 'new' }} dropdown-toggle" 
+                                                              data-bs-toggle="dropdown" aria-expanded="false">
+                                                            {{ lead.status if lead.status else 'New Lead' }}
+                                                        </span>
+                                                        <ul class="dropdown-menu">
+                                                            <li><h6 class="dropdown-header">Change Status</h6></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="updateLeadStatus('{{ lead._id }}', 'New Lead')">New Lead</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="updateLeadStatus('{{ lead._id }}', 'Contacted')">Contacted</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="updateLeadStatus('{{ lead._id }}', 'Qualified')">Qualified</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="updateLeadStatus('{{ lead._id }}', 'Converted')">Converted</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="updateLeadStatus('{{ lead._id }}', 'Rejected')">Rejected</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="updateLeadStatus('{{ lead._id }}', 'Closed')">Closed</a></li>
+                                                        </ul>
+                                                    </div>
                                                 </td>
                                                 <td class="lead-meta">
                                                     {{ lead.timestamp if lead.timestamp else 'Unknown date' }}
                                                 </td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        <button type="button" class="btn btn-outline-primary">Edit</button>
-                                                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" 
+                                                                data-bs-target="#editLeadModal" 
+                                                                onclick="prepareEditModal('{{ lead._id }}', '{{ lead.company }}', '{{ lead.name }}', '{{ lead.email }}', '{{ lead.network }}')">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" 
+                                                                data-bs-target="#deleteLeadModal" 
+                                                                onclick="prepareDeleteModal('{{ lead._id }}', '{{ lead.company }}')">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -220,6 +329,181 @@
         </div>
     </div>
     
+    <!-- Edit Lead Modal -->
+    <div class="modal fade" id="editLeadModal" tabindex="-1" aria-labelledby="editLeadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLeadModalLabel">Edit Lead</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editLeadForm">
+                        <input type="hidden" id="edit_lead_id" name="lead_id">
+                        <div class="mb-3">
+                            <label for="edit_company" class="form-label">Company</label>
+                            <input type="text" class="form-control" id="edit_company" name="company" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_name" class="form-label">Contact Name</label>
+                            <input type="text" class="form-control" id="edit_name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="edit_email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_network" class="form-label">Network Size</label>
+                            <input type="text" class="form-control" id="edit_network" name="network" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="updateLead()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Lead Modal -->
+    <div class="modal fade" id="deleteLeadModal" tabindex="-1" aria-labelledby="deleteLeadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteLeadModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the lead for <strong id="delete_company_name"></strong>?</p>
+                    <p class="text-danger">This action cannot be undone.</p>
+                    <input type="hidden" id="delete_lead_id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteLead()">Delete Lead</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sort table
+        function sortTable(field) {
+            const currentSort = document.getElementById('sort').value;
+            const currentDir = document.getElementById('dir').value;
+            
+            let newDir = 'asc';
+            if (field === currentSort && currentDir === 'asc') {
+                newDir = 'desc';
+            }
+            
+            document.getElementById('sort').value = field;
+            document.getElementById('dir').value = newDir;
+            document.getElementById('filterForm').submit();
+        }
+        
+        // Reset filters
+        function resetFilters() {
+            document.getElementById('q').value = '';
+            document.getElementById('status').value = 'all';
+            document.getElementById('sort').value = 'timestamp';
+            document.getElementById('dir').value = 'desc';
+            document.getElementById('filterForm').submit();
+        }
+        
+        // Prepare edit modal
+        function prepareEditModal(id, company, name, email, network) {
+            document.getElementById('edit_lead_id').value = id;
+            document.getElementById('edit_company').value = company;
+            document.getElementById('edit_name').value = name;
+            document.getElementById('edit_email').value = email;
+            document.getElementById('edit_network').value = network;
+        }
+        
+        // Update lead
+        function updateLead() {
+            const leadId = document.getElementById('edit_lead_id').value;
+            const company = document.getElementById('edit_company').value;
+            const name = document.getElementById('edit_name').value;
+            const email = document.getElementById('edit_email').value;
+            const network = document.getElementById('edit_network').value;
+            
+            fetch(`/admin/leads/${leadId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    company,
+                    name,
+                    email,
+                    network
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(`Error: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                alert(`Error: ${error.message}`);
+            });
+        }
+        
+        // Prepare delete modal
+        function prepareDeleteModal(id, company) {
+            document.getElementById('delete_lead_id').value = id;
+            document.getElementById('delete_company_name').textContent = company;
+        }
+        
+        // Delete lead
+        function deleteLead() {
+            const leadId = document.getElementById('delete_lead_id').value;
+            
+            fetch(`/admin/leads/${leadId}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(`Error: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                alert(`Error: ${error.message}`);
+            });
+        }
+        
+        // Update lead status
+        function updateLeadStatus(leadId, status) {
+            fetch(`/admin/leads/${leadId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    status
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(`Error: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                alert(`Error: ${error.message}`);
+            });
+        }
+    </script>
 </body>
 </html> 

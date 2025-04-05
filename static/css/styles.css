@@ -1050,6 +1050,100 @@ input:focus, select:focus {
     box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
 }
 
+/* Checkbox styling for subscription options */
+.subscription-options {
+    margin-bottom: 0.8rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.consent-text {
+    line-height: 1.3;
+}
+
+/* Privacy notice styling */
+.privacy-notice {
+    margin: 1.5rem 0;
+    padding: 0.8rem;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.privacy-notice p {
+    font-size: 0.8rem;
+    color: var(--medium-gray);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.privacy-notice a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+}
+
+.privacy-notice a:hover {
+    color: var(--dark-blue);
+}
+
 .submit-button {
     width: 100%;
     background: var(--gradient-blue);

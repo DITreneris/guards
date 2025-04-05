@@ -1,0 +1,3564 @@
+{
+  "demo_client_123": [
+    {
+      "id": "9669119f-5cc3-486c-b002-a28c0b71e8db",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.383086",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "074ef736-a5ef-4beb-ad0a-eb662f811751",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.388137",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "48400abc-b396-4ba3-b333-10c194ba6b81",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.401109",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "88f47ea7-8b23-4cae-b559-e67974b0bb29",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.414071",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6c7d2ee0-f000-47a7-8d4d-21bfb61aa45e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.426214",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "8168a60f-7222-477a-a1be-b176264825e6",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.437292",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "14991f08-60ac-439d-a2f1-20ec6c88fcc2",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.451522",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d99903f0-7711-4c45-9bb7-a2f2483ea0f5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.464487",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "04b847de-6537-4c06-98f8-865fe48a1ef3",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.479571",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3ab410c7-8b73-4cf8-beec-d80df7a41ebe",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.493652",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "610c9433-39ee-48c3-8de3-c476221736c8",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.505775",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "fd63dcbb-2228-450e-b8d8-28b059018a26",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.519737",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "419fdd3d-3c29-4a04-9b81-75b891c0c3db",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.547958",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "869d347f-a891-459d-9650-90379cd11d41",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.568900",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "aea0d439-4a4d-4cca-9347-36ec2ee860c5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.584100",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1574d5f8-a42f-4f6d-a24b-c986f2ebaebd",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.599309",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "97442895-adff-47a9-8372-39517dae528e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.613608",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ecbec7c1-91aa-4687-bb0b-bbb3ed54db5e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.629683",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "00ebaa46-db3d-4324-9e8a-24a25d25d370",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.642884",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "703cb0e5-c62c-47e3-91d7-c6e8566c0cf3",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.655944",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b79b53a9-d780-464e-a610-89530626df9c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.671041",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "fe11d417-2d5d-44ce-bb3b-d05c539383ef",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.685100",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "90f98ee5-59da-4e9a-83eb-0836f42543b5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.699173",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7bac4888-92e4-49f5-89d4-4315a1554140",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.713262",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "40f85792-ffd9-4077-b1ac-80319b19469f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.727348",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e68fe481-2017-482d-a5a6-8da99fc890a6",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.741404",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1697a5f5-eff1-4c51-bed3-b18143c6a4cb",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.755475",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "bf89b8bb-1cb0-4829-88d3-bcab74b1217f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.770628",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "cc3ce3f6-82d0-4874-8b61-391ae1cc4d40",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.784714",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "15d8ba51-e7a2-4d9b-a903-98214c4e2cac",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.800013",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7685827c-bf88-4aaf-9515-a46bf865e622",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.813973",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "311dc0a8-ecea-4b6e-9228-bef87fbc3bc2",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.829097",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5e4ca434-54e1-4f2f-87cc-1cbceab7725d",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.845088",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "4ab12ea6-3a7f-425d-8d0d-ef495c3ab98b",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.861128",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b4670718-bbcc-4e58-bd42-ff08f5930392",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.875249",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "46d28f19-3ca5-44d4-9de6-0d23f7aa7f4a",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.889348",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "71eb94b8-3204-4325-9568-08168a13f2cf",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.904419",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "4644d82d-e3ef-4612-a100-1406237b1fd6",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.919379",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "82edf31f-f75c-421b-80b9-ea82ecb5f948",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.935549",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b7db8cea-4126-4642-bef0-f2807a098be7",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.954607",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "836a0149-586b-4955-a418-d37b4362efb7",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.980537",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7ef882a9-a1b0-49bb-9049-4b02cd66c6f3",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:21.997084",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9ab0ef62-09f1-46e7-b2cf-cdddd7e43ebc",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.014148",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "a3ebd18a-65b5-4dd1-b21f-768539b6feff",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.031303",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "66c517c7-18d3-4466-89a6-0e7e6422dab9",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.048258",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "26e1a5a4-ad0d-42dd-a88d-a7eeee0d264c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.064369",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "671643a7-4c3b-4f6b-a47a-a3407550d321",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.080581",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "afb3962d-8294-4f90-a61f-f0763abbd93d",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.096989",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7cce00d2-8699-44fa-af54-4572eaf60a61",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.113060",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "bea8f9ed-6b6f-4879-9135-ed3eda08a061",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.130174",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b4cd1b4c-7f01-497a-a593-e7ddd9a43e3c",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.147131",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "d599e813-3058-4c97-87d6-999cc4df0c57",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.165186",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "a206071d-1f27-47e8-ae5d-01bf119cead1",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.181258",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "715dadca-ac46-4029-832b-17f4173ff20f",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.199209",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "04276710-1db6-444a-aef5-4670bcf47e03",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.219262",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "9505da77-f374-4c7b-8f0f-c4a77bcbd06e",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.237555",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "eabc3a9f-5f19-4af4-b53f-daca037e0054",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.253725",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "e7cd227c-8655-41fd-83c0-4e21c12806d0",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.269683",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "d77a6c4e-a1d9-4713-9808-df8078a9fea8",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.284922",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "e3e6a93b-71d1-4eac-b7b9-f097cda20531",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.301841",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "d0679588-44f5-4433-b6ae-69c75959c217",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.319162",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "5a4cdefa-a163-4024-9bd4-586d03b4aaa3",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.335280",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "30b70664-b6a0-44d7-b00e-34593d1cd6c9",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.354392",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "fc6edbbb-d895-400f-ab5a-ed05818bf2b6",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.374510",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "60b35aa2-c9b7-4198-8787-770a131a03fb",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.395732",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "0bc37628-bcf9-4a7c-9809-d19f54220084",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.414804",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "6a9200ef-7903-425c-a6ea-18c40216cf17",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.434001",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "718ce7a5-7c9c-4736-9792-3103c7d3a700",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.453048",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "17b09ee0-5041-41fa-8c3b-df8b16fc6416",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.482233",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "b1706865-d097-40b0-9ee5-f454ad241de7",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.510702",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "f14a01f5-048c-4a77-9e76-ac4ee4a928a4",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.529595",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "326d42b5-54da-4220-8914-c50756c663a2",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.549537",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "08a36e54-ba87-4e27-877c-3c577c26ea47",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.569936",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "74a6b562-2ecd-4976-a4f2-2be897c44f11",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.588041",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "76aee0bd-94dc-4d5f-b902-632c874728a9",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.626851",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "ddf1d046-808a-4d13-8232-58b262a756e1",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.665976",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "f1c057ad-d016-4298-945a-15dde215be03",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.693485",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "91eb9c38-833c-4be2-898a-e58f4bd9e9f7",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.721759",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "aafbe42b-a9bb-4d9c-a933-544cb3e7fdc7",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.765032",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "a1e02b68-0119-45d8-89e0-e61156fbc9d4",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:00:22.797945",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "eade855a-308f-4271-9839-0eb2f53614cf",
+      "client_id": "demo_client_123",
+      "metric_type": "data_storage",
+      "value": 512.5,
+      "timestamp": "2025-04-05T11:00:22.832996",
+      "metadata": {
+        "data_type": "customer_data"
+      }
+    },
+    {
+      "id": "0d2f97eb-c5fa-45b0-9292-e66a1c79b9ea",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.261923",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e8cc72a1-8233-4268-9e06-ef73f45a7ef5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.273891",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "2e0cc0de-9187-4098-a2ec-42495ed5fb40",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.293952",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1f5849dc-1e80-45bb-8afd-8a7218c658d9",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.324767",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "525ddf01-219c-4e1d-b241-e79a46eec88c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.350900",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "0b2fb13c-15ae-441a-88c9-b52893990d08",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.376164",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "0fd85eeb-2650-4c7f-ba73-c68626067d9c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.397220",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "338b5b13-2dcb-4fb0-a2c8-f427d00d1cfe",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.421428",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "55bcd756-a718-496a-a746-b258e6eb0a64",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.444504",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "96596277-407c-43b0-b0d3-c429aafe1032",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.466689",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "8b1d7c8b-66e2-40a2-a863-1005292bafcc",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.495680",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "4c9f7762-b96f-4467-8703-7b60ffaa5c6c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.523834",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d7a1ec48-5638-499e-9d9f-f3f6711aaa91",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.546888",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b0a0fcd0-95b6-46d1-9c7d-2342a6447900",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.572055",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "db10608e-3280-4671-b720-c484556f53a7",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.592116",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d00d9858-8a02-4d6d-9f67-dba6f5d0d8b4",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.629535",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5b64a449-ca50-4bcb-b0af-b889dc4e4363",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.654743",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f0558d17-3c60-475f-bffb-79bbf446facd",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.674806",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "c63cb4a9-4649-462e-acae-d190e3606306",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.701950",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "c972fbbd-d9d9-4ad5-b517-0a07ae659b01",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.727989",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d9fe58f9-a306-43a0-8b76-deb2c96e9129",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.754272",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6fa2bce5-e136-4fc7-8b0f-e9d42acbb02e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.778319",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "dd0cecc3-7661-4f34-8e04-1be0c3c2a532",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.803527",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6040ec20-f8ba-4c67-bb8f-b22f59910eee",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.828653",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "74df502a-efc3-462b-9529-a19b6b55bffe",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.856970",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "20ab1a78-1e4b-4460-93bc-78b1ce28b1bf",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.879225",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6155484a-75c2-4f0d-a1b3-0f6e3e589371",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.905686",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ab6e85df-bef8-47fd-8d3d-687ce858c75a",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.930086",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d4c1559b-f1c3-496d-bd4e-365fa199afd7",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.958644",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9c73ad22-c041-493d-a649-6ae55055621f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:51.982069",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ae2c00ca-dd14-453a-be65-193655e94ecb",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.006149",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "a3661b95-1be0-4036-82f1-fce103aa6721",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.032218",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "042ccdd7-460e-4fec-a34a-22ef2422610f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.058448",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9d8f837b-83c5-420b-a316-597f95975449",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.090564",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ad7eacb8-4ad9-45c3-b9d0-903b913f6218",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.121868",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "0aa9a2e3-71c1-4da6-9420-6ff53e254916",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.145907",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "fd1407b1-fed0-442a-9ad0-40234c926cfd",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.172063",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5b87daf1-0a6d-4078-98ea-5f157fc2ec33",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.205288",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "c0cac5e6-ec45-4f59-ad93-433411912dfb",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.262274",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ac7ab9d2-5a46-4a13-a648-226a9726cd5b",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.299176",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "14317d89-0795-4d7b-b6fb-198a6922868e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.372980",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1ce7e170-45ac-4fe1-bc46-dbef5f8d0cfb",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.484680",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e8ef7801-7c40-4e48-a415-92fcce371935",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.554494",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1fa6083b-2841-4d44-a5b5-5883f28af371",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.672346",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "c483094d-e060-44f7-a95c-a5a3695c48f1",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.759481",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9db51d03-cf8e-48c5-93b0-e807dda316ee",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.781095",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "750b6268-f700-447b-a381-e3e0e698e123",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.807246",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "17fc9723-e03f-4c24-a973-f36291975245",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.830363",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "4176b195-3fb1-4580-9152-24b142284baa",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.856006",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d573be41-2519-48fc-a9da-ff8b3c0831ae",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.883156",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1a7ed61c-afc8-471c-8566-90970c4db64a",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.908192",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "7336de1b-5aaf-421e-a7e6-db05275a60c1",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.929472",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "dddafa41-a4c7-4a53-a56f-ed80fd666c31",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.955894",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "7d07d213-2f48-4e9b-b480-d5d7def1d8cb",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:52.982069",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "dc91da69-aa26-4b32-904d-4b2e65034a0e",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.011497",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "d889c088-9a77-4fff-b4d9-ceaf4f1003af",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.039528",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "1c2fd8b0-7d31-43ce-8578-f9a070701f12",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.070658",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "8eb70e7c-1d88-4a30-8c50-1b3890cfd8f3",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.162414",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "b4a0aac1-e74d-43d7-903d-03d3f36bec0b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.210284",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "d21d9bd8-978a-4356-942f-c7f028ac8575",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.279100",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "c46a46d1-ffb5-4291-a8db-95686e0fff00",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.383821",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "bf1fc407-96d2-4c8a-8b59-2e48bd0e5ca9",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.479565",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "1bd4fcce-7dd2-4458-a82f-3acd8ed4e4e1",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.529431",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "fc6d9abe-dd80-4392-9510-bbf92781abd6",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.581210",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "f2ab8ada-9f46-4d9b-9bd1-6830af543682",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.657352",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "eab76c3b-0919-4d14-98d8-f66c66dfdf94",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.715984",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "f4588903-c006-46bb-a4ba-510d0cafa920",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.764057",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "ff7253fc-dd19-4d89-8c3d-96ef62a27380",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.820789",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "e82fed88-8b7e-458e-b8ae-790020b61f55",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.857284",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "b2ed6638-2eb5-471d-a059-a779adba1715",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.908414",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "c134068a-1144-4931-812d-ab8784afe39c",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:53.959169",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "da786a07-94b7-448c-8e2b-4636c7f35039",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.009864",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "bc862838-2d70-4974-a8c7-e9b47a2aa05a",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.077940",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "0de22807-8342-4a69-aafc-586d2e367070",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.126852",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "acd73792-6c59-4db2-bc7c-362d02a44987",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.177298",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "fcead665-5667-4ce5-8b57-bf466b3515cd",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.239729",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "69f82452-17d1-4674-b6ed-87aa972b2259",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.328235",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "7579f2e5-c2cd-482a-bdac-928aba847609",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.377428",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "98ae2dfa-606a-46a2-9614-b69d48246431",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.424435",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "693b4f99-ba1b-4ab4-b123-0ea3866453cf",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:01:54.449469",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "50ce9b7c-5a00-4d1e-9b7c-0b52201ecb81",
+      "client_id": "demo_client_123",
+      "metric_type": "data_storage",
+      "value": 512.5,
+      "timestamp": "2025-04-05T11:01:54.482717",
+      "metadata": {
+        "data_type": "customer_data"
+      }
+    },
+    {
+      "id": "1929d82e-60ec-45ec-baf5-d14582cfbda4",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.663717",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "4de96852-0c41-4949-9175-6ef0dff696be",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.689794",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5b7b2a18-e402-4da3-a587-6b4704c4e4ff",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.719844",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ee341ad4-8478-4553-907e-a0e12739b8ae",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.755948",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f90e1b30-0dfb-445c-bb21-ad48cdeaba2f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.795026",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "0b3c07bd-64be-4103-b177-7eb697ea813c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.824780",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "114d6a57-04c7-4ef1-924e-958f9936997f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.866549",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "28b38ac4-dbe3-400c-b36c-485c26bc834d",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.894703",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9264c172-ebba-412d-b885-e3a690a5de2f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.928808",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "8567b097-3810-4c33-9281-68188aa1e62a",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.958948",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "323c94fe-7e80-4478-b6c8-8a02d4161390",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:27.992162",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d70f3f8e-199a-418b-8831-3d29c864ee18",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.021181",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f55bc081-279f-4f8d-9c5b-0ada1f190e14",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.051345",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f31c9477-6aba-435b-b68b-b68f05408282",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.079373",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d5ffe5d8-4c69-4aa4-b777-6bddb4ed0a19",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.110890",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "8bbb9395-67b4-4632-8549-5fd0e9efe60a",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.145180",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "559d956c-289b-42eb-b40f-c42ad62fab4d",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.182851",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e5abcc69-d8d2-4487-b01b-60b1bd78b5f2",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.209027",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1212e28f-4bb7-42ff-bd10-5a97a4991f42",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.240102",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3e71ff48-f6f4-4008-8277-4681fff9157b",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.288754",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e3228b21-4584-4ab4-ad3b-378c55918167",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.328989",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "2a74b3f6-1bee-48fc-a864-2c658b9dfc27",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.373319",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "348c98aa-949a-45ca-b34b-a3e18fa6142b",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.419082",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b24353ce-f63d-4f09-8fbb-dfc2c5862ec0",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.453282",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "feb2ff1e-c31d-42cc-9ded-0b30b6b73e8b",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.499271",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5970eb95-6f06-4ba0-b41f-b13f8e62be52",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.549240",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d0b771f6-b2ea-468b-a0b2-e05886cf4691",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.604220",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "742124fc-2bb9-4c4b-956f-a827448a91da",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.648040",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "cd6fee34-4abd-46db-94a6-dde93cc1f9c5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.733612",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3b3be4c8-49ad-439f-94f5-7d10efcaefb8",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.782236",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5aded851-4738-413e-8b1c-1e7171d89da8",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:28.833162",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "158147bd-27fa-4f5d-9934-99851e5b2918",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.017515",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7fef20c5-5d5a-43b6-aa9e-bcd5b8968c98",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.194395",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e190e909-13cc-4eaa-b3cf-731657040615",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.267035",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "73d7a486-d00c-4609-acec-6b0524aaaf77",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.354716",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "577abdc2-3a7f-427e-98d5-ab4366f7ed66",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.430377",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "458169ad-3b61-45ae-beb7-19889f7e5af6",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.488051",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1b798e6b-5c6e-4d4c-8666-352333b46168",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.532150",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b828b666-279e-4076-a21f-e26a284d3b35",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.598637",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ccf5da88-14ec-4c74-aacb-c261ba34c569",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.652586",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "91889790-3f6c-4ebb-bacd-afecea940769",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.716446",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "724cae6e-a923-44b0-9f7d-32e4aaaba987",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.783663",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b0f987b3-35c3-4a2b-88eb-136689cf766c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.842951",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "23535423-69c1-456d-85ff-8b5f2f1159b5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.894780",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3ab6577a-91d4-444f-ba9a-489b1c89f0bb",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:29.952790",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "cc517a07-f444-4236-a792-4c084b82d14a",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.006716",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9e35400a-1129-4fcf-83f0-34e565669c2c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.067469",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5a7969a3-e894-4e2e-bfb4-30734dede338",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.134923",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d46ccd98-500f-49d8-a3f6-78a56134dc59",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.202217",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "77dde868-c1ce-4f05-9c50-8012b43918f7",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.256942",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "cf4545c5-8ae2-4fef-b4ba-7cf6ee51cdde",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.301848",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "c7e43273-7d91-43f7-b7a2-d65638c9ec71",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.366675",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "426660b3-dfa8-4677-891a-5e139bee420a",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.489347",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "5a088f12-5807-4dd4-af32-f71ab712f05b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.538219",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "462a6e7f-057c-4db7-924e-4ac57602f5da",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.599054",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "7625d257-fecc-4a17-9171-d39e835ecdaf",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.645825",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "89be8b55-66d3-45a1-8e0a-fc19267a5ef6",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.688629",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "6de1bc2a-ba98-4400-a991-9e63eaf7c773",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.737191",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "7de4df1d-3641-45f4-99a6-ccae31358eab",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.900752",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "6f4e9b74-3d16-49ff-b95b-d3a32ee44fb9",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:30.949621",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "571e337a-d4f3-4fd8-b08d-59e54f63a2e7",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.152081",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "0c4a232e-8f34-49de-a591-5f31d57c2467",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.202094",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "4144d06a-f677-4f94-8245-9985bf9f7aa5",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.289859",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "fd2afc87-5715-4115-a970-ad9b3ea1d635",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.344801",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "0858f814-04dc-48ee-8ace-e4e1eabebdfa",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.390531",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "1eb7ab8c-76bb-4263-b644-ad25a1d96f5b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.441063",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "03c1d01a-940d-4e32-831d-0bc7d799dcf3",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.484301",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "1ae4d5b8-fe65-438e-8fe0-2be5bae0e263",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.532388",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "441c5f00-5651-4217-bf0a-fb5eeb65a4af",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.574287",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "ae43f715-bf63-4f3b-a3c1-4898755ce32d",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.623629",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "337ef5dd-7afe-4ff9-9250-4bf5f7ee32de",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.667730",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "8127253f-9048-44d9-aa85-c648c26c23fd",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.717450",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "b04f5ad1-6aa0-4859-b276-8942f4dde01f",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.767368",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "c84ff176-f768-4f7a-868a-bac67e16a73d",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.812601",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "74cd8298-a517-4588-bc83-9151c9b1684b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:31.953226",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "c2304569-4467-470e-8dd4-30c2bcb3313b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:32.034009",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "05847b57-e46c-49ac-b1f5-44a14dd76e36",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:32.172640",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "38876db4-dd5b-4063-958f-5277c9c8dc36",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:32.235470",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "0f4925d8-8701-4a09-96a2-69ef5c9b7232",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:32.298303",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "526adc74-1ead-4939-a01e-f7339abe0daf",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:02:32.371112",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "710283b9-460d-4167-a7f2-a1f0b40155b2",
+      "client_id": "demo_client_123",
+      "metric_type": "data_storage",
+      "value": 512.5,
+      "timestamp": "2025-04-05T11:02:32.432943",
+      "metadata": {
+        "data_type": "customer_data"
+      }
+    },
+    {
+      "id": "ec1cdb9d-d849-4c38-aa18-af8921ce8bae",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.450910",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e1427808-8a91-43f0-83ed-df8bbfd9295f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.476840",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d4edc0b7-7d66-4166-ba7c-cd240133c753",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.513849",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "40195434-91b9-4aa1-8d27-3e95d8e7df11",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.544692",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "80ac42dd-5560-42b4-b00f-61daa97b5736",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.572783",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6c55a25b-3a30-45a6-a37f-334b20c920dd",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.603904",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "50cc90f9-3ff0-4641-af1b-165c3fb785a5",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.631136",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "042d38ae-91b5-4d5d-9b56-94c7a0c31801",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.662294",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "33492dcd-31ab-4f33-8db0-fd30a7061c2c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.690553",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e1b341a4-2978-4642-b2cf-659bf86c38b4",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.719652",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b2e991de-b4f6-4a8e-b026-9bcff804a40d",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.750790",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "c959e582-8fcc-4683-bcda-9b6e2cb71803",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.780170",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "1ff793ca-83b0-4c38-a613-19ee4baade2e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.818278",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7e85960a-1892-419e-8ddb-5742dc05df30",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.858274",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "110eaf8d-206e-403b-9059-2d016b2cb34e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.897441",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "aa7545f2-fcac-4e90-afde-da8bfc1f2118",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.941714",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f5dcfa90-8e81-4ea7-8344-cc26a74ab437",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:09.982820",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "e83cff20-5a1c-4db0-9eb8-a5f4de7bc1da",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.012924",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d8c2a31d-8786-475b-bf6a-1f92d205ef4f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.045058",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5f02b0f8-cf51-4128-9481-15894d8ea222",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.079060",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "d7dd4a13-619d-4ef6-be39-24028529d1b2",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.109461",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "4b50bbab-a992-4fa7-be49-48d26eaadde9",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.138710",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "91156a7b-fabc-49da-8ff2-55365a771fbe",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.167642",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6bd67dc2-d166-4fe3-a99e-eb58d014cb31",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.195893",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "bf3a62bd-141d-4882-af32-25981cefc45e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.225448",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "2ffba517-c07b-4409-82b0-c9b7c4724126",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.256760",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "5e8ad3fb-8e83-413e-997d-b66d89242bc0",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.294895",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "a5f2a59a-5833-4a04-ac63-90a4860daf1c",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.324988",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "a5222ce1-54ec-4ba1-a843-472b79adb817",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.356275",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ca352ba5-e10f-414d-9a84-39bd6f279e5f",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.386552",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "94a975d3-562c-444f-af1c-90453b38eef3",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.418679",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3f9edb56-d122-47f3-9d3b-eb30bc425d32",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.456879",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "ec9dcbdd-57d4-45bf-a6ce-ee7fd9aa1e00",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.493564",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3832489b-8c33-47be-a17d-fa2e727d98aa",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.528589",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "21b8f92c-8290-4b26-9a47-f94f5f23d475",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.571831",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "09853764-cae2-4fd8-9eac-8e904a3c5494",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.604869",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b406cbc7-48ef-47e7-8fef-e4189c584ab4",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.639101",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "78f978ba-f080-47bb-81cb-57faf61a5f52",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.669481",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f45ac2c3-1769-4dcb-8542-420842a84ebb",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.702674",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "9292d7bb-5f82-4492-a97f-b371251c452e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.733993",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "35e2cb08-19c4-4964-abee-71e8318c97e0",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.762184",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "7b3a8bf4-5794-4a32-a8d5-2f5a5cd673e6",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.792456",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "214366e6-6560-4d82-a5da-8711033400a2",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.823632",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3d3b4568-d94d-4531-902a-6271eb45bfc9",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.853886",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "a8e209b5-82ef-40cd-b697-75e260d864cc",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.885118",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "f61b74db-9cb4-4583-bc02-2a3d1bd35b90",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.914674",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "a82952a0-0b14-4d87-acfb-b406042eac29",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.946393",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "3af0d97a-9f87-4f04-b31d-cb8ed1d6af0e",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:10.978630",
+      "metadata": {
+        "endpoint": "/api/extract",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "55d5c1a4-a6a7-4d02-aaba-eab78f9536a1",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.009220",
+      "metadata": {
+        "endpoint": "/api/predict",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "6bef7a34-59aa-41a1-92dd-cdc0ab3c4339",
+      "client_id": "demo_client_123",
+      "metric_type": "api_call",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.043459",
+      "metadata": {
+        "endpoint": "/api/analyze",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "b71111ed-7146-4ca3-b9cb-50b020c5ff03",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.119560",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "cb6c1bf8-4bb0-4bde-b210-e67a61037e9d",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.196758",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "dc324fa3-ef05-4868-9ec4-409251ba9ba8",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.273697",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "6c306b20-f0ca-4acb-9067-4f2ecc0021cf",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.370223",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "bec70017-5cc4-44ab-8db8-4cb0fdf61f7e",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.430619",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "33c3f1b3-c78a-4e95-b232-6240c66b6b5a",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.504549",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "83eaba16-517b-4887-8b6a-be92fcb03d35",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.561155",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "a174a3ec-36af-4909-be74-e1becbc59887",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.657305",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "de30e38f-62a4-4e51-9bde-e0a13aaed3db",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.711799",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "f210db88-654e-4468-8df7-4792c3c88f8b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.760755",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "8efbc5c8-7b26-466a-9d30-acd3158e06e7",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.791983",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "dd176b56-2d15-4e11-8f1f-bad021c009aa",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.824016",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "c01a6683-5b71-4ca8-86a3-c0c5087b9cee",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.855273",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "3ebf31e0-22aa-4c23-8df5-ca2b816f34f8",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.889384",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "873e0010-be01-4a4c-aa10-e43fb51f4fef",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.923731",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "372027c9-d04b-4d7d-b7cd-bbf38b7e9042",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.956859",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "048118f9-36ca-46d9-8a32-bdbcfa51fa24",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:11.989969",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "f1f526cd-2ed7-4fdb-8b9d-d52b3746efc5",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.021126",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "95fa93f9-90aa-46a3-bb5e-cf6d3a643981",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.058274",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "202b855e-2189-49f2-8517-5fb5d7341e4c",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.091833",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "7634ddde-a15f-4c91-94fe-e943b5fed409",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.124076",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 50
+      }
+    },
+    {
+      "id": "ddb81705-2f56-40db-8448-a61281007099",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.160942",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 51
+      }
+    },
+    {
+      "id": "bd401de9-b981-4d21-a808-37dfe8be629b",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.207960",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 52
+      }
+    },
+    {
+      "id": "80b9e29a-c3cb-4309-954b-b3946660baf1",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.240359",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 53
+      }
+    },
+    {
+      "id": "8edfecf5-e2a8-4518-8b9e-9cb53ff33c10",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.272543",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 54
+      }
+    },
+    {
+      "id": "d65f45e0-8f9b-4740-b8db-f3e9e1e51d95",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.305769",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 55
+      }
+    },
+    {
+      "id": "834a11cd-3b95-4ec7-9190-b0bf9b66c0b8",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.341188",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 56
+      }
+    },
+    {
+      "id": "0e77e3d5-acc6-44e6-b92d-50d8c18b352d",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.377262",
+      "metadata": {
+        "model": "intent_model",
+        "latency_ms": 57
+      }
+    },
+    {
+      "id": "28500dfa-c3e2-4a94-b757-b122cf97243c",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.408473",
+      "metadata": {
+        "model": "sentiment_model",
+        "latency_ms": 58
+      }
+    },
+    {
+      "id": "501c5a37-2264-4467-935b-e4c39510dc26",
+      "client_id": "demo_client_123",
+      "metric_type": "model_inference",
+      "value": 1.0,
+      "timestamp": "2025-04-05T11:03:12.441600",
+      "metadata": {
+        "model": "entity_model",
+        "latency_ms": 59
+      }
+    },
+    {
+      "id": "6923639a-e004-46b7-b8b9-64dc110f1fbd",
+      "client_id": "demo_client_123",
+      "metric_type": "data_storage",
+      "value": 512.5,
+      "timestamp": "2025-04-05T11:03:12.472894",
+      "metadata": {
+        "data_type": "customer_data"
+      }
+    }
+  ]
+}

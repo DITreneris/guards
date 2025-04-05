@@ -1,0 +1,120 @@
+{
+  "timestamp": "2025-04-05T11:48:40.773345",
+  "models_optimized": {
+    "intent_recognition_model": {
+      "model_id": "intent_recognition_model",
+      "optimizations_applied": [
+        "quantization",
+        "caching",
+        "batching"
+      ],
+      "success": true,
+      "error": null,
+      "details": {
+        "quantization": {
+          "using_quantized": false,
+          "original_path": "C:\\Users\\tomas\\Desktop\\0001 DUOMENU ANALITIKA\\29_guards_and_robbers\\ml\\models\\intent_model.pkl",
+          "quantized_path": "C:\\Users\\tomas\\Desktop\\0001 DUOMENU ANALITIKA\\29_guards_and_robbers\\ml\\models\\intent_model_quantized.pkl",
+          "original_size_bytes": 210982,
+          "quantized_size_bytes": 211714,
+          "size_reduction_percent": -0.34694902882710377,
+          "bit_depth": 8,
+          "weight_threshold": 0.001
+        },
+        "caching": {
+          "cache_size": 1000,
+          "cache_stats": {
+            "size": 0,
+            "capacity": 1000,
+            "hits": 0,
+            "misses": 0,
+            "hit_rate": 0,
+            "memory_usage_estimate_kb": 0
+          }
+        },
+        "batching": {
+          "batch_size": 16
+        }
+      }
+    },
+    "sentiment_analysis_model": {
+      "model_id": "sentiment_analysis_model",
+      "optimizations_applied": [
+        "quantization",
+        "caching",
+        "batching"
+      ],
+      "success": true,
+      "error": null,
+      "details": {
+        "quantization": {
+          "using_quantized": false,
+          "original_path": "C:\\Users\\tomas\\Desktop\\0001 DUOMENU ANALITIKA\\29_guards_and_robbers\\ml\\models\\sentiment_model.pkl",
+          "quantized_path": "C:\\Users\\tomas\\Desktop\\0001 DUOMENU ANALITIKA\\29_guards_and_robbers\\ml\\models\\sentiment_model_quantized.pkl",
+          "original_size_bytes": 5053,
+          "quantized_size_bytes": 5174,
+          "size_reduction_percent": -2.3946170591727656,
+          "bit_depth": 8,
+          "weight_threshold": 0.001
+        },
+        "caching": {
+          "cache_size": 1000,
+          "cache_stats": {
+            "size": 0,
+            "capacity": 1000,
+            "hits": 0,
+            "misses": 0,
+            "hit_rate": 0,
+            "memory_usage_estimate_kb": 0
+          }
+        },
+        "batching": {
+          "batch_size": 16
+        }
+      }
+    },
+    "email_categorization_model": {
+      "model_id": "email_categorization_model",
+      "optimizations_applied": [
+        "quantization",
+        "caching",
+        "batching"
+      ],
+      "success": true,
+      "error": null,
+      "details": {
+        "quantization": {
+          "using_quantized": false,
+          "original_path": "C:\\Users\\tomas\\Desktop\\0001 DUOMENU ANALITIKA\\29_guards_and_robbers\\ml\\models\\email_categorization_model.pkl",
+          "quantized_path": "C:\\Users\\tomas\\Desktop\\0001 DUOMENU ANALITIKA\\29_guards_and_robbers\\ml\\models\\email_categorization_model_quantized.pkl",
+          "original_size_bytes": 5687,
+          "quantized_size_bytes": 4748,
+          "size_reduction_percent": 16.51134165640935,
+          "bit_depth": 8,
+          "weight_threshold": 0.001
+        },
+        "caching": {
+          "cache_size": 1000,
+          "cache_stats": {
+            "size": 0,
+            "capacity": 1000,
+            "hits": 0,
+            "misses": 0,
+            "hit_rate": 0,
+            "memory_usage_estimate_kb": 0
+          }
+        },
+        "batching": {
+          "batch_size": 16
+        }
+      }
+    }
+  },
+  "memory_optimized": true,
+  "disk_optimized": true,
+  "monitoring_optimized": true,
+  "overall_status": "success",
+  "memory_results": true,
+  "disk_results": true,
+  "monitoring_results": true
+}

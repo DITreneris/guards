@@ -1,0 +1,58 @@
+{
+    "version": "0.1.0",
+    "storage": {
+        "conversation_storage_path": "data/conversations",
+        "email_storage_path": "data/emails",
+        "extraction_storage_path": "data/extractions"
+    },
+    "nlp": {
+        "preprocessing": {
+            "lowercase": true,
+            "remove_punctuation": true,
+            "remove_stopwords": true,
+            "stemming": false,
+            "lemmatization": false
+        },
+        "intent_recognition": {
+            "confidence_threshold": 0.5,
+            "use_regex_patterns": true,
+            "use_ml_model": false,
+            "ml_model_path": "ml/models/intent_model.pkl"
+        },
+        "sentiment_analysis": {
+            "enabled": true,
+            "model_type": "rule-based",
+            "ml_model_path": "ml/models/sentiment_model.pkl"
+        }
+    },
+    "email": {
+        "extract_attachments": true,
+        "extract_html": true,
+        "detect_auto_replies": true,
+        "url_extraction": true,
+        "client_matching": true,
+        "thread_detection": true,
+        "priority_calculation": true,
+        "categorization": {
+            "use_ml_model": false,
+            "ml_model_path": "ml/models/email_categorization_model.pkl"
+        }
+    },
+    "data_extraction": {
+        "extraction_methods": {
+            "regex": true,
+            "named_entity_recognition": false,
+            "pattern_matching": true,
+            "dictionary_lookup": true
+        },
+        "confidence_thresholds": {
+            "high": 0.8,
+            "medium": 0.5,
+            "low": 0.3
+        },
+        "validation": {
+            "require_validation_below": 0.7,
+            "enable_automated_validation": true
+        }
+    }
+} 

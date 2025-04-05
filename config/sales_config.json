@@ -1,0 +1,139 @@
+{
+  "version": "1.0.0",
+  "pricing_tiers": {
+    "basic": {
+      "name": "Basic",
+      "price_monthly": 99.99,
+      "price_yearly": 999.99,
+      "features": [
+        "Intent Recognition",
+        "Sentiment Analysis",
+        "Email Categorization",
+        "Basic Entity Extraction",
+        "Standard Support"
+      ],
+      "api_rate_limit": 60,
+      "support_level": "Email only",
+      "max_models": 2,
+      "max_users": 5,
+      "custom_training": false,
+      "model_config": {
+        "name": "basic_ml_suite",
+        "version": "1.0.0",
+        "accuracy_threshold": 0.7,
+        "latency_threshold_ms": 300,
+        "memory_limit_mb": 256,
+        "auto_retrain": false,
+        "daily_request_limit": 1000,
+        "failover_enabled": true,
+        "monitoring_interval_min": 30
+      }
+    },
+    "professional": {
+      "name": "Professional",
+      "price_monthly": 299.99,
+      "price_yearly": 2999.99,
+      "features": [
+        "Intent Recognition",
+        "Sentiment Analysis",
+        "Email Categorization",
+        "Advanced Entity Extraction",
+        "Custom Entities",
+        "Model Fine-tuning",
+        "Priority Support",
+        "API Access",
+        "Dashboard Analytics"
+      ],
+      "api_rate_limit": 300,
+      "support_level": "Email + Chat",
+      "max_models": 5,
+      "max_users": 20,
+      "custom_training": true,
+      "model_config": {
+        "name": "professional_ml_suite",
+        "version": "1.0.0",
+        "accuracy_threshold": 0.8,
+        "latency_threshold_ms": 200,
+        "memory_limit_mb": 512,
+        "auto_retrain": true,
+        "daily_request_limit": 5000,
+        "failover_enabled": true,
+        "monitoring_interval_min": 15
+      }
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price_monthly": 999.99,
+      "price_yearly": 9999.99,
+      "features": [
+        "Intent Recognition",
+        "Sentiment Analysis",
+        "Email Categorization",
+        "Advanced Entity Extraction",
+        "Custom Entities",
+        "Model Fine-tuning",
+        "Priority Support",
+        "API Access",
+        "Dashboard Analytics",
+        "Custom Model Training",
+        "Multi-language Support",
+        "Advanced Analytics",
+        "Dedicated Support",
+        "SLA Guarantees"
+      ],
+      "api_rate_limit": 1000,
+      "support_level": "Email + Chat + Phone",
+      "max_models": 999,
+      "max_users": 999,
+      "custom_training": true,
+      "model_config": {
+        "name": "enterprise_ml_suite",
+        "version": "1.0.0",
+        "accuracy_threshold": 0.85,
+        "latency_threshold_ms": 100,
+        "memory_limit_mb": 1024,
+        "auto_retrain": true,
+        "daily_request_limit": null,
+        "failover_enabled": true,
+        "monitoring_interval_min": 5
+      }
+    }
+  },
+  "system_requirements": {
+    "cloud": {
+      "cpu_cores": 4,
+      "ram_gb": 8,
+      "storage_gb": 50,
+      "gpu_required": false,
+      "gpu_memory_gb": null,
+      "network_bandwidth_mbps": 100,
+      "supports_docker": true,
+      "supports_kubernetes": true
+    },
+    "on_premise": {
+      "cpu_cores": 8,
+      "ram_gb": 16,
+      "storage_gb": 100,
+      "gpu_required": true,
+      "gpu_memory_gb": 8,
+      "network_bandwidth_mbps": 1000,
+      "supports_docker": true,
+      "supports_kubernetes": true
+    },
+    "edge": {
+      "cpu_cores": 2,
+      "ram_gb": 4,
+      "storage_gb": 20,
+      "gpu_required": false,
+      "gpu_memory_gb": null,
+      "network_bandwidth_mbps": 10,
+      "supports_docker": true,
+      "supports_kubernetes": false
+    }
+  },
+  "trial_period_days": 14,
+  "sla_uptime_percentage": 99.9,
+  "support_hours": "9am-5pm EST, Monday-Friday",
+  "emergency_support": false,
+  "refund_policy_days": 30
+}

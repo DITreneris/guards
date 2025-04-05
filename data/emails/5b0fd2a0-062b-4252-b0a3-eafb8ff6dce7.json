@@ -1,0 +1,115 @@
+{
+  "id": "5b0fd2a0-062b-4252-b0a3-eafb8ff6dce7",
+  "processed_at": "2025-04-05T09:43:26.224779",
+  "metadata": {
+    "subject": "Urgent: Security breach detected by ARP Guard",
+    "from": "John Smith <john.smith@acmecorp.com>",
+    "to": "Support Team <support@guardsrobbers.com>",
+    "cc": "",
+    "date": "Mon, 19 Jun 2023 14:25:10 -0500",
+    "message_id": "",
+    "in_reply_to": "",
+    "references": "",
+    "sender_domain": "acmecorp.com"
+  },
+  "content": {
+    "text": "Hello Support Team,\n\nOur ARP Guard installation has detected what appears to be a serious security breach \nin our network. The dashboard is showing multiple ARP spoofing attempts from \nMAC address 00:1A:2B:3C:4D:5E.\n\nThe system has quarantined the device, but we need urgent assistance to:\n1. Verify if this is a false positive\n2. Analyze the threat data\n3. Implement additional safeguards\n\nOur network details:\n- Subnet: 192.168.10.0/24\n- ARP Guard version: 0.6.0\n- Deployment: Enterprise\n\nPlease respond as soon as possible. This is impacting our operations.\n\nThank you,\nJohn Smith\nNetwork Security Manager\nACME Corporation\nPhone: (555) 123-4567\n",
+    "html": false,
+    "html_preview": null,
+    "attachment_count": 0,
+    "attachments": [],
+    "urls": []
+  },
+  "analysis": {
+    "categorization": {
+      "enabled": true,
+      "method": "rule-based",
+      "categories": [
+        {
+          "category": "inquiry",
+          "score": 1.0
+        },
+        {
+          "category": "support",
+          "score": 0.3333333333333333
+        },
+        {
+          "category": "sales",
+          "score": 0.0
+        },
+        {
+          "category": "complaint",
+          "score": 0.0
+        },
+        {
+          "category": "feedback",
+          "score": 0.0
+        }
+      ],
+      "primary_category": "inquiry"
+    },
+    "sentiment": {
+      "enabled": true,
+      "method": "rule-based",
+      "scores": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 1.0
+      },
+      "overall": "neutral"
+    },
+    "word_count": 98,
+    "character_count": 648,
+    "keywords": [
+      {
+        "word": "guard",
+        "count": 2
+      },
+      {
+        "word": "security",
+        "count": 2
+      },
+      {
+        "word": "network",
+        "count": 2
+      },
+      {
+        "word": "hello",
+        "count": 1
+      },
+      {
+        "word": "support",
+        "count": 1
+      },
+      {
+        "word": "team,",
+        "count": 1
+      },
+      {
+        "word": "installation",
+        "count": 1
+      },
+      {
+        "word": "detected",
+        "count": 1
+      },
+      {
+        "word": "what",
+        "count": 1
+      },
+      {
+        "word": "appears",
+        "count": 1
+      }
+    ],
+    "urgent": true
+  },
+  "is_auto_reply": false,
+  "priority": {
+    "level": "high",
+    "score": 8,
+    "factors": [
+      "urgent keywords"
+    ]
+  }
+}
