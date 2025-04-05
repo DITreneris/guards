@@ -16,6 +16,11 @@ from utils.email_sender import send_welcome_email
 import hashlib
 import time
 import ssl
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import re
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # Load environment variables
 load_dotenv()
@@ -41,17 +46,22 @@ logger.info(f"Current working directory: {os.getcwd()}")
 logger.info(f"Directory contents: {os.listdir(os.getcwd())}")
 
 # MongoDB connection
-MONGODB_URI = os.getenv('MONGODB_URI', '')
-if MONGODB_URI:
-    try:
-        client = MongoClient(MONGODB_URI, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+mongo_uri = os.getenv('MONGODB_URI', '')
+try:
+    if mongo_uri:
+        client = MongoClient(mongo_uri, 
+                           ssl=True,
+                           ssl_cert_reqs=ssl.CERT_NONE,
+                           connectTimeoutMS=30000,
+                           socketTimeoutMS=45000)
         db = client.get_database()
         print("Successfully connected to MongoDB")
-    except Exception as e:
-        print(f"Failed to connect to MongoDB: {str(e)}")
+    else:
+        print("No MongoDB URI provided, using in-memory storage")
         db = None
-else:
-    print("MongoDB connection disabled or no valid MongoDB URI provided. Using in-memory storage.")
+except Exception as e:
+    print(f"Failed to connect to MongoDB: {str(e)}")
+    print("Falling back to in-memory storage")
     db = None
 
 # Initialize MongoDB client
@@ -65,7 +75,7 @@ subscribers = []
 # Check if we should use MongoDB
 USE_MONGODB = os.getenv('USE_MONGODB', 'false').lower() == 'true'
 
-if USE_MONGODB and MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv://' in MONGODB_URI):
+if USE_MONGODB and mongo_uri and ('mongodb://' in mongo_uri or 'mongodb+srv://' in mongo_uri):
     max_retries = 3
     retry_count = 0
     retry_delay = 1
@@ -73,12 +83,12 @@ if USE_MONGODB and MONGODB_URI and ('mongodb://' in MONGODB_URI or 'mongodb+srv:
     while retry_count < max_retries:
         try:
             # Mask the password in logs
-            log_uri = MONGODB_URI.split('@')[0] + '@...' if '@' in MONGODB_URI else 'mongodb://...'
+            log_uri = mongo_uri.split('@')[0] + '@...' if '@' in mongo_uri else 'mongodb://...'
             logger.info(f"Attempting to connect to MongoDB (Attempt {retry_count+1}/{max_retries}) with URI: {log_uri}")
             
             # Use a more robust connection setup
             mongo_client = MongoClient(
-                MONGODB_URI,
+                mongo_uri,
                 serverSelectionTimeoutMS=10000,  # Increased timeout
                 connectTimeoutMS=10000,          # Increased timeout
                 socketTimeoutMS=15000,           # Increased timeout
@@ -273,7 +283,7 @@ def health():
     
     # Get environment info
     env_info = {
-        "MONGODB_URI": MONGODB_URI.split('@')[0] + '@...' if MONGODB_URI and '@' in MONGODB_URI else "Not set",
+        "MONGODB_URI": mongo_uri.split('@')[0] + '@...' if mongo_uri and '@' in mongo_uri else "Not set",
         "MONGODB_DB": MONGODB_DB,
         "MONGODB_COLLECTION": MONGODB_COLLECTION,
         "JSON_BACKUP_ENABLED": os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true',
@@ -293,171 +303,109 @@ def health():
         "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
-@app.route('/submit-lead', methods=['POST'])
+# Email configuration
+MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+MAIL_PORT = int(os.getenv('MAIL_PORT', 587))
+MAIL_USE_TLS = os.getenv('MAIL_USE_TLS', 'true').lower() == 'true'
+MAIL_USERNAME = os.getenv('MAIL_USERNAME', '')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '')
+MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', '')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', '')
+
+def send_email(to, subject, body):
+    try:
+        if not all([MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD]):
+            print("Email configuration incomplete")
+            return False
+            
+        msg = MIMEMultipart()
+        msg['From'] = MAIL_DEFAULT_SENDER or MAIL_USERNAME
+        msg['To'] = to
+        msg['Subject'] = subject
+        
+        msg.attach(MIMEText(body, 'html'))
+        
+        server = smtplib.SMTP(MAIL_SERVER, MAIL_PORT)
+        server.starttls()
+        server.login(MAIL_USERNAME, MAIL_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        print(f"Email sent successfully to {to}")
+        return True
+    except Exception as e:
+        print(f"Failed to send email: {str(e)}")
+        return False
+
+@app.route('/submit_lead', methods=['POST'])
 def submit_lead():
-    # Parse the request data
-    data = request.json
-    
-    # Validate required fields
-    required_fields = ['company', 'contact_name', 'email']
-    if not all(field in data for field in required_fields):
-        logger.warning(f"Missing required fields in lead submission: {data}")
-        return jsonify({'success': False, 'message': 'Missing required fields'}), 400
-    
-    # Extract lead data
-    lead = {
-        'company': data['company'],
-        'contact_name': data['contact_name'],
-        'email': data['email'],
-        'phone': data.get('phone', ''),
-        'network_type': data.get('network_type', ''),
-        'network_size': data.get('network_size', ''),
-        'message': data.get('message', ''),
-        'created_at': datetime.now().isoformat(),
-        'source': data.get('source', 'website'),
-        # Extract newsletter and marketing consent
-        'newsletter_consent': data.get('newsletter_consent', False),
-        'marketing_consent': data.get('marketing_consent', False),
-        'consent_timestamp': data.get('consent_timestamp', datetime.now().isoformat()),
-        'consent_version': data.get('consent_version', '1.0')
-    }
-    
-    # Create a subscriber record if user consented
-    if lead['newsletter_consent']:
-        subscriber = {
-            'email': lead['email'],
-            'name': lead['contact_name'],
-            'company': lead['company'],
-            'subscribed_at': datetime.now().isoformat(),
-            'marketing_consent': lead['marketing_consent'],
-            'consent_timestamp': lead['consent_timestamp'],
-            'consent_version': lead['consent_version'],
-            'source': 'lead_form',
-            'active': True,
-            'confirmed': False
+    try:
+        data = request.get_json()
+        name = data.get('name', '').strip()
+        email = data.get('email', '').strip().lower()
+        phone = data.get('phone', '').strip()
+        message = data.get('message', '').strip()
+        
+        if not all([name, email, phone]):
+            return jsonify({'error': 'Missing required fields'}), 400
+            
+        # Validate email format
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            return jsonify({'error': 'Invalid email format'}), 400
+            
+        # Validate phone format (basic validation)
+        if not re.match(r"^\+?[\d\s-]{8,}$", phone):
+            return jsonify({'error': 'Invalid phone format'}), 400
+            
+        # Store lead in database
+        lead = {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'message': message,
+            'timestamp': datetime.utcnow(),
+            'status': 'new'
         }
         
-        try:
-            # Store subscriber in MongoDB
-            if mongo_client:
-                # Check for existing subscriber
-                existing = subscribers_collection.find_one({"email": lead['email']})
-                
-                if existing:
-                    # Update existing subscriber
-                    subscribers_collection.update_one(
-                        {"email": lead['email']},
-                        {"$set": {
-                            "name": lead['contact_name'],
-                            "company": lead['company'],
-                            "marketing_consent": lead['marketing_consent'],
-                            "consent_timestamp": lead['consent_timestamp'],
-                            "consent_version": lead['consent_version'],
-                            "active": True
-                        }}
-                    )
-                    logger.info(f"Updated existing subscriber: {lead['email']}")
-                else:
-                    # Insert new subscriber
-                    subscribers_collection.insert_one(subscriber)
-                    logger.info(f"Added new subscriber: {lead['email']}")
-                    
-                    # Send welcome email
-                    send_welcome_email(
-                        lead['email'],
-                        lead['contact_name'],
-                        lead['company']
-                    )
-            else:
-                # Fallback to local storage
-                try:
-                    # Check if subscribers directory exists, create it if not
-                    if not os.path.exists('data'):
-                        os.makedirs('data')
-                        
-                    # Check if subscribers file exists, create it if not
-                    if not os.path.exists('data/subscribers.json'):
-                        with open('data/subscribers.json', 'w') as f:
-                            json.dump([], f)
-                    
-                    # Read existing subscribers
-                    with open('data/subscribers.json', 'r') as f:
-                        subscribers = json.load(f)
-                    
-                    # Check for existing subscriber
-                    existing_subscriber = False
-                    for s in subscribers:
-                        if s.get('email') == lead['email']:
-                            s.update({
-                                "name": lead['contact_name'],
-                                "company": lead['company'],
-                                "marketing_consent": lead['marketing_consent'],
-                                "consent_timestamp": lead['consent_timestamp'],
-                                "consent_version": lead['consent_version'],
-                                "active": True
-                            })
-                            existing_subscriber = True
-                            break
-                    
-                    if not existing_subscriber:
-                        subscribers.append(subscriber)
-                        
-                        # Send welcome email
-                        send_welcome_email(
-                            lead['email'],
-                            lead['contact_name'],
-                            lead['company']
-                        )
-                    
-                    # Save updated subscribers
-                    with open('data/subscribers.json', 'w') as f:
-                        json.dump(subscribers, f, indent=2)
-                        
-                    logger.info(f"Stored subscriber locally: {lead['email']}")
-                    
-                except Exception as e:
-                    logger.error(f"Error storing subscriber locally: {str(e)}")
-        except Exception as e:
-            logger.error(f"Error processing subscriber: {str(e)}")
-    
-    # Try to save to MongoDB
-    try:
-        if mongo_client:
+        if db:
             leads_collection.insert_one(lead)
-            logger.info(f"Lead saved to MongoDB: {lead['email']}")
         else:
-            logger.warning("MongoDB not available, falling back to local storage")
-            raise Exception("MongoDB not available")
-    except Exception as e:
-        logger.error(f"Error saving to MongoDB: {str(e)}")
-        # Fallback to local JSON storage
-        try:
-            # Check if data directory exists, create it if not
-            if not os.path.exists('data'):
-                os.makedirs('data')
-                
-            # Check if leads file exists, create it if not
-            if not os.path.exists('data/leads.json'):
-                with open('data/leads.json', 'w') as f:
-                    json.dump([], f)
-            
-            # Read existing leads
-            with open('data/leads.json', 'r') as f:
-                leads = json.load(f)
-            
-            # Add new lead
             leads.append(lead)
             
-            # Save updated leads
-            with open('data/leads.json', 'w') as f:
-                json.dump(leads, f, indent=2)
-                
-            logger.info(f"Lead saved locally: {lead['email']}")
-        except Exception as local_error:
-            logger.error(f"Error saving lead locally: {str(local_error)}")
-            return jsonify({'success': False, 'message': 'Error processing lead'}), 500
-    
-    return jsonify({'success': True, 'message': 'Lead submitted successfully'})
+        # Send confirmation email to lead
+        confirmation_subject = "Thank you for your interest!"
+        confirmation_body = f"""
+        <html>
+            <body>
+                <h2>Thank you for contacting us!</h2>
+                <p>Dear {name},</p>
+                <p>We have received your message and will get back to you shortly.</p>
+                <p>Best regards,<br>Guards & Robbers Team</p>
+            </body>
+        </html>
+        """
+        send_email(email, confirmation_subject, confirmation_body)
+        
+        # Send notification to admin
+        if ADMIN_EMAIL:
+            admin_subject = f"New Lead: {name}"
+            admin_body = f"""
+            <html>
+                <body>
+                    <h2>New Lead Received</h2>
+                    <p><strong>Name:</strong> {name}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Phone:</strong> {phone}</p>
+                    <p><strong>Message:</strong> {message}</p>
+                </body>
+            </html>
+            """
+            send_email(ADMIN_EMAIL, admin_subject, admin_body)
+            
+        return jsonify({'message': 'Lead submitted successfully'}), 200
+        
+    except Exception as e:
+        print(f"Error processing lead: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/leads/count', methods=['GET'])
 def leads_count():
@@ -584,7 +532,7 @@ def confirm_subscription():
     # Validate token here (simplified for example)
     try:
         # Find the subscriber in MongoDB
-        if MONGODB_URI and subscribers_collection:
+        if mongo_uri and subscribers_collection:
             subscriber = subscribers_collection.find_one({"email": email})
             if subscriber:
                 # Update confirmation status
@@ -639,7 +587,7 @@ def unsubscribe():
         other_reason = request.form.get('other_reason')
         
         try:
-            if MONGODB_URI and subscribers_collection:
+            if mongo_uri and subscribers_collection:
                 # Log the unsubscribe reason
                 if reason:
                     subscribers_collection.update_one(
@@ -697,7 +645,7 @@ def unsubscribe():
 @login_required
 def count_subscribers():
     try:
-        if MONGODB_URI and subscribers_collection:
+        if mongo_uri and subscribers_collection:
             # Count active confirmed subscribers
             count = subscribers_collection.count_documents({"active": True, "confirmed": True})
             return jsonify({'success': True, 'count': count})
@@ -732,6 +680,78 @@ def save_subscribers(subscribers):
             json.dump(subscribers, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"Error saving subscribers: {str(e)}")
+
+def process_message(message):
+    try:
+        # Preprocess the message
+        message = message.lower().strip()
+        
+        # Check for common greetings
+        greetings = ['hello', 'hi', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening']
+        if any(greeting in message for greeting in greetings):
+            return "Hello! How can I help you today?"
+            
+        # Check for common questions
+        questions = {
+            'what is guards and robbers': 'Guards & Robbers is a cybersecurity company that helps protect businesses from digital threats.',
+            'what services do you offer': 'We offer a range of cybersecurity services including network security, threat detection, and incident response.',
+            'how can i contact you': 'You can contact us through our website form or email us at info@guardsandrobbers.com',
+            'what are your prices': 'Our pricing depends on your specific needs. Please contact us for a customized quote.',
+            'do you offer free consultation': 'Yes, we offer a free initial consultation to assess your security needs.'
+        }
+        
+        for key, value in questions.items():
+            if key in message:
+                return value
+                
+        # If no specific match, generate a response using the ML model
+        try:
+            # Load the model and tokenizer
+            model = AutoModelForCausalLM.from_pretrained("gpt2")
+            tokenizer = AutoTokenizer.from_pretrained("gpt2")
+            
+            # Prepare the input
+            input_text = f"User: {message}\nAssistant:"
+            inputs = tokenizer(input_text, return_tensors="pt", max_length=100, truncation=True)
+            
+            # Generate response
+            outputs = model.generate(
+                inputs["input_ids"],
+                max_length=150,
+                num_return_sequences=1,
+                no_repeat_ngram_size=2,
+                temperature=0.7,
+                top_p=0.9
+            )
+            
+            response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            response = response.split("Assistant:")[-1].strip()
+            
+            return response if response else "I'm not sure how to respond to that. Could you please rephrase your question?"
+            
+        except Exception as e:
+            print(f"Error generating ML response: {str(e)}")
+            return "I'm having trouble processing your request. Please try again later."
+            
+    except Exception as e:
+        print(f"Error processing message: {str(e)}")
+        return "I'm sorry, I encountered an error. Please try again."
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    try:
+        data = request.get_json()
+        message = data.get('message', '').strip()
+        
+        if not message:
+            return jsonify({'error': 'Message is required'}), 400
+            
+        response = process_message(message)
+        return jsonify({'response': response}), 200
+        
+    except Exception as e:
+        print(f"Error in chat endpoint: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
