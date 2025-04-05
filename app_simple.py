@@ -1,30 +1,41 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session, send_file
 import os
-import json
-import logging
 import sys
-import secrets
-import io
-from datetime import datetime, timedelta
-from dotenv import load_dotenv
-from pymongo import MongoClient
-from pymongo.server_api import ServerApi
-from pymongo.errors import ConnectionFailure, OperationFailure
-from admin_auth import login_required, authenticate, init_admin_users
-from PIL import Image, ImageDraw, ImageFont
-from utils.email_sender import send_welcome_email
-import hashlib
+import json
+import re
+import uuid
+import random
+import datetime
+import logging
 import time
+import math
+import csv
+import io
 import ssl
+import secrets
 import smtplib
+import hashlib
+from io import StringIO
+from functools import wraps
+from urllib.parse import quote_plus
+from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import re
+
+# Third-party imports
+from dotenv import load_dotenv
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, send_file
 from flask_compress import Compress
 from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
-import csv
-from io import StringIO
+from werkzeug.security import generate_password_hash, check_password_hash
+from pymongo import MongoClient
+from pymongo.server_api import ServerApi
+from pymongo.errors import ConnectionFailure, OperationFailure
+from PIL import Image, ImageDraw, ImageFont
+
+# Local imports
+from admin_auth import login_required, authenticate, init_admin_users
+from utils.email_sender import send_welcome_email
 
 # Load environment variables
 load_dotenv()
@@ -882,7 +893,6 @@ def process_message(message):
             "Thank you for your question. We'll have our experts answer that for you soon.",
             "For more specific information on that topic, please email us at info@guardsandrobbers.com"
         ]
-        import random
         return random.choice(fallback_responses)
             
     except Exception as e:
