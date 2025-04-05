@@ -15,6 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 from utils.email_sender import send_welcome_email
 import hashlib
 import time
+import ssl
 
 # Load environment variables
 load_dotenv()
@@ -40,10 +41,18 @@ logger.info(f"Current working directory: {os.getcwd()}")
 logger.info(f"Directory contents: {os.listdir(os.getcwd())}")
 
 # MongoDB connection
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
-MONGODB_DB = os.getenv('MONGODB_DB', 'guards_robbers_db')
-MONGODB_COLLECTION = os.getenv('MONGODB_COLLECTION', 'leads')
-MONGODB_SUBSCRIBERS_COLLECTION = os.getenv('MONGODB_SUBSCRIBERS_COLLECTION', 'subscribers')
+MONGODB_URI = os.getenv('MONGODB_URI', '')
+if MONGODB_URI:
+    try:
+        client = MongoClient(MONGODB_URI, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+        db = client.get_database()
+        print("Successfully connected to MongoDB")
+    except Exception as e:
+        print(f"Failed to connect to MongoDB: {str(e)}")
+        db = None
+else:
+    print("MongoDB connection disabled or no valid MongoDB URI provided. Using in-memory storage.")
+    db = None
 
 # Initialize MongoDB client
 mongo_client = None
@@ -707,6 +716,22 @@ def count_subscribers():
     except Exception as e:
         logger.error(f"Error counting subscribers: {str(e)}")
         return jsonify({'success': False, 'message': 'Error counting subscribers'}), 500
+
+def load_subscribers():
+    try:
+        if os.path.exists('subscribers.json'):
+            with open('subscribers.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except Exception as e:
+        print(f"Error loading subscribers: {str(e)}")
+    return []
+
+def save_subscribers(subscribers):
+    try:
+        with open('subscribers.json', 'w', encoding='utf-8') as f:
+            json.dump(subscribers, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Error saving subscribers: {str(e)}")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
