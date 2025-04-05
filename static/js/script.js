@@ -230,23 +230,15 @@ function initFormSubmission() {
             // Prepare form data
             const formData = new FormData(leadForm);
             const data = {
-                company: formData.get('company'),
-                contact_name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone') || '',
-                network_type: formData.get('network') || '',
-                network_size: formData.get('network_size') || '',
-                message: formData.get('message') || '',
-                newsletter_consent: formData.get('newsletter_consent') === 'on',
-                marketing_consent: formData.get('marketing_consent') === 'on',
-                consent_timestamp: new Date().toISOString(),
-                consent_version: '1.0',
-                source: 'website_contact_form'
+                name: formData.get('name') || '',
+                email: formData.get('email') || '',
+                phone: formData.get('phone') || '123-456-7890', // Default value if not provided
+                message: `Company: ${formData.get('company')}, Network Type: ${formData.get('network')}`,
             };
 
             try {
                 // Send data to backend
-                const response = await fetch('/submit-lead', {
+                const response = await fetch('/submit_lead', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -259,21 +251,21 @@ function initFormSubmission() {
                 // Show success or error message
                 formStatus.classList.remove('hidden', 'success', 'error');
                 
-                if (result.success) {
+                if (result.message && !result.error) {
                     // Success
                     formStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${result.message || 'Demo requested successfully!'}`;
                     formStatus.classList.add('success');
                     leadForm.reset();
                     
                     // If user consented to newsletter, show additional confirmation
-                    if (data.newsletter_consent) {
+                    if (formData.get('newsletter_consent') === 'on') {
                         const newsConfirmation = document.createElement('p');
                         newsConfirmation.innerHTML = '<strong>Thanks for subscribing!</strong> Please check your email to confirm your subscription.';
                         formStatus.appendChild(newsConfirmation);
                     }
                 } else {
                     // Error
-                    formStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.message || 'Something went wrong. Please try again.'}`;
+                    formStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.error || 'Something went wrong. Please try again.'}`;
                     formStatus.classList.add('error');
                 }
             } catch (error) {
