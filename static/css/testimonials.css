@@ -145,47 +145,68 @@
     color: #4B73FF;
 }
 
-/* Trusted by section */
+/* Trusted By Industry Leaders Section */
 .trusted-by-section {
-    margin: 60px 0;
+    padding: 4rem 0;
+    background: linear-gradient(to bottom, #EAF3FF, #ffffff);
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.trusted-by-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
     text-align: center;
 }
 
-.trusted-by-section h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 30px;
-}
-
-.trusted-by-section .logo-container {
+.trusted-by-section .logo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 3rem;
     align-items: center;
     justify-content: center;
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
 }
 
 .trusted-by-section .logo-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
-    filter: grayscale(100%);
-    opacity: 0.7;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .trusted-by-section .logo-item:hover {
-    filter: grayscale(0%);
-    opacity: 1;
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.trusted-by-section .client-logo {
-    max-width: 120px;
-    max-height: 60px;
+.trusted-by-section .logo-item img {
+    max-width: 140px;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.trusted-by-section .logo-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.trusted-by-section .subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 /* Compliance section */
@@ -254,9 +275,18 @@
         gap: 20px;
     }
     
-    .trusted-by-section .logo-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+    .trusted-by-section h2 {
+        font-size: 2rem;
+    }
+    
+    .trusted-by-section .logo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+    
+    .trusted-by-section .logo-item img {
+        max-width: 100px;
     }
     
     .compliance-section .badge-container {
