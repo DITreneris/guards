@@ -1,0 +1,129 @@
+/* Browser Compatibility Fixes */
+
+/* Fix for Firefox flexbox issues */
+@-moz-document url-prefix() {
+    .sidebar {
+        min-height: calc(100vh - 56px);
+    }
+}
+
+/* IE11 Fixes */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .sidebar {
+        height: 100vh;
+    }
+    
+    .card-body {
+        flex: 1 1 auto;
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Fix for IE11 flexbox */
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .col-md-2, .col-md-3, .col-md-6, .col-md-10 {
+        flex: 0 0 auto;
+    }
+    
+    .col-md-2 {
+        width: 16.666667%;
+    }
+    
+    .col-md-3 {
+        width: 25%;
+    }
+    
+    .col-md-6 {
+        width: 50%;
+    }
+    
+    .col-md-10 {
+        width: 83.333333%;
+    }
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .sidebar {
+        position: sticky;
+        top: 56px;
+        height: calc(100vh - 56px);
+    }
+}
+
+/* Edge compatibility fixes */
+@supports (-ms-ime-align: auto) {
+    .card {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .form-control {
+        width: 100%;
+    }
+}
+
+/* Responsive fixes for mobile */
+@media (max-width: 767.98px) {
+    .sidebar {
+        min-height: auto;
+        padding-bottom: 1rem;
+    }
+    
+    .sidebar .nav-link {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 0.5rem;
+    }
+    
+    .lead-card {
+        margin-bottom: 1rem;
+    }
+    
+    .dropdown-menu {
+        position: static !important;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        border: 0;
+        box-shadow: none;
+    }
+    
+    .page-link {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+}
+
+/* Chart.js compatibility fixes */
+canvas {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Cross-browser consistent shadows */
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix for form elements in different browsers */
+select, input, textarea, button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+} 

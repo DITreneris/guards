@@ -23,6 +23,8 @@ import re
 from flask_compress import Compress
 from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
+import csv
+from io import StringIO
 
 # Load environment variables
 load_dotenv()
@@ -441,26 +443,176 @@ def admin_logout():
 @app.route('/admin')
 @login_required
 def admin_dashboard():
-    dashboard_leads = []
+    # Get filter parameters from request
+    search_query = request.args.get('q', '')
+    status_filter = request.args.get('status', 'all')
+    sort_by = request.args.get('sort_by', 'timestamp')
+    sort_order = request.args.get('sort_order', 'desc')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
     
-    if mongo_client:
-        try:
-            dashboard_leads = list(leads_collection.find().sort('timestamp', -1))
+    # Define available statuses
+    statuses = ['new', 'contacted', 'qualified', 'converted', 'rejected', 'closed']
+    
+    dashboard_leads = []
+    total_count = 0
+    today_leads_count = 0
+    status_counts = []
+    trend_data = []
+    conversion_rate = 0
+    avg_response_time = 'N/A'
+    
+    # Calculate today's date (for today's leads count)
+    today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    # Calculate dates for trend analysis (last 30 days)
+    trend_start_date = today - timedelta(days=29)
+    date_range = [(trend_start_date + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30)]
+    
+    try:
+        if mongo_client:
+            # Build the filter query
+            query = {}
+            
+            # Add search query if provided
+            if search_query:
+                query['$or'] = [
+                    {'name': {'$regex': search_query, '$options': 'i'}},
+                    {'email': {'$regex': search_query, '$options': 'i'}},
+                    {'phone': {'$regex': search_query, '$options': 'i'}},
+                    {'message': {'$regex': search_query, '$options': 'i'}}
+                ]
+            
+            # Add status filter if not 'all'
+            if status_filter != 'all':
+                query['status'] = status_filter
+            
+            # Get total count and today's leads count
+            total_count = leads_collection.count_documents(query)
+            today_query = query.copy()
+            today_query['timestamp'] = {'$gte': today}
+            today_leads_count = leads_collection.count_documents(today_query)
+            
+            # Calculate status distribution
+            for status in statuses:
+                status_query = query.copy()
+                status_query['status'] = status
+                count = leads_collection.count_documents(status_query)
+                status_counts.append({'status': status.title(), 'count': count})
+            
+            # Calculate conversion rate (converted / total * 100)
+            converted_count = leads_collection.count_documents({'status': 'converted'})
+            if total_count > 0:
+                conversion_rate = round((converted_count / total_count) * 100, 1)
+            
+            # Calculate lead acquisition trend (last 30 days)
+            for date_str in date_range:
+                date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+                next_date = date_obj + timedelta(days=1)
+                trend_query = {'timestamp': {'$gte': date_obj, '$lt': next_date}}
+                daily_count = leads_collection.count_documents(trend_query)
+                trend_data.append({'date': date_str, 'count': daily_count})
+            
+            # Determine sort direction
+            sort_direction = -1 if sort_order == 'desc' else 1
+            
+            # Get paginated leads
+            skip_count = (page - 1) * per_page
+            dashboard_leads = list(leads_collection.find(query)
+                                  .sort(sort_by, sort_direction)
+                                  .skip(skip_count)
+                                  .limit(per_page))
+            
             # Convert ObjectId to string for JSON serialization
             for lead in dashboard_leads:
                 if '_id' in lead:
                     lead['_id'] = str(lead['_id'])
                 if 'timestamp' in lead:
                     lead['timestamp'] = lead['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
-        except Exception as e:
-            logger.error(f"Error retrieving leads from MongoDB: {e}")
-            # Fall back to in-memory leads
-            dashboard_leads = leads
-    else:
-        # Use in-memory fallback
-        dashboard_leads = leads
+        else:
+            # In-memory filtering and sorting for fallback
+            all_leads = leads.copy()
+            filtered_leads = []
+            
+            # Filter leads
+            for lead in all_leads:
+                match = True
+                
+                # Apply search query filter
+                if search_query:
+                    search_text = f"{lead.get('name', '')} {lead.get('email', '')} {lead.get('phone', '')} {lead.get('message', '')}"
+                    if search_query.lower() not in search_text.lower():
+                        match = False
+                
+                # Apply status filter
+                if status_filter != 'all' and lead.get('status') != status_filter:
+                    match = False
+                
+                if match:
+                    filtered_leads.append(lead)
+            
+            # Count today's leads
+            today_leads_count = sum(1 for lead in all_leads if lead.get('timestamp', datetime.min) >= today)
+            
+            # Get total count
+            total_count = len(filtered_leads)
+            
+            # Calculate status distribution
+            for status in statuses:
+                count = sum(1 for lead in all_leads if lead.get('status') == status)
+                status_counts.append({'status': status.title(), 'count': count})
+            
+            # Calculate conversion rate (converted / total * 100)
+            converted_count = sum(1 for lead in all_leads if lead.get('status') == 'converted')
+            if len(all_leads) > 0:
+                conversion_rate = round((converted_count / len(all_leads)) * 100, 1)
+            
+            # Calculate lead acquisition trend (last 30 days)
+            for date_str in date_range:
+                date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+                next_date = date_obj + timedelta(days=1)
+                daily_count = sum(1 for lead in all_leads if 
+                                 'timestamp' in lead and 
+                                 date_obj <= lead['timestamp'] < next_date)
+                trend_data.append({'date': date_str, 'count': daily_count})
+            
+            # Sort leads
+            sort_reverse = sort_order == 'desc'
+            filtered_leads.sort(key=lambda x: x.get(sort_by, ''), reverse=sort_reverse)
+            
+            # Paginate leads
+            start_idx = (page - 1) * per_page
+            end_idx = start_idx + per_page
+            dashboard_leads = filtered_leads[start_idx:end_idx]
     
-    return render_template('admin_dashboard.html', leads=dashboard_leads, username=session.get('admin_username'))
+    except Exception as e:
+        logger.error(f"Error retrieving leads: {e}")
+        flash('Error retrieving leads', 'danger')
+    
+    # Calculate pagination values
+    total_pages = (total_count + per_page - 1) // per_page
+    has_prev = page > 1
+    has_next = page < total_pages
+    
+    return render_template('admin_dashboard.html', 
+                          leads=dashboard_leads,
+                          username=session.get('admin_username'),
+                          search_query=search_query,
+                          status_filter=status_filter,
+                          statuses=statuses,
+                          sort_by=sort_by,
+                          sort_order=sort_order,
+                          page=page,
+                          per_page=per_page,
+                          total_count=total_count,
+                          total_pages=total_pages,
+                          has_prev=has_prev,
+                          has_next=has_next,
+                          today_leads_count=today_leads_count,
+                          status_counts=status_counts,
+                          trend_data=trend_data,
+                          conversion_rate=conversion_rate,
+                          avg_response_time=avg_response_time)
 
 @app.route('/admin/settings')
 @login_required
@@ -777,6 +929,159 @@ def inject_asset_paths():
         return url_for('static', filename=f'js/{filename}')
         
     return dict(css_url=css_url, js_url=js_url)
+
+@app.route('/admin/export-leads')
+@login_required
+def export_leads():
+    """Export leads as CSV or JSON"""
+    file_format = request.args.get('format', 'csv').lower()
+    search_query = request.args.get('q', '')
+    status_filter = request.args.get('status', 'all')
+    
+    try:
+        # Build filter query
+        query = {}
+        
+        # Add search query if provided
+        if search_query:
+            if mongo_client:
+                query['$or'] = [
+                    {'name': {'$regex': search_query, '$options': 'i'}},
+                    {'email': {'$regex': search_query, '$options': 'i'}},
+                    {'phone': {'$regex': search_query, '$options': 'i'}},
+                    {'message': {'$regex': search_query, '$options': 'i'}}
+                ]
+        
+        # Add status filter if not 'all'
+        if status_filter != 'all':
+            query['status'] = status_filter
+        
+        # Get leads based on filters
+        if mongo_client:
+            # MongoDB data source
+            export_leads = list(leads_collection.find(query).sort('timestamp', -1))
+            # Convert ObjectId to string for JSON serialization
+            for lead in export_leads:
+                if '_id' in lead:
+                    lead['_id'] = str(lead['_id'])
+                if 'timestamp' in lead and isinstance(lead['timestamp'], datetime):
+                    lead['timestamp'] = lead['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            # In-memory data source
+            export_leads = []
+            for lead in leads:
+                match = True
+                
+                # Apply search query filter
+                if search_query:
+                    search_text = f"{lead.get('name', '')} {lead.get('email', '')} {lead.get('phone', '')} {lead.get('message', '')}"
+                    if search_query.lower() not in search_text.lower():
+                        match = False
+                
+                # Apply status filter
+                if status_filter != 'all' and lead.get('status') != status_filter:
+                    match = False
+                
+                if match:
+                    export_leads.append(lead)
+        
+        # Generate filename
+        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        filename = f"leads_export_{timestamp}"
+        
+        if file_format == 'json':
+            # Export as JSON
+            response_data = json.dumps(export_leads, indent=2)
+            mimetype = 'application/json'
+            attachment_filename = f"{filename}.json"
+        else:
+            # Default: Export as CSV
+            output = StringIO()
+            writer = csv.writer(output)
+            
+            # Write header row
+            csv_columns = ['name', 'email', 'phone', 'message', 'status', 'timestamp']
+            writer.writerow(csv_columns)
+            
+            # Write data rows
+            for lead in export_leads:
+                row = [lead.get(col, '') for col in csv_columns]
+                writer.writerow(row)
+            
+            response_data = output.getvalue()
+            mimetype = 'text/csv'
+            attachment_filename = f"{filename}.csv"
+        
+        # Create response
+        response = app.response_class(
+            response=response_data,
+            mimetype=mimetype
+        )
+        response.headers.set('Content-Disposition', f'attachment; filename={attachment_filename}')
+        
+        return response
+        
+    except Exception as e:
+        logger.error(f"Error exporting leads: {e}")
+        flash('Error exporting leads', 'danger')
+        return redirect(url_for('admin_dashboard'))
+        
+@app.route('/admin/update-lead-status', methods=['POST'])
+@login_required
+def update_lead_status():
+    """Update the status of a lead"""
+    lead_id = request.form.get('lead_id')
+    new_status = request.form.get('status')
+    
+    if not lead_id or not new_status:
+        flash('Missing required fields', 'danger')
+        return redirect(url_for('admin_dashboard'))
+    
+    try:
+        if mongo_client:
+            # Convert string ID to ObjectId for MongoDB
+            from bson.objectid import ObjectId
+            result = leads_collection.update_one(
+                {'_id': ObjectId(lead_id)},
+                {'$set': {
+                    'status': new_status,
+                    'updated_at': datetime.now()
+                }}
+            )
+            
+            if result.modified_count > 0:
+                flash(f'Lead status updated to {new_status}', 'success')
+            else:
+                flash('No changes made to lead status', 'warning')
+        else:
+            # In-memory fallback
+            updated = False
+            for lead in leads:
+                if str(lead.get('_id', '')) == lead_id:
+                    lead['status'] = new_status
+                    lead['updated_at'] = datetime.now()
+                    updated = True
+                    break
+            
+            if updated:
+                # Save to JSON file if available
+                if os.getenv('ENABLE_JSON_BACKUP', 'True').lower() == 'true':
+                    json_path = os.getenv('JSON_BACKUP_PATH', 'data/leads.json')
+                    os.makedirs(os.path.dirname(json_path), exist_ok=True)
+                    with open(json_path, 'w') as f:
+                        for lead_data in leads:
+                            json.dump(lead_data, f)
+                            f.write('\n')
+                
+                flash(f'Lead status updated to {new_status}', 'success')
+            else:
+                flash('Lead not found', 'danger')
+    
+    except Exception as e:
+        logger.error(f"Error updating lead status: {e}")
+        flash('Error updating lead status', 'danger')
+    
+    return redirect(url_for('admin_dashboard'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 
