@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .text { font-family: Arial, sans-serif; font-weight: bold; }
+    .primary { fill: #0066cc; }
+    .accent { fill: #003366; }
+  </style>
+  <g transform="translate(10, 40)">
+    <path class="primary" d="M0,-30 h20 v30 h-20z M25,-30 h20 v30 h-20z" />
+    <text class="text accent" x="55" y="0" font-size="28">GB</text>
+    <path class="accent" d="M10,-35 l10,5 l10,-5" />
+  </g>
+</svg> 

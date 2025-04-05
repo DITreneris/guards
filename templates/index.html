@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guards & Robbers - AI-Powered Cybersecurity</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" sizes="32x32">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -251,11 +257,11 @@
             
             <h3 style="text-align: center; margin-top: 3rem;">Trusted By</h3>
             <div class="company-logos">
-                <img src="https://via.placeholder.com/150x40?text=TechCorp" alt="TechCorp" class="company-logo">
-                <img src="https://via.placeholder.com/150x40?text=GlobalBank" alt="GlobalBank" class="company-logo">
-                <img src="https://via.placeholder.com/150x40?text=HealthSystems" alt="HealthSystems" class="company-logo">
-                <img src="https://via.placeholder.com/150x40?text=RetailGiant" alt="RetailGiant" class="company-logo">
-                <img src="https://via.placeholder.com/150x40?text=EnergyInc" alt="EnergyInc" class="company-logo">
+                <img src="{{ url_for('static', filename='images/testimonials/itcorp-logo.svg') }}" alt="ITCorp" class="company-logo">
+                <img src="{{ url_for('static', filename='images/testimonials/bankgb-logo.svg') }}" alt="BankGB" class="company-logo">
+                <img src="{{ url_for('static', filename='images/testimonials/healthsy-logo.svg') }}" alt="HealthSY" class="company-logo">
+                <img src="{{ url_for('static', filename='images/testimonials/shoppy-logo.svg') }}" alt="ShoPPy" class="company-logo">
+                <img src="{{ url_for('static', filename='images/testimonials/energyq-logo.svg') }}" alt="EnergyQ" class="company-logo">
             </div>
             
             <div class="trust-badges">
@@ -329,7 +335,7 @@
             <div class="footer-content">
                 <div class="footer-logo"><i class="fas fa-shield-halved"></i> Guards & Robbers</div>
                 <div class="footer-info">
-                    <p>&copy; 2025 Guards & Robbers | Contact Us: info@guardsrobbers.com</p>
+                    <p>&copy; 2025 Guards & Robbers | Contact Us: info@guardsandrobbers.com</p>
                 </div>
                 <div class="footer-links">
                     <a href="#">Privacy Policy</a>

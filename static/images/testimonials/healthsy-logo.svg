@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .text { font-family: Arial, sans-serif; font-weight: bold; }
+    .primary { fill: #0066cc; }
+    .accent { fill: #003366; }
+  </style>
+  <g transform="translate(10, 40)">
+    <circle class="primary" cx="15" cy="-15" r="15"/>
+    <path class="accent" d="M10,-20 h10 v-5 h5 v10 h10 v5 h-10 v10 h-5 v-10 h-10z" fill="white"/>
+    <text class="text primary" x="40" y="0" font-size="24">SY</text>
+  </g>
+</svg> 
