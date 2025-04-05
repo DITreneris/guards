@@ -20,7 +20,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import re
-from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# Try to import ML dependencies, but make them optional
+try:
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    ML_ENABLED = True
+except ImportError:
+    print("ML dependencies not available. Chat functionality will use fallback responses.")
+    ML_ENABLED = False
 
 # Load environment variables
 load_dotenv()
@@ -28,6 +35,11 @@ load_dotenv()
 app = Flask(__name__)
 # Set secret key for session management
 app.secret_key = os.getenv('SECRET_KEY', secrets.token_hex(16))
+
+# Configure MongoDB settings
+MONGODB_DB = os.getenv('MONGODB_DB', 'guards_db')
+MONGODB_COLLECTION = os.getenv('MONGODB_COLLECTION', 'leads')
+MONGODB_SUBSCRIBERS_COLLECTION = os.getenv('MONGODB_SUBSCRIBERS_COLLECTION', 'subscribers')
 
 # Make sure admin users are initialized
 init_admin_users()
@@ -704,34 +716,45 @@ def process_message(message):
             if key in message:
                 return value
                 
-        # If no specific match, generate a response using the ML model
-        try:
-            # Load the model and tokenizer
-            model = AutoModelForCausalLM.from_pretrained("gpt2")
-            tokenizer = AutoTokenizer.from_pretrained("gpt2")
-            
-            # Prepare the input
-            input_text = f"User: {message}\nAssistant:"
-            inputs = tokenizer(input_text, return_tensors="pt", max_length=100, truncation=True)
-            
-            # Generate response
-            outputs = model.generate(
-                inputs["input_ids"],
-                max_length=150,
-                num_return_sequences=1,
-                no_repeat_ngram_size=2,
-                temperature=0.7,
-                top_p=0.9
-            )
-            
-            response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-            response = response.split("Assistant:")[-1].strip()
-            
-            return response if response else "I'm not sure how to respond to that. Could you please rephrase your question?"
-            
-        except Exception as e:
-            print(f"Error generating ML response: {str(e)}")
-            return "I'm having trouble processing your request. Please try again later."
+        # If no specific match, use ML model if available or fallback to default responses
+        if ML_ENABLED:
+            try:
+                # Load the model and tokenizer
+                model = AutoModelForCausalLM.from_pretrained("gpt2")
+                tokenizer = AutoTokenizer.from_pretrained("gpt2")
+                
+                # Prepare the input
+                input_text = f"User: {message}\nAssistant:"
+                inputs = tokenizer(input_text, return_tensors="pt", max_length=100, truncation=True)
+                
+                # Generate response
+                outputs = model.generate(
+                    inputs["input_ids"],
+                    max_length=150,
+                    num_return_sequences=1,
+                    no_repeat_ngram_size=2,
+                    temperature=0.7,
+                    top_p=0.9
+                )
+                
+                response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+                response = response.split("Assistant:")[-1].strip()
+                
+                return response if response else "I'm not sure how to respond to that. Could you please rephrase your question?"
+                
+            except Exception as e:
+                print(f"Error generating ML response: {str(e)}")
+                return "I'm having trouble processing your request. Please try again later."
+        else:
+            # Fallback responses when ML is not available
+            fallback_responses = [
+                "I understand you're asking about that. Could you please provide more details?",
+                "That's an interesting question. Let me get back to you with more information.",
+                "I'd be happy to help with that. Please contact our team for personalized assistance.",
+                "Thank you for your question. We'll have our experts answer that for you soon."
+            ]
+            import random
+            return random.choice(fallback_responses)
             
     except Exception as e:
         print(f"Error processing message: {str(e)}")
